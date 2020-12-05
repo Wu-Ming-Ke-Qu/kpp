@@ -14,12 +14,12 @@ class Comment(models.Model):
     c_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
 
     def approve_count(self):
-        return self.comments.filter(attr="A").count()
+        return self.vote_set.filter(attr="A").count()
     approve_count.admin_order_field = "c_time"
     approve_count.short_description = "计算赞数"
 
     def disapprove_count(self):
-        return self.comments.filter(attr="D").count()
+        return self.vote_set.filter(attr="D").count()
     disapprove_count.admin_order_field = "c_time"
     disapprove_count.short_description = "计算踩数"
 

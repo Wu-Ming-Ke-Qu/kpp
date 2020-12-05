@@ -16,7 +16,7 @@ class Vote(models.Model):
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="用户")
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, verbose_name="评论", related_name='comments')
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, verbose_name="评论")
     attr = models.CharField(max_length=1, verbose_name="赞踩情况", choices=LIKES)
     ch_time = models.DateTimeField(auto_now=True, verbose_name="修改时间")
 
