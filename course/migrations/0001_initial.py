@@ -14,19 +14,22 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='User',
+            name='Course',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=128, unique=True)),
-                ('password', models.CharField(max_length=256)),
-                ('email', models.EmailField(max_length=254, unique=True)),
+                ('course_name', models.CharField(max_length=128)),
+                ('course_id', models.CharField(blank=True, max_length=128, null=True, unique=True)),
+                ('credit', models.IntegerField()),
+                ('hour', models.IntegerField()),
+                ('pre_course', models.CharField(blank=True, max_length=128, null=True)),
                 ('c_time', models.DateTimeField(auto_now_add=True)),
-                ('department', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='school.department')),
+                ('department', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='school.department')),
                 ('school', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='school.school')),
+                ('teacher', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='school.teacher')),
             ],
             options={
-                'verbose_name': '用户',
-                'verbose_name_plural': '用户',
+                'verbose_name': '课程',
+                'verbose_name_plural': '课程',
                 'ordering': ['c_time'],
             },
         ),
