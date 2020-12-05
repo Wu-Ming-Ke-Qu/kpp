@@ -10,25 +10,23 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('account', '0001_initial'),
-        ('course', '0001_initial'),
+        ('comment', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Comment',
+            name='Vote',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content', models.TextField(verbose_name='内容')),
-                ('zan', models.IntegerField(verbose_name='赞')),
-                ('cai', models.IntegerField(verbose_name='踩')),
-                ('c_time', models.DateTimeField(auto_now_add=True, verbose_name='创建时间')),
-                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='course.course', verbose_name='课程')),
+                ('attr', models.CharField(choices=[('A', '赞'), ('D', '踩')], max_length=1, verbose_name='赞踩情况')),
+                ('ch_time', models.DateTimeField(auto_now=True, verbose_name='修改时间')),
+                ('comment', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='comment.comment', verbose_name='评论')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='account.user', verbose_name='用户')),
             ],
             options={
-                'verbose_name': '评论表',
-                'verbose_name_plural': '评论表',
-                'ordering': ['-c_time'],
+                'verbose_name': '投票表',
+                'verbose_name_plural': '投票表',
+                'ordering': ['-ch_time'],
             },
         ),
     ]
