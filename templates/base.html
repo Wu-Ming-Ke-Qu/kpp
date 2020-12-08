@@ -29,14 +29,14 @@
               <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="{% url 'index' %}">
-              <img alt="Brand" src="../static/img/logo-white.png" height="22px">
+              <img alt="Brand" src="{% static 'img/logo-white.png' %}" height="22px">
             </a>
           </div>
       
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
 
-            <form class="navbar-form navbar-left" action="/search/" method="post" style="text-align: center;">
+            <form class="navbar-form navbar-left" action="{% url 'search:index' %}" method="post" style="text-align: center;">
               <div class="form-group">
                  <input type="text" class="form-control" id="sch" placeholder="学校" style="width:135px; font-size: x-small;"> 
                  {{ search_form.school.label_tag }}
@@ -57,9 +57,8 @@
                 <li class="active"><a href="{% url 'index' %}"style="background-color: #fff;">主页<span class="sr-only">(current)</span></a></li>
               </ul>
               {% if request.session.is_login %}
-              <li><a href="#" style="color: #fff;">你好！{{ request.session.user_name }}</a></li>
-              <li><a href="/userinfo/" style="color: #fff;">我的信息</a></li>
-              <li><a href="/logout/" style="color: #fff;">登出</a></li>
+              <li><a href="{% url 'account:index' %}" style="color: #fff;">{{ request.session.user_name }}</a></li>
+              <li><a href="{% url 'logout' %}" style="color: #fff;">登出</a></li>
               {% else %}
               <li><a href="{% url 'login' %}" style="color: #fff;">登录</a></li>
               <li><a href="{% url 'register' %}" style="color: #fff;">注册</a></li>

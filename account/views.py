@@ -79,9 +79,7 @@ def register(request):
                 if user_school.email_addr != email.split("@")[-1]:
                     message = "邮箱域名错误！请使用本学校edu邮箱！"
                     return render(request, 'account/register.html', locals())
-                
 
-                
                 new_user = models.User.objects.create(
                     username=username,
                     password=make_password(password),
