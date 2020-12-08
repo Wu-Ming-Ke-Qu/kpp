@@ -18,7 +18,7 @@
     {% block css %} {% endblock %}
   </head>
   <body>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default" style="background-color: #2a69ba;" >
         <div class="container-fluid">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
@@ -28,21 +28,41 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{% url 'index' %}">KPP 课评评</a>
+            <a class="navbar-brand" href="{% url 'index' %}">
+              <img alt="Brand" src="../static/img/logo-white.png" height="22px">
+            </a>
           </div>
       
           <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="{% url 'index' %}">主页<span class="sr-only">(current)</span></a></li>
-            </ul>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
+
+            <form class="navbar-form navbar-left" action="/search/" method="post" style="text-align: center;">
+              <div class="form-group">
+                 <input type="text" class="form-control" id="sch" placeholder="学校" style="width:135px; font-size: x-small;"> 
+                 {{ search_form.school.label_tag }}
+                 {{ search_form.school }}
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" id="cour" placeholder="课程名" style="width: 210px; font-size: x-small;">
+                 {{ search_form.course.label_tag }}
+                 {{ search_form.course }}
+              </div>
+              <button type="submit" class="btn btn-default" style="color: #909090; font-size: x-small; height: 34px;">搜课程</button>
+            </form>
+
+            
+
             <ul class="nav navbar-nav navbar-right">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="{% url 'index' %}"style="background-color: #fff;">主页<span class="sr-only">(current)</span></a></li>
+              </ul>
               {% if request.session.is_login %}
-                <li><a href="#">当前在线：{{ request.session.user_name }}</a></li>
-                <li><a href="{% url 'logout' %}">登出</a></li>
+              <li><a href="#" style="color: #fff;">你好！{{ request.session.user_name }}</a></li>
+              <li><a href="/userinfo/" style="color: #fff;">我的信息</a></li>
+              <li><a href="/logout/" style="color: #fff;">登出</a></li>
               {% else %}
-                <li><a href="{% url 'register' %}">注册</a></li>
-                <li><a href="{% url 'login' %}">登录</a></li>
+              <li><a href="{% url 'login' %}" style="color: #fff;">登录</a></li>
+              <li><a href="{% url 'register' %}" style="color: #fff;">注册</a></li>
               {% endif %}
             </ul>
           </div><!-- /.navbar-collapse -->
@@ -50,6 +70,14 @@
       </nav>
 
     {% block content %}{% endblock %}
+
+    <!-- copyright -->
+    <div>
+      <div style="clear: both; height: 200px;"></div>
+        <p style="text-align: center; color: #999999;">
+          Copyright © 2020 by 無名可取
+      </p>
+    </div>
 
     <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
     <script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
