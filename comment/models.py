@@ -1,7 +1,7 @@
-from course.models import Course
-from account.models import User
 from django.db import models
 
+from course.models import Course
+from account.models import User
 # Create your models here.
 class Comment(models.Model):
     '''评论表'''
@@ -24,7 +24,7 @@ class Comment(models.Model):
     disapprove_count.short_description = "计算踩数"
 
     def is_folded(self):
-        return False
+        return ((self.approve_count - self.disapprove_count) < -1)
     is_folded.admin_order_field = "c_time"
     is_folded.boolean = True
     is_folded.short_description = "是否折叠？"

@@ -28,7 +28,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">KPP 课评评</a>
+            <a class="navbar-brand" href="{% url 'index' %}">KPP 课评评</a>
           </div>
       
           <!-- Collect the nav links, forms, and other content for toggling -->
@@ -39,10 +39,10 @@
             <ul class="nav navbar-nav navbar-right">
               {% if request.session.is_login %}
                 <li><a href="#">当前在线：{{ request.session.user_name }}</a></li>
-                <li><a href="/logout/">登出</a></li>
+                <li><a href="{% url 'logout' %}">登出</a></li>
               {% else %}
-              <li><a href="{% url 'register' %}">注册</a></li>
-              <li><a href="{% url 'login' %}">登录</a></li>
+                <li><a href="{% url 'register' %}">注册</a></li>
+                <li><a href="{% url 'login' %}">登录</a></li>
               {% endif %}
             </ul>
           </div><!-- /.navbar-collapse -->
