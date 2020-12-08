@@ -12,8 +12,11 @@ class UserForm(forms.Form):
 
 class RegisterForm(forms.Form):
     school_set = []
-    for school in School.objects.all():
-        school_set.append((school.id, school.school_name))
+    try:
+        for school in School.objects.all():
+            school_set.append((school.id, school.school_name))
+    except Exception:
+        pass
     username = forms.CharField(label="用户名", 
                                max_length=128, 
                                widget=forms.TextInput(attrs={"class": 'form-control'}))
