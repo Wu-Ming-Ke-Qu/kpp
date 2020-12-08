@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{%load static %}
+{% block title%}xxx的搜索结果（无）{% endblock %}
+{% block css %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+      <!-- searchbox -->
+      <div class="row">
+          <!-- search-form -->
+        <div class="col-lg-12">
+            <div class="col-md-12" style="height: 80px;"></div>
+                <form class="navbar-form" action="/search/" method="post" style="text-align: center;">
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="sch" placeholder="学校" style="height: 50px;width: 300px;"> 
+                      {{ search_form.school.label_tag }}
+                      {{ search_form.school }}
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="cour" placeholder="课程名" style="height: 50px;width: 540px;"v>
+                      {{ search_form.course.label_tag }}
+                      {{ search_form.course }}
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="height: 50px; width: 90px;">搜课程</button>
+                </form>
+        </div>
+      </div> 
+        <!-- search result summary -->
+        <p></p>
+        <div class="row">
+          <div class="col-md-offset-2">
+            <p>未检索到相关课程，</p>
+            请尝试更改搜索关键词或选择
+            <!-- to add course page -->
+            <a href="#">添加课程</a>
+          </div>
+        </div>
+    </div>
+
+{% endblock %}
