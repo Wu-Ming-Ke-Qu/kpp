@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+{% if request.session.is_login %}
+<div class="container">
+    <div class="col-md-6 col-md-offset-3">
+      <form class='form-register' action="/register/" method="post">
+
+        
+          <p style="height: 120px;"></p>
+
+          <h1 class="text-center">添加课程</h1>
+          <div class="form-group col-md-12">
+            <h5><strong>课程名：</strong></h5>
+            <input type="text" class="form-control" id="courname" >
+          </div>
+          <div class="form-group col-md-12">
+            <h5><strong>学校：</strong></h5>
+            <input type="text" class="form-control" id="sch" >
+          </div>
+          <div class="form-group col-md-12">
+            <h5><strong>任课教师：</strong></h5>
+            <input type="text" class="form-control" id="te" >
+          </div>
+          <div class="form-group col-md-6">
+            <h5><strong>学分：</strong></h5>
+            <input type="number" class="form-control" id="cred" >
+          </div>
+          <div class="form-group col-md-6">
+            <h5><strong>学时：</strong></h5>
+            <input type="number" class="form-control" id="hour" >
+          </div>
+          <div class="form-group col-md-12">
+            <h5><strong>先修要求</strong></h5>
+            <textarea class="form-control" id="pre" rows="3"></textarea>
+          </div>
+
+        <!-- buttons -->
+          <div class="form-group col-md-12">
+            <div style="clear: both; height: 15px;"></div>
+              <button type="reset" class="btn btn-default pull-left col-md-4 ">重置</button>
+              <button type="submit" class="btn btn-primary pull-right col-md-7 col-md-offset-1">发布</button>
+          </div>
+      </form>
+    </div>
+</div> <!-- /container -->
+{% else %}
+<div class="container">
+    <p style="height: 120px;"></p>
+    <h2 style="text-align: center;"><strong>未登录用户不可以添加课程哟！请先
+        <a href="{% url 'login' %}">登录</a>
+        或
+        <a href="{% url 'register' %}">注册</a>
+        。</strong>
+    </h2>
+</div>
+{% endif %}
+
+{% endblock %}
