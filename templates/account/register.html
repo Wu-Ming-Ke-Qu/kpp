@@ -31,22 +31,10 @@
                 {{ register_form.school.label_tag }}
                 {{ register_form.school }} <a href="/login/">没有你的学校？点击申请支持</a>
               </div>
-              <form class='form-register' action="/sendca/" method="post">
               <div class="form-group col-md-12">
                   {{ register_form.email.label_tag }}
                   {{ register_form.email }}
               </div>
-              <!-- input vertifycode -->
-              <div class="form-group col-md-12">
-                  {{ register_form.captcha.label_tag }}
-              </div>
-              <div class="form-group col-md-7" style="margin-top: -15px;">
-                  {{ register_form.captcha }}
-              </div >
-              <div class="col-md-5" style="margin-top: -15px;">
-                <button type="submit" class="btn btn-default col-md-12" >发送验证码</button>   
-              </div>
-              </form>
               <div class="form-group col-md-12">
                 <div style="clear: both; height: 15px;"></div>
                   <button type="reset" class="btn btn-default pull-left col-md-4 ">重置</button>

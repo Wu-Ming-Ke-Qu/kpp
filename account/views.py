@@ -1,12 +1,36 @@
+import random, string
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
+from django.core.mail import EmailMultiAlternatives
+from django.conf import settings
 
 from . import models
 from .forms import UserForm, RegisterForm
 from school.models import School
 
 # Create your views here.
+
+def generate_code(num):
+    return ''.join(random.sample(string.ascii_letters + string.digits, num))
+
+def send_email(email, code):
+    subject = '课评评注册激活邮件'
+    text_content = '''感谢注册课评评，在这里你可以匿名地分享、吐槽课程，\
+                      如果你看到这条消息，说明你的邮箱服务器不提供HTML链接功能，请联系管理员！'''
+    html_content = '''<p>感谢注册<a href="http://{}/confirm/?code={}" target=blank>课评评网站</a>，\
+                    在这里你可以匿名地分享、吐槽课程！</p>
+                    <p>请点击<a href="http://{}/confirm/?code={}" target=blank>这里</a>完成注册确认！</p>
+                    <p>此链接有效期为{}天！</p>'''.format(
+                        '127.0.0.1:8000', 
+                        code, 
+                        '127.0.0.1:8000',
+                        code,
+                        settings.CONFIRM_DAYS)
+    msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_HOST_USER, [email])
+    msg.attach_alternative(html_content, "text/html")
+    return msg.send()
 
 def index(request):
     return render(request, 'index.html') # 主页
@@ -24,14 +48,18 @@ def login(request):
             try:
                 user = models.User.objects.get(username=username)
                 if check_password(password, user.password):
-                    request.session['is_login'] = True
-                    request.session['user_id'] = user.id
-                    request.session['user_name'] = user.username
-                    if login_form.cleaned_data['is_rem']:
-                        request.session.set_expiry(7 * 24 * 3600) # 保存1周
+                    if user.is_active:
+                        request.session['is_login'] = True
+                        request.session['user_id'] = user.id
+                        request.session['user_name'] = user.username
+                        if login_form.cleaned_data['is_rem']:
+                            request.session.set_expiry(7 * 24 * 3600) # 保存1周
+                        else:
+                            request.session.set_expiry(12 * 3600)
+                        return redirect("/")
                     else:
-                        request.session.set_expiry(12 * 3600)
-                    return redirect("/")
+                        message = "请先激活账号！"
+                        # TODO: 此处增加一个重定向
                 else:
                     message = "用户名或密码错误"
             except ObjectDoesNotExist:
@@ -80,12 +108,33 @@ def register(request):
                     message = "邮箱域名错误！请使用本学校edu邮箱！"
                     return render(request, 'account/register.html', locals())
 
-                new_user = models.User.objects.create(
+                models.User.objects.create(
                     username=username,
                     password=make_password(password),
                     email = email,
                     school = user_school)
-                return redirect('/login/')
+
+                code = generate_code(30)
+                send_email(email, code)
+                models.EmailVerify.objects.create(email=email, code=code, send_type="r")
+
+                return redirect('/confirm/')
 
     register_form = RegisterForm()
     return render(request, 'account/register.html', locals())
+
+def confirm(request):
+    if request.method == "GET":
+        code = request.GET.get("code")
+        try:
+            right = models.EmailVerify.objects.get(code=code)
+            if right.is_valid:
+                right_user = models.User.objects.get(email=right.email)
+                right_user.is_active = True
+                right_user.save()
+            else:
+                return redirect('/register/')
+        except ObjectDoesNotExist:
+            pass
+        return redirect('/login/')
+    return redirect('/register/')

@@ -30,6 +30,3 @@ class RegisterForm(forms.Form):
                                widget=forms.Select(attrs={'class': 'form-control'}))
     email = forms.EmailField(label="邮箱地址", 
                              widget=forms.EmailInput(attrs={'class': 'form-control'}))
-    captcha = forms.CharField(label="验证码",
-                              max_length=6,
-                              widget=forms.TextInput(attrs={"class": "form-control"}))
