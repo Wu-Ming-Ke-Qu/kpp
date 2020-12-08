@@ -3,7 +3,7 @@
 {% block title %}注册{% endblock %}
 {% block content %}
     <div class="container">
-        <div class="col-md-4 col-md-offset-4">
+        <div class="col-md-6 col-md-offset-3">
           <form class='form-register' action="/register/" method="post">
 
               {% if message %}
@@ -12,27 +12,49 @@
 
               {% csrf_token %}
 
-              <h2 class="text-center">欢迎注册</h2>
-              <div class="form-group">
+              <p style="height: 200px;"></p>
+
+              <h1 class="text-center">欢迎注册</h1>
+              <div class="form-group col-md-12">
                   {{ register_form.username.label_tag }}
                   {{ register_form.username}}
               </div>
-              <div class="form-group">
+              <div class="form-group col-md-12">
                   {{ register_form.password.label_tag }}
                   {{ register_form.password }}
               </div>
-              <div class="form-group">
+              <div class="form-group col-md-12">
                   {{ register_form.password_confirm.label_tag }}
                   {{ register_form.password_confirm }}
               </div>
-              <div class="form-group">
+
+              <div class="form-group col-md-12">
                   {{ register_form.email.label_tag }}
                   {{ register_form.email }}
               </div>
 
-              <button type="reset" class="btn btn-default pull-left">重置</button>
-              <button type="submit" class="btn btn-primary pull-right">提交</button>
+              <!-- input vertifycode -->
+              <div class="form-group col-md-12">
+                {{ register_form.email.label_tag }}
+              </div>
 
+            
+              <div class="form-group col-md-7" style="margin-top: -15px;">
+                {{ register_form.email }}
+              </div >
+              <div class="col-md-5" style="margin-top: -15px;">
+                <button action="sendca" class="btn btn-default col-md-12" >发送验证码</button>   
+              </div>
+           
+              
+                
+             
+            
+              <div class="form-group col-md-12">
+                <div style="clear: both; height: 15px;"></div>
+                  <button type="reset" class="btn btn-default pull-left col-md-4 ">重置</button>
+                  <button type="submit" class="btn btn-primary pull-right col-md-7 col-md-offset-1">提交</button>
+              </div>
           </form>
         </div>
     </div> <!-- /container -->
