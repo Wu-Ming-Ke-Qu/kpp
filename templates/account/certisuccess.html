@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}激活成功！{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="col-md-10 col-md-offset-1">
+      <p style="clear: both; height: 50px;"> </p>
+      <div class="col-md-12" style="background-color: #549ce073;">
+        <div class="col-md-8 col-md-offset-2" style="text-align: center;">
+          <p style="height: 40px;"></p>
+          <h3><strong>激活成功！将在&nbsp;&nbsp;X&nbsp;s&nbsp;&nbsp;后自动跳转至首页。</strong></h3>
+          <p style="height: 30px;"></p>
+          <img src="../static/img/OK.png" height="100px">
+          <p style="height: 30px;"></p>
+        </div>
+      </div>
+      <p style="clear: both; height: 40px;"> </p>
+      <button class="btn btn-primary pull-left col-md-2 col-md-offset-5">直接回首页</button>
+    </div>
+</div>
+{% endblock %}

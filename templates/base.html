@@ -10,6 +10,7 @@
 
     <!-- Bootstrap -->
     <link href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="../static/css/base.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
       <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
@@ -18,25 +19,25 @@
     {% block css %} {% endblock %}
   </head>
   <body>
-    <nav class="navbar navbar-default" style="background-color: #2a69ba;" >
+    <nav class="navbar navbar-default" style="background-color: #2a69ba; border-radius: 0px;" >
         <div class="container-fluid">
           <!-- Brand and toggle get grouped for better mobile display -->
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <div class="navbar-header"  style="border:none">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" >
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{% url 'index' %}">
+            <a class="navbar-brand" href="{% url 'index' %}" >
               <img alt="Brand" src="{% static 'img/logo-white.png' %}" height="22px">
             </a>
           </div>
       
           <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="border:none" >
 
-            <form class="navbar-form navbar-left" action="{% url 'search:index' %}" method="post" style="text-align: center;">
+            <form class="navbar-form navbar-left" action="{% url 'search:index' %}" method="post" style="border:none">
               <div class="form-group">
                  <input type="text" class="form-control" id="sch" placeholder="学校" style="width:135px; font-size: x-small;"> 
                  {{ search_form.school.label_tag }}
@@ -47,15 +48,15 @@
                  {{ search_form.course.label_tag }}
                  {{ search_form.course }}
               </div>
-              <button type="submit" class="btn btn-default" style="color: #909090; font-size: x-small; height: 34px;">搜课程</button>
+              <div class="form-group">
+                <button type="submit" class="btn btn-default" style="color: #909090; font-size: x-small; height: 34px;">搜一搜</button>
+              </div>
             </form>
 
             
 
-            <ul class="nav navbar-nav navbar-right">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="{% url 'index' %}"style="background-color: #fff;">主页<span class="sr-only">(current)</span></a></li>
-              </ul>
+            <ul class="nav navbar-nav navbar-right" style="border:none">
+              <li class="active"><a href="{% url 'index' %}"style="background-color: #fff; color: #2a68ba;">主页<span class="sr-only">(current)</span></a></li>
               {% if request.session.is_login %}
               <li><a href="{% url 'account:index' %}" style="color: #fff;">{{ request.session.user_name }}</a></li>
               <li><a href="{% url 'logout' %}" style="color: #fff;">登出</a></li>
