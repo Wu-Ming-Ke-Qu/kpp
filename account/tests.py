@@ -5,9 +5,11 @@ from django.conf import settings
 from .models import User
 from .models import EmailVerify
 
+
 # Create your tests here.
 
 
+# 模型测试
 class UserModelTests(TestCase):
 
     def is_new_user_with_future_user(self):
@@ -66,3 +68,5 @@ class EmailVerifyModelTests(TestCase):
         time = timezone.now() - datetime.timedelta(days=(settings.CONFIRM_DAYS - 1), hours=23, minutes=59, seconds=59)
         recent_email = EmailVerify(ctime=time)
         self.assertIs(recent_email.is_valid(), True)
+
+# 视图测试
