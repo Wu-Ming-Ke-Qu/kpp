@@ -12,7 +12,7 @@ from .models import EmailVerify
 # 模型测试
 class UserModelTests(TestCase):
 
-    def is_new_user_with_future_user(self):
+    def test_is_new_user_with_future_user(self):
         """
         is_new_user() returns False for users whose ctime
         is in the future.
@@ -21,7 +21,7 @@ class UserModelTests(TestCase):
         future_user = User(ctime=time)
         self.assertIs(future_user.is_new_user(), False)
 
-    def is_new_user_with_old_user(self):
+    def test_is_new_user_with_old_user(self):
         """
         is_new_user() returns False for users whose ctime
         is older than 30 days.
@@ -30,7 +30,7 @@ class UserModelTests(TestCase):
         old_user = User(ctime=time)
         self.assertIs(old_user.is_new_user(), False)
 
-    def is_new_user_with_new_user(self):
+    def test_is_new_user_with_new_user(self):
         """
         is_new_user() returns True for users whose ctime
         is within 30 days.
@@ -42,7 +42,7 @@ class UserModelTests(TestCase):
 
 class EmailVerifyModelTests(TestCase):
 
-    def is_valid_with_future_email(self):
+    def test_is_valid_with_future_email(self):
         """
         is_valid() returns False for email whose ctime
         is in the future.
@@ -51,7 +51,7 @@ class EmailVerifyModelTests(TestCase):
         future_email = EmailVerify(ctime=time)
         self.assertIs(future_email.is_valid(), False)
 
-    def is_valid_with_old_email(self):
+    def test_is_valid_with_old_email(self):
         """
         is_valid() returns False for email whose ctime
         is older than settings.CONFIRM_DAYS.
@@ -60,7 +60,7 @@ class EmailVerifyModelTests(TestCase):
         old_email = EmailVerify(ctime=time)
         self.assertIs(old_email.is_valid(), False)
 
-    def is_valid_with_recent_email(self):
+    def test_is_valid_with_recent_email(self):
         """
         is_valid() returns True for email whose ctime
         is within settings.CONFIRM_DAYS.
