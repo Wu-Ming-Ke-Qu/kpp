@@ -8,7 +8,6 @@ from django.conf import settings
 
 from . import models
 from .forms import UserForm, RegisterForm
-from school.models import School
 
 # Create your views here.
 
@@ -103,8 +102,7 @@ def register(request):
                     message = '该邮箱地址已被注册，请使用别的邮箱！'
                     return render(request, 'account/register.html', locals())
 
-                user_school = School.objects.get(pk=school)
-                if user_school.email_addr != email.split("@")[-1]:
+                if school.email_addr != email.split("@")[-1]:
                     message = "邮箱域名错误！请使用本学校edu邮箱！"
                     return render(request, 'account/register.html', locals())
 
@@ -112,7 +110,7 @@ def register(request):
                     username=username,
                     password=make_password(password),
                     email = email,
-                    school = user_school)
+                    school = school)
 
                 code = generate_code(30)
                 send_email(email, code)
