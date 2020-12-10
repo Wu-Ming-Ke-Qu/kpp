@@ -2,149 +2,158 @@
   个人中心界面
  -->
 
-{% extends 'base.html' %}
-{% load static %}
-{% block title %}个人空间{% endblock%}
-{% block content %}
-<div class="container">
-  <div class="row clearfix">
-    <!-- nav list start -->
-    <div class="col-md-3 column">
-      <div class="list-group">
-        <a href="#" class="list-group-item active">@username的个人空间</a>
-        <div class="list-group-item">
-          <a href="#profile">基本信息</a>
-        </div>
-        <div class="list-group-item">
-          <a href="#security">账户安全</a>
-        </div>
-        <div class="list-group-item">
-          <a href="#my-comments">我的评论</a>
-        </div>
-      </div>
-    </div>
-    <!-- nav list end -->
-
-    <div class="col-md-9 column">
-      <!-- private info start -->
-      <div class="page-header">
-        <h1 id="profile">
-          基本信息
-        </h1>
-      </div>
-      <h3>
-        我的头像
-      </h3>
-      <hr/>
-      <img alt="profile" src="{% static 'img/user/profile.png' %}" style="width: 140px;height: 140px;" />
-      <a href="#" class="btn btn-default">修改头像</a>
-      <br/>
-      <h3>
-        个人信息
-      </h3>
-      <hr/>
-      <div class="row clearfix">
-        <div class="col-md-5 column">
-          <form role="form">
-            <div class="form-group">
-              <label for="user_profile_name">学校</label>
-              <input class="form-control" id="disabledInput" type="text" placeholder="清华大学" disabled>
-            </div>
-            <div class="form-group">
-              <label for="user_profile_name">邮箱</label>
-              <input class="form-control" id="disabledInput" type="text" placeholder="xxx@xxx.xxx" disabled>
-            </div>
-          </form>
-        </div>
-      </div>
-    
-      <a href="#" class="btn btn-default">修改个人信息</a>
-      <!-- private info end -->  
-
-      <!-- security part start -->
-      <div class="page-header">
-        <h1 id="security">
-          账户安全
-        </h1>
-      </div>
-      <a href="#" class="btn btn-default">修改密码</a>
-      <!-- security part end -->  
-
-      <!-- my comments start -->
-      <div class="page-header">
-        <h1 id="my-comments">
-          我的评论
-        </h1>
-      </div>
-      <!-- overall comments info start -->
-      <form role="form">
-        <div class="form-group">
-          <span>评论总数：</span>
-          <span style="color:#777;">20</span>
-        </div>
-        <div class="form-group">
-          <span>获赞总数：</span>
-          <span style="color:#777;">100</span>
-        </div>
-        <div class="form-group">
-          <span>被踩总数：</span>
-          <span style="color:#777;">1000</span>
-        </div>
-      </form>
-      <!-- overall comments info end -->
-
-      <!-- one of my comments start -->
-      <form class="clearfix">
-        <div class="head">
-          <div class="time">
-            <span>发布日期：</span>
-            <span style="color:#777;">2020-10-08 19:50</span>
-            <span>评论课程：</span>
-            <span style="color:#777;"><a href="#">软件工程（清华大学 董渊）</a></span>
-            <span>获赞数：</span>
-            <span style="color:#777;">10</span>
-            <span>被踩数：</span>
-            <span style="color:#777;">100</span>
-            <span>是否折叠：</span>
-            <span style="color:#777;">是</span>
-          </div>
-        </div>
-        <div class="context">
-          <span>评论内容：</span>
-          <p>怀新资讯12月8日消息，据报道，三星Galaxy S21系列已通过巴西监管机构ANATEL的入网销售认证，三款Galaxy S21手机都取消了附赠充电器和耳机。分析认为，随着苹果、三星两大厂的率先取消附赠充电器及耳机，不排除后续仍有大厂跟随，三方快充头将成为明年重要的需求方向，并迎来重大发展机遇。A股公司中，海能实业已自主研发出快充氮化镓产品；富满电子有可搭配氮化镓的中高功率主控芯片，与OPPO协作研发氮化镓充电器产品。</p>
-        </div>
-        <a href="#" class="btn btn-default">删除该评论</a>
-        <hr/>
-      </form>
-      <!-- one of my comments end-->
-
-      <!-- one of my comments start -->
-      <form class="clearfix">
-      <div class="head">
-        <div class="time">
-          <span>发布日期：</span>
-          <span style="color:#777;">2020-10-08 19:50</span>
-          <span>评论课程：</span>
-          <span style="color:#777;"><a href="#">软件工程（清华大学 董渊）</a></span>
-          <span>获赞数：</span>
-          <span style="color:#777;">10</span>
-          <span>被踩数：</span>
-          <span style="color:#777;">100</span>
-          <span>是否折叠：</span>
-          <span style="color:#777;">是</span>
-        </div>
-      </div>
-      <div class="context">
-        <span>评论内容：</span>
-        <p>怀新资讯12月8日消息，据报道，三星Galaxy S21系列已通过巴西监管机构ANATEL的入网销售认证，三款Galaxy S21手机都取消了附赠充电器和耳机。分析认为，随着苹果、三星两大厂的率先取消附赠充电器及耳机，不排除后续仍有大厂跟随，三方快充头将成为明年重要的需求方向，并迎来重大发展机遇。A股公司中，海能实业已自主研发出快充氮化镓产品；富满电子有可搭配氮化镓的中高功率主控芯片，与OPPO协作研发氮化镓充电器产品。</p>
-      </div>
-      <a href="#" class="btn btn-default">删除该评论</a>
-      <hr/>
-    </form>
-    <!-- one of my comments end-->
-
-      <!-- my comments end -->
-    </div>
-  </div>
-</div>
+ {% extends 'base.html' %}
+ {% load static %}
+ {% block title %}个人空间{% endblock%}
+ {% block css %}
+ <link rel="stylesheet" href="{% static 'css/style.css' %}">
 {% endblock %}
+
+ {% block content %}
+ <div class="container">
+   <div class="row clearfix">
+     <!-- nav list start -->
+     <div class="col-md-3 column">
+       <div class="list-group" style="position: fixed; top: 100px;">
+         <a href="#" class="list-group-item active">@username的个人空间</a>
+         <div class="list-group-item">
+           <a href="#profile">基本信息</a>
+         </div>
+         <div class="list-group-item">
+           <a href="#security">账户安全</a>
+         </div>
+         <div class="list-group-item">
+           <a href="#my-comments">我的评论</a>
+         </div>
+       </div>
+     </div>
+     <!-- nav list end -->
+ 
+     <div class="col-md-9 column">
+       <!-- private info start -->
+       <div class="page-header">
+        
+         <h1 id="profile">
+           <p style="clear: both; height: 50px;"></p>
+           基本信息
+         </h1>
+       </div>
+       <!-- <h3>
+         我的头像
+       </h3>
+       <hr/>
+       <img alt="profile" src="{% static 'img/user/profile.png' %}" style="width: 140px;height: 140px;" />
+       <a href="#" class="btn btn-default">修改头像</a>
+       <br/>
+       <h3>
+         个人信息
+       </h3>
+       <hr/> -->
+       <div class="row clearfix">
+         <div class="col-md-5 column">
+           <form role="form">
+             <div class="form-group">
+               <label for="user_profile_name">学校</label>
+               <input class="form-control" id="disabledInput" type="text" placeholder="清华大学" disabled>
+             </div>
+             <div class="form-group">
+               <label for="user_profile_name">邮箱</label>
+               <input class="form-control" id="disabledInput" type="text" placeholder="xxx@xxx.xxx" disabled>
+             </div>
+           </form>
+         </div>
+       </div>
+     
+       <a href="#" class="btn btn-default">修改个人信息</a>
+       <!-- private info end -->  
+ 
+       <!-- security part start -->
+       <div class="page-header">
+         <h1 id="security">
+          <p style="clear: both; height: 50px;"></p>
+           账户安全
+         </h1>
+       </div>
+       <a href="#" class="btn btn-default">修改密码</a>
+       <!-- security part end -->  
+ 
+       <!-- my comments start -->
+       <div class="page-header">
+         <h1 id="my-comments">
+          <p style="clear: both; height: 50px;"></p>
+           我的评论
+         </h1>
+       </div>
+       <!-- overall comments info start -->
+       <form role="form">
+         <div class="form-group">
+           <span>评论总数：</span>
+           <span style="color:#777;">20</span>
+         </div>
+         <div class="form-group">
+           <span>获赞总数：</span>
+           <span style="color:#777;">100</span>
+         </div>
+         <div class="form-group">
+           <span>被踩总数：</span>
+           <span style="color:#777;">1000</span>
+         </div>
+       </form>
+       <!-- overall comments info end -->
+ 
+       <!-- one of my comments start -->
+       <form class="clearfix">
+         <div class="head">
+           <div class="time">
+             <span>发布日期：</span>
+             <span style="color:#777;">2020-10-08 19:50</span>
+             <span>评论课程：</span>
+             <span style="color:#777;"><a href="#">软件工程（清华大学 董渊）</a></span>
+             <span>获赞数：</span>
+             <span style="color:#777;">10</span>
+             <span>被踩数：</span>
+             <span style="color:#777;">100</span>
+             <span>是否折叠：</span>
+             <span style="color:#777;">是</span>
+           </div>
+         </div>
+         <div class="context">
+           <span>评论内容：</span>
+           <p>怀新资讯12月8日消息，据报道，三星Galaxy S21系列已通过巴西监管机构ANATEL的入网销售认证，三款Galaxy S21手机都取消了附赠充电器和耳机。分析认为，随着苹果、三星两大厂的率先取消附赠充电器及耳机，不排除后续仍有大厂跟随，三方快充头将成为明年重要的需求方向，并迎来重大发展机遇。A股公司中，海能实业已自主研发出快充氮化镓产品；富满电子有可搭配氮化镓的中高功率主控芯片，与OPPO协作研发氮化镓充电器产品。</p>
+         </div>
+         <a href="#" class="btn btn-default">删除该评论</a>
+         <hr/>
+       </form>
+       <!-- one of my comments end-->
+ 
+       <!-- one of my comments start -->
+       <form class="clearfix">
+       <div class="head">
+         <div class="time">
+           <span>发布日期：</span>
+           <span style="color:#777;">2020-10-08 19:50</span>
+           <span>评论课程：</span>
+           <span style="color:#777;"><a href="#">软件工程（清华大学 董渊）</a></span>
+           <span>获赞数：</span>
+           <span style="color:#777;">10</span>
+           <span>被踩数：</span>
+           <span style="color:#777;">100</span>
+           <span>是否折叠：</span>
+           <span style="color:#777;">是</span>
+         </div>
+       </div>
+       <div class="context">
+         <span>评论内容：</span>
+         <p>怀新资讯12月8日消息，据报道，三星Galaxy S21系列已通过巴西监管机构ANATEL的入网销售认证，三款Galaxy S21手机都取消了附赠充电器和耳机。分析认为，随着苹果、三星两大厂的率先取消附赠充电器及耳机，不排除后续仍有大厂跟随，三方快充头将成为明年重要的需求方向，并迎来重大发展机遇。A股公司中，海能实业已自主研发出快充氮化镓产品；富满电子有可搭配氮化镓的中高功率主控芯片，与OPPO协作研发氮化镓充电器产品。</p>
+       </div>
+       <a href="#" class="btn btn-default">删除该评论</a>
+       <hr/>
+     </form>
+     <!-- one of my comments end-->
+ 
+       <!-- my comments end -->
+     </div>
+   </div>
+
+ </div>
+ {% endblock %}

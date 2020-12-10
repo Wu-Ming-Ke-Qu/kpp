@@ -7,12 +7,8 @@
 
 {% block content %}
     <div class="container">
-      <div class="row">
-        <div class="col-md-4">
-          <!-- back to account info page -->
-          <button type="button" class="btn btn-default" οnclick=”javascript:history.back(1);”>返回</button>
-        </div>
-      </div>
+      <p style="height: 50px;"></p>
+      
       <div class="row">
         <div class="col-md-4 col-md-offset-4">
           <h2 class="text-center">修改密码</h2>
@@ -37,7 +33,8 @@
               <label for="confirmpass">确认新密码</label>
               <input type="password" class="form-control" name="confirmpass" id="confirmpass" />
             </div>
-            <button type="reset" class="btn btn-default pull-left">清空</button>
+            <!-- TODO:这里要返回到个人信息页面@gy -->
+            <a class="btn btn-default pull-left" href="#">返回个人信息页面</a>
             <button type="submit" class="btn btn-primary pull-right">确认修改</button>
           </form>
         </div>
