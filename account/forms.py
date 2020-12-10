@@ -11,12 +11,6 @@ class UserForm(forms.Form):
     is_rem = forms.BooleanField(required=False)
 
 class RegisterForm(forms.Form):
-    school_set = []
-    try:
-        for school in School.objects.all():
-            school_set.append((school.id, school.school_name))
-    except Exception:
-        pass
     username = forms.CharField(label="用户名", 
                                max_length=128, 
                                widget=forms.TextInput(attrs={"class": 'form-control'}))
@@ -26,7 +20,8 @@ class RegisterForm(forms.Form):
     password_confirm = forms.CharField(label="确认密码", 
                                        max_length=256, 
                                        widget=forms.PasswordInput(attrs={"class": 'form-control'}))
-    school = forms.ChoiceField(label="学校", choices=school_set,
-                               widget=forms.Select(attrs={'class': 'form-control'}))
+    school = forms.ModelChoiceField(queryset=School.objects.all(), label="学校", 
+                                    empty_label="请选择你的学校",
+                                    widget=forms.Select(attrs={'class': 'form-control'}))
     email = forms.EmailField(label="邮箱地址", 
                              widget=forms.EmailInput(attrs={'class': 'form-control'}))
