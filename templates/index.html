@@ -22,19 +22,21 @@
         <div class="col-md-12" style="height: 80px;"></div>
             <form class="navbar-form" action="{% url 'search:index' %}" method="post" style="text-align: center;">
                 <div class="form-group">
-                   <input type="text" class="form-control" id="sch" placeholder="学校" style="height: 50px;width: 300px; margin-left: 0px;"> 
-                   {{ search_form.school.label_tag }}
-                   {{ search_form.school }}
+                  <div class="input-group">
+                    <input type="text" class="form-control" id="sch" placeholder="学校" style="height: 50px;width: 300px; margin-left: 0px;"> 
+                    {{ search_form.school.label_tag }}
+                    {{ search_form.school }}
+                    <input type="text" class="form-control" id="cour" placeholder="课程名" style="height: 50px;width: 540px; margin-right: 0px;">
+                    
+                    {{ search_form.course.label_tag }}
+                    {{ search_form.course }}
+                      <span class="input-group-btn" >
+                        <button class="btn btn-default" type="submit" style="height: 50px; background-color:#2a68ba;" type="button">
+                          <span class="glyphicon glyphicon-search" aria-hidden="true" style="color: rgba(255, 255, 255, 0.705);"></span>
+                        </button>
+                      </span>
+                  </div>
                 </div>
-                <div class="input-group">
-                  <input type="text" class="form-control" id="cour" placeholder="课程名" style="height: 50px;width: 540px; margin-right: 0px;">
-                  
-                   {{ search_form.course.label_tag }}
-                   {{ search_form.course }}
-                   <span class="input-group-addon" style="background-color:#2a68bad5 ;"><i class="glyphicon glyphicon-search" style="color: rgba(255, 255, 255, 0.849); font-size:22px;"></i></span>
-                </div>
-                
-                <!-- <button type="submit" class="btn btn-primary" style="height: 50px; width: 90px;">搜课程</button> -->
             </form>
         </div>
     </div> <!-- /container -->
