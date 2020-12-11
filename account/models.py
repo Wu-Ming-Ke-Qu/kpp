@@ -7,6 +7,7 @@ from django.conf import settings
 
 from school.models import Department, School
 
+
 class User(models.Model):
     '''用户表'''
 
@@ -47,6 +48,7 @@ class User(models.Model):
         ordering = ['-c_time']
         verbose_name = '用户表'
         verbose_name_plural = '用户表'
+
 
 class EmailVerify(models.Model):
     code = models.CharField(max_length=30, verbose_name="激活码")
