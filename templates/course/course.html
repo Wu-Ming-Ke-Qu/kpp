@@ -11,170 +11,147 @@
  {% endblock %}
  
  {% block content %}
+  <p style="height: 50px;"></p>
+  <div class="container">
    <!-- course info area start-->
-   <p style="height: 50px;"></p>
-   <div class="container">
-     <div class="banner">
-       <div class="row clearfix">
-         <div class="col-md-5 column">
-           <img src="../static/img/wordcloud.png" alt="wordcloud">
-         </div>
-         <div class="col-md-7 column">
-           <div class="row clearfix">
-             <div class="col-md-8 column">
-               <div style="height: 120px;"></div>
-               <h1 style="font-size: xxx-large; margin-bottom: 10px; color:#2a69ba ;"><strong>软件工程</strong></h1>
-               <h4>清华大学 董渊</h4>
-               <div style="height: 40px;"></div>
-               <ul class="list-unstyled">
-                 <li>
-                   学分：3
-                 </li>
-                 <li>
-                   学时: 48
-                 </li>
-                 <li>
-                   先修课程：程序设计基础
-                 </li>
-               </ul>
-             </div>
-             <div class="col-md-4 column">
-               <div style="height: 260px;"></div>
-               {% if request.session.is_login %}
-               <a href="#add-comment" class="btn btn-primary col-md-8" role="button" >发&nbsp;&nbsp;表&nbsp;&nbsp;评&nbsp;&nbsp;论</a>
-               <p style="clear:both; height: 10px;"></p>
-               <!-- TODO:添加修改课程页面链接 -->
-               <a href="#" class="btn btn-default col-md-8" role="button">修改课程信息</a>
-               {% else %}
-               <span class="btn btn-primary col-md-8" role="button" disabled="disabled">发&nbsp;&nbsp;表&nbsp;&nbsp;评&nbsp;&nbsp;论</span>
-               <p style="clear:both; height: 10px;"></p>
-               <!-- TODO:添加修改课程页面链接 -->
-               <a class="btn btn-default col-md-8" role="button" disabled="disabled">修改课程信息</a>
-               {% endif %}
-             </div>
-           </div>
-         </div>
-       </div>
-     </div> 
-   </div>
+    <div class="banner">
+      <div class="row clearfix">
+        <div class="col-md-5 column">
+          <img src="../static/img/wordcloud.png" alt="wordcloud">
+        </div>
+        <div class="col-md-5 column">
+        <p style="height: 100px;"></p>
+        <h1 style="font-size: xxx-large; margin-bottom: 10px; color:#2a69ba ;"><strong>软件工程</strong></h1>
+        <h4>清华大学 董渊</h4>
+        <p style="height: 20px;"></p>
+        <ul class="list-unstyled">
+          <li>
+            学分：3
+          </li>
+          <li>
+            学时: 48
+          </li>
+          <li>
+            先修课程：程序设计基础
+          </li>
+        </ul>
+        </div>
+        <div class="col-md-2 column">
+        <p style="height: 240px;"></p>
+        {% if request.session.is_login %}
+        <a href="#add-comment" class="btn btn-primary col-md-8" role="button" >发&nbsp;&nbsp;表&nbsp;&nbsp;评&nbsp;&nbsp;论</a>
+        <p style="clear:both; height: 10px;"></p>
+        <!-- TODO:添加修改课程页面链接 -->
+        <!-- TODO:链接到课程信息界面 -->
+        <a href="{% url 'course:changecourseinfo' %}" class="btn btn-default col-md-8" role="button">修改课程信息</a>
+        {% else %}
+        <span class="btn btn-primary col-md-8" role="button" disabled="disabled">发&nbsp;&nbsp;表&nbsp;&nbsp;评&nbsp;&nbsp;论</span>
+        <p style="clear:both; height: 10px;"></p>
+        <!-- TODO:添加修改课程页面链接 -->
+        <a class="btn btn-default col-md-8" role="button" disabled="disabled">修改课程信息</a>
+        {% endif %}
+        </div>
+      </div>
+    </div> 
    <!-- course info area end-->
  
    <!-- comments area start-->
    <!-- latest comments begin-->
-   <div class="container">
-     <div class="comments-area">
-       <h4 class="bg-white">最新评论</h4>
-       <hr/>
-       <!-- a comment begin -->
-       <div class="panel panel-default">
-         <div class="panel-heading">
-           <div class="container">
-             <div class="row clearfix">
-               <!-- <div class="col-md-1 column">
-                 <img src="{% static 'img/user/profile.png' %}" alt="profile">
-               </div> -->
-               <div class="col-md-9 column">
-                 <scan>@username</scan>
-                 <scan>发布于@time</scan>
-               </div>
-               <div class="col-md-3 column">
+    <div class="comments-area">
+      <h4 class="bg-white">最新评论</h4>
+      <hr/>
+
+      <!-- a comment begin -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row clearfix">
+            <div class="col-md-9 column">
+              <scan>@username</scan>
+              <scan>发布于@time</scan>
+            </div>
+            <div class="col-md-3 column">
+              <div class="form pull-right">
+                <div class="btn-group" role="group" aria-label="...">
+                  <button type="submit" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 赞同(10)
+                  </button>
+                  <!-- 已点赞图标 -->
+                  <!-- <button type="button" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="color: blue;"></span> 赞同(10)
+                  </button> -->
+                  <button type="submit" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> 不赞同(5)
+                  </button>
+                  <!-- 已踩图标 -->
+                  <!-- <button type="button" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" style="color: red;"></span> 不赞同(5)
+                  </button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          工作量大
+        </div>
+      </div>
+      <!-- a comment end -->
+
+      <!-- a fold comment begin -->
+      <div class="panel panel-warning">
+        <div class="panel-heading">
+           <div class="row clearfix">
+             <div class="col-md-9 column">
+               <scan>@username</scan>
+               <scan>发布于@time</scan>
+             </div>
+             <div class="col-md-3 column">
+               <div class="form pull-right">
                  <div class="btn-group" role="group" aria-label="...">
-                   <button type="button" class="btn btn-default btn-sm">
+                   <button type="submit" class="btn btn-default btn-sm" disabled="disabled">
                      <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 赞同(10)
                    </button>
-                   <!-- 已点赞图标 -->
-                   <!-- <button type="button" class="btn btn-default btn-sm">
-                     <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="color: blue;"></span> 赞同(10)
-                   </button> -->
-                   <button type="button" class="btn btn-default btn-sm">
+                   <button type="submit" class="btn btn-default btn-sm" disabled="disabled">
                      <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> 不赞同(5)
                    </button>
-                   <!-- 已踩图标 -->
-                   <!-- <button type="button" class="btn btn-default btn-sm">
-                     <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" style="color: red;"></span> 不赞同(5)
-                   </button> -->
                  </div>
                </div>
              </div>
            </div>
-         </div>
-         <div class="panel-body">
-           工作量大
-         </div>
-       </div>
-       <!-- a comment end -->
- 
-       <!-- a comment begin -->
-       <div class="panel panel-default">
-        <div class="panel-heading">
-          <div class="container">
-            <div class="row clearfix">
-              <!-- <div class="col-md-1 column">
-                <img src="{% static 'img/user/profile.png' %}" alt="profile">
-              </div> -->
-              <div class="col-md-9 column">
-                <scan>@username</scan>
-                <scan>发布于@time</scan>
-              </div>
-              <div class="col-md-3 column">
-                <div class="btn-group" role="group" aria-label="...">
-                  <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 赞同(10)
-                  </button>
-                  <!-- 已点赞图标 -->
-                  <!-- <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="color: blue;"></span> 赞同(10)
-                  </button> -->
-                  <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> 不赞同(5)
-                  </button>
-                  <!-- 已踩图标 -->
-                  <!-- <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" style="color: red;"></span> 不赞同(5)
-                  </button> -->
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
         <div class="panel-body">
           工作量大
         </div>
       </div>
-       <!-- a comment end -->
-     </div>
-   </div>
-   <!-- latest comments end-->
+      <!-- a fold comment end -->
+    </div>
+    <!-- latest comments end-->
  
-   <!-- all comments start-->
-   <div class="container">
+    <!-- all comments start--> 
     {% if request.session.is_login %}
-     <div class="comments-area">
-       <h4 class="bg-white">全部评论(20)</h4>
-       <hr/>
+    <div class="comments-area">
+      <h4 class="bg-white">全部评论(20)</h4>
+      <hr/>
  
-       <!-- a comment begin -->
-       <div class="panel panel-default">
+      <!-- a comment begin -->
+      <div class="panel panel-default">
         <div class="panel-heading">
-          <div class="container">
-            <div class="row clearfix">
-              <!-- <div class="col-md-1 column">
-                <img src="{% static 'img/user/profile.png' %}" alt="profile">
-              </div> -->
-              <div class="col-md-9 column">
-                <scan>@username</scan>
-                <scan>发布于@time</scan>
-              </div>
-              <div class="col-md-3 column">
+          <div class="row clearfix">
+            <div class="col-md-9 column">
+              <scan>@username</scan>
+              <scan>发布于@time</scan>
+            </div>
+            <div class="col-md-3 column">
+              <div class="form pull-right">
                 <div class="btn-group" role="group" aria-label="...">
-                  <button type="button" class="btn btn-default btn-sm">
+                  <button type="submit" class="btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 赞同(10)
                   </button>
                   <!-- 已点赞图标 -->
                   <!-- <button type="button" class="btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="color: blue;"></span> 赞同(10)
                   </button> -->
-                  <button type="button" class="btn btn-default btn-sm">
+                  <button type="submit" class="btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> 不赞同(5)
                   </button>
                   <!-- 已踩图标 -->
@@ -190,46 +167,7 @@
           工作量大
         </div>
       </div>
-       <!-- a comment end -->
- 
-       <!-- a comment begin -->
-       <div class="panel panel-default">
-        <div class="panel-heading">
-          <div class="container">
-            <div class="row clearfix">
-              <!-- <div class="col-md-1 column">
-                <img src="{% static 'img/user/profile.png' %}" alt="profile">
-              </div> -->
-              <div class="col-md-9 column">
-                <scan>@username</scan>
-                <scan>发布于@time</scan>
-              </div>
-              <div class="col-md-3 column">
-                <div class="btn-group" role="group" aria-label="...">
-                  <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 赞同(10)
-                  </button>
-                  <!-- 已点赞图标 -->
-                  <!-- <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="color: blue;"></span> 赞同(10)
-                  </button> -->
-                  <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> 不赞同(5)
-                  </button>
-                  <!-- 已踩图标 -->
-                  <!-- <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" style="color: red;"></span> 不赞同(5)
-                  </button> -->
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="panel-body">
-          工作量大
-        </div>
-      </div>
-       <!-- a comment end -->
+      <!-- a comment end -->
      </div>
     {% else %}
     <div class="comments-area">
@@ -242,34 +180,32 @@
      </p>
     </div>
     {% endif %}
-   </div>
-   <!-- all comments end-->
-   <!-- comments area end-->
+    <!-- all comments end-->
+    <!-- comments area end-->
  
-   <!-- add comment start-->
-   <div id="add-comment" class="container">
-     <div class="comments-area">
-       <div class="row clearfix">
-         <div class="col-md-12 column">
-           <h4>发表评论</h4>
-           {% if request.session.is_login %}
-           <form role="form">
-             <div class="form-group">
-                <textarea class="form-control" rows="4"></textarea>
-             </div>
-             <button type="submit" class="btn btn-default">提交</button>
-           </form>
-           {% else %}
-           <form role="form">
-            <div class="form-group">
-               <textarea class="form-control" rows="4" placeholder="请在登录后评论" disabled="disabled"></textarea>
-            </div>
-            <!-- <button type="submit" class="btn btn-default">提交</button> -->
-          </form>
-           {% endif %}
-         </div>
-       </div>
-     </div>
-   </div>
-   <!-- add comment end-->
+    <!-- add comment start-->
+      <div class="comments-area">
+        <div class="row clearfix">
+          <div class="col-md-12 column">
+            <h4>发表评论</h4>
+            {% if request.session.is_login %}
+            <form role="form">
+              <div class="form-group">
+                  <textarea class="form-control" rows="4"></textarea>
+              </div>
+              <button type="submit" class="btn btn-default">提交</button>
+            </form>
+            {% else %}
+            <form role="form">
+              <div class="form-group">
+                <textarea class="form-control" rows="4" placeholder="请在登录后评论" disabled="disabled"></textarea>
+              </div>
+              <button type="submit" class="btn btn-default" disabled="disabled">提交</button>
+            </form>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    <!-- add comment end-->
+  </div>
  {% endblock %}
