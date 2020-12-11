@@ -24,6 +24,8 @@ class AccountViewTests(TestCase):
         response = client.get('login.html', follow=True)
         self.assertRedirects(response, "/", status_code=302, target_status_code=200)
 
+
+
     def test_login_with_not_login(self):
         response = client.get(reverse("login"))
         self.assertEqual(response.status_code, 200)
