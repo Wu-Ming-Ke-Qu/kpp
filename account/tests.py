@@ -11,7 +11,6 @@ from .models import EmailVerify
 
 # 模型测试
 class UserModelTests(TestCase):
-
     def test_is_new_user_with_future_user(self):
         """
         is_new_user() returns False for users whose ctime
