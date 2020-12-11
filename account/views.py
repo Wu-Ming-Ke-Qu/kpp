@@ -136,3 +136,6 @@ def confirm(request):
             pass
         return redirect('/login/')
     return redirect('/register/')
+
+def userinfo(request):
+    return render(request, 'account/userspace.html', locals())
