@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}找回密码丨课评评{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="col-md-4 col-md-offset-4">
+          <form class='form-register' action="addschool" method="post">
+
+            <p style="height: 100px;"></p>
+            <h1 class="text-center">找回密码</h1>
+            <p style="height: 30px;"></p>
+            <p style="margin-left: 15px;">正在找回的用户是：xxxxxxxx</p>
+            <div class="form-group col-md-12">
+              <p style="height: 10px;"></p>
+              <h5><strong>新密码：</strong></h5>
+              <input class="form-control col-md-12">
+              <p style="height: 50px;"></p>
+              <h5><strong>再次输入新密码：</strong></h5>
+              <input class="form-control col-md-12">
+              <div style="clear: both; height: 25px;"></div>
+              <button type="reset" class="btn btn-default pull-left col-md-4 ">重置</button>
+              <button type="submit" class="btn btn-primary pull-right col-md-7 col-md-offset-1">提交</button>
+              <div style="clear: both; height: 25px;"></div>
+            </div>
+          </form>
+        </div>
+    </div> <!-- /container -->
+{% endblock %}
