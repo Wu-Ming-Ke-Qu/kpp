@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>{% block title %}base{% endblock %}</title>
+    <!-- title后缀统一为“丨课评评” -->
 
     <!-- Bootstrap -->
     <link href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -37,27 +38,25 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="border:none" >
 
             <form class="navbar-form navbar-left" action="{% url 'search:index' %}" method="get" style="border:none">
-              <div class="form-group">
+              <div class="input-group">
                  {{ small_search_form.school }}
-              </div>
-              <div class="form-group">
                  {{ small_search_form.course }}
-              </div>
-              <div class="form-group">
-                <button type="submit" class="btn btn-default" style="color: #909090; font-size: x-small; height: 34px;">搜一搜</button>
+                 <span class="input-group-btn" >
+                  <button class="btn btn-default" type="submit" style="background-color: #cecece; border-color: #cecece;" >
+                    <span class="glyphicon glyphicon-search" aria-hidden="true" style=" color:#2b4f7c; font-size: 10px;"></span>
+                  </button>
+                </span>
               </div>
             </form>
-
             
-
             <ul class="nav navbar-nav navbar-right" style="border:none">
-              <li class="active"><a href="{% url 'index' %}"style="background-color: #fff; color: #2a68ba;">主页<span class="sr-only">(current)</span></a></li>
+              <li class="active" style="text-align: center;"><a href="{% url 'index' %}"style="background-color: #fff; color: #2a68ba;">主页<span class="sr-only">(current)</span></a></li>
               {% if request.session.is_login %}
-              <li><a href="{% url 'account:index' %}" style="color: #fff;">{{ request.session.user_name }}</a></li>
-              <li><a href="{% url 'logout' %}" style="color: #fff;">登出</a></li>
+              <li style="text-align: center;"><a href="{% url 'account:index' %}" style="color: #fff;">{{ request.session.user_name }}</a></li>
+              <li style="text-align: center;"><a href="{% url 'logout' %}" style="color: #fff;">登出</a></li>
               {% else %}
-              <li><a href="{% url 'login' %}" style="color: #fff;">登录</a></li>
-              <li><a href="{% url 'register' %}" style="color: #fff;">注册</a></li>
+              <li style="text-align: center;"><a href="{% url 'login' %}" style="color: #fff;">登录</a></li>
+              <li style="text-align: center;"><a href="{% url 'register' %}" style="color: #fff;">注册</a></li>
               {% endif %}
             </ul>
           </div><!-- /.navbar-collapse -->
