@@ -20,15 +20,10 @@
         <!-- search-form -->
     <div class="col-lg-12">
         <div class="col-md-12" style="height: 80px;"></div>
-            <form class="navbar-form" action="{% url 'search:index' %}" method="post" style="text-align: center;">
+            <form class="navbar-form" action="{% url 'search:index' %}" method="get" style="text-align: center;">
                 <div class="form-group">
                   <div class="input-group">
-                    <input type="text" class="form-control" id="sch" placeholder="学校" style="height: 50px;width: 300px; margin-left: 0px;"> 
-                    {{ search_form.school.label_tag }}
                     {{ search_form.school }}
-                    <input type="text" class="form-control" id="cour" placeholder="课程名" style="height: 50px;width: 540px; margin-right: 0px;">
-                    
-                    {{ search_form.course.label_tag }}
                     {{ search_form.course }}
                       <span class="input-group-btn" >
                         <button class="btn btn-default" type="submit" style="height: 50px; background-color:#2a68ba;" type="button">

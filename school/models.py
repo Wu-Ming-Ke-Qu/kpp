@@ -35,8 +35,8 @@ class Teacher(models.Model):
     '''教师表'''
 
     teacher_name = models.CharField(max_length=128, verbose_name="教师名")
-    school = models.ForeignKey(School, on_delete=models.CASCADE, verbose_name="学校")
-    department = models.ForeignKey(Department, on_delete=models.CASCADE, verbose_name="院系")
+    school = models.ForeignKey(School, on_delete=models.CASCADE, verbose_name="学校", null=True, blank=True)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, verbose_name="院系", null=True, blank=True)
     c_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
 
     def __str__(self):

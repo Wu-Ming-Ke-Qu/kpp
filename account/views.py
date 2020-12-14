@@ -8,6 +8,7 @@ from django.conf import settings
 
 from . import models
 from .forms import UserForm, RegisterForm
+from search.forms import SearchForm, SmallSearchForm
 
 # Create your views here.
 
@@ -32,7 +33,9 @@ def send_email(email, code):
     return msg.send()
 
 def index(request):
-    return render(request, 'index.html') # 主页
+    search_form = SearchForm()
+    small_search_form = SmallSearchForm()
+    return render(request, 'index.html', locals()) # 主页
 
 def login(request):
     if request.session.get('is_login', None): # 是否已登录
@@ -51,6 +54,7 @@ def login(request):
                         request.session['is_login'] = True
                         request.session['user_id'] = user.id
                         request.session['user_name'] = user.username
+                        request.session['user_school'] = user.school.school_name
                         if login_form.cleaned_data['is_rem']:
                             request.session.set_expiry(7 * 24 * 3600) # 保存1周
                         else:
