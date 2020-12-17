@@ -12,6 +12,8 @@
     <!-- Bootstrap -->
     <link href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}" rel="stylesheet">
 
+    <link href="/static/css/base.css" rel="stylesheet">
+
     <!--[if lt IE 9]>
       <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
@@ -63,15 +65,21 @@
         </div><!-- /.container-fluid -->
       </nav>
 
-    {% block content %}{% endblock %}
 
-    <!-- copyright -->
-    <div>
-      <div style="clear: both; height: 200px;"></div>
-        <p style="text-align: center; color: #999999;">
-          Copyright © 2020 by 無名可取
-      </p>
-    </div>
+
+        {% block content %}{% endblock %}
+
+        <!-- copyright -->
+        <div style="clear: both; height: 80px;"></div>
+        <div class="container">
+          <div class="row" style="text-align: center; font-size: x-small; background-color: #fff;">
+            <p style="color: #999999;">
+              Copyright © 2020 by 無名可取
+            </p>
+          </div>
+        </div>
+   
+      
 
     <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
     <script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
