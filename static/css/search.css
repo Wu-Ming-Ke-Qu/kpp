@@ -1,0 +1,29 @@
+  /*--------------------------------------------------
+    ## responsive
+---------------------------------------------------*/
+@media all and (min-width: 1200px) {
+    .search-hint {
+        padding: 0px 120px 0px;
+    }
+  }
+  @media all and (max-width: 1199px) {
+    .search-hint {
+        padding: 0px 100px 0px;
+    }
+  }
+  @media all and (max-width: 991px) {
+    .search-hint {
+        padding: 0px 25px 0px;
+    }
+  }
+  @media all and (max-width: 767px) {
+    .search-hint {
+        padding: 0px 20px 0px;
+    }
+  }
+  @media all and (max-width: 480px) {
+    .search-hint {
+        padding: 0px 15px 0px;
+    }
+  }
+  
