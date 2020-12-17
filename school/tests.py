@@ -5,7 +5,7 @@ from .models import School
 
 
 # 模型测试
-# 暂无
+# 无
 
 
 # 视图测试
