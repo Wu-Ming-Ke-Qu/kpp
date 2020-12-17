@@ -1,50 +1,110 @@
-/* style */
-body{
-  background-color:rgb(248, 249, 250);
+body {
+  background-color: rgb(248, 249, 250);
 }
-.banner {
-  height: 400px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.07);
-  transition: 0.4s;
-  padding: 20px 20px 20px 20px;
-  border-radius: 10px;
-}
-
-h3{
-  color: rgb(32, 60, 84);
-}
-.comments-area{
+.comments-area {
   padding: 20px;
   margin: 20px 0px 0px;
   background-color: rgb(255, 255, 255);
   border-radius: 1px;
 }
-
-.thumb{
-  position: relative;
-  float: left;
-  clear: both;
+.banner {
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.07);
+  transition: 0.4s;
+  padding: 20px 20px 20px 20px;
+  border-radius: 10px;
 }
-
-.panel-right{
-  float: right;
-}
-.panel-heading{
+.banner-thumbnail {
+  display: inline-block;
   height: auto;
+  max-width: 400px;
 }
-
-.pd-top-140{
-  margin: 140px 0px 0px 0px;
+.banner-name {
+  display: inline-block;
+  font-size: 32px;
+  color: #2a69ba;
 }
-.pd-top-40{
-  margin: 40px 0px 0px 0px;
+.banner-details {
+  display: inline-block;
 }
-.course-info{
-  display:flex;/*Flex布局*/
-  display: -webkit-flex; /* Safari */
-  align-items:center;/*指定垂直居中*/
+.banner-btn {
+  display: inline-block;
+  width: 240px;
 }
-.margin-20{
-  margin: 20px;
+/*--------------------------------------------------
+    ## responsive
+---------------------------------------------------*/
+@media all and (min-width: 1200px) {
+  .banner-name {
+    font-size: 32px;
+    margin-top: 100px;
+  }
+  .banner-details {
+    margin-top: 10px;
+  }
+  .banner-btn {
+    margin-top: 220px;
+  }
 }
-/* responsive */
+@media all and (max-width: 1199px) {
+  .banner-name {
+    font-size: 32px;
+    margin-top: 80px;
+  }
+  .banner-details {
+    margin-top: 10px;
+  }
+  .banner-btn {
+    margin-top: 220px;
+  }
+}
+@media all and (max-width: 991px) {
+  .banner {
+    text-align: center;
+  }
+  .banner-name {
+    font-size: 32px;
+    margin-top: 40px;
+  }
+  .banner-details {
+    margin-top: 10px;
+  }
+  .banner-btn {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}
+@media all and (max-width: 767px) {
+  .banner {
+    text-align: center;
+  }
+  .banner-name {
+    font-size: 32px;
+    margin-top: 40px;
+  }
+  .banner-details {
+    margin-top: 10px;
+  }
+  .banner-btn {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}
+@media all and (max-width: 480px) {
+  .banner {
+    text-align: center;
+  }
+  .banner-name {
+    font-size: 32px;
+    margin-top: 40px;
+  }
+  .banner-details {
+    margin-top: 10px;
+  }
+  .banner-btn {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .banner-thumbnail {
+    max-width: 100%;
+  }
+}
