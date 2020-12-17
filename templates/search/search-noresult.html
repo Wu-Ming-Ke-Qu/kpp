@@ -12,16 +12,10 @@
         <!-- search-form -->
           <div class="col-md-10 col-md-offset-1">
               <div class="col-md-12" style="height: 80px;"></div>
-                  <form class="form" action="{% url 'search:index' %}" method="post" style="text-align: center;">
+                  <form class="form" action="{% url 'search:index' %}" method="GET" style="text-align: center;">
                       <div class="form-group">
                           <div class="input-group">
-                          <input type="text" class="form-control" id="sch" placeholder="这里是你刚刚搜索的学校@gy" style="height: 50px;width: 300px; margin-left: 0px;"> 
-                          {{ search_form.school.label_tag }}
-                          {{ search_form.school }}
-                          <!-- TODO:在搜索框中显示刚刚的搜索内容 -->
-                          <input type="text" class="form-control" id="cour" placeholder="这里是刚刚搜索的课程@gy" style="height: 50px;width: 600px; margin-right: 0px;">
-                          
-                          {{ search_form.course.label_tag }}
+                          {{ search_form.school }}                      
                           {{ search_form.course }}
                               <span class="input-group-btn" >
                               <button class="btn btn-default" type="submit" style="height: 50px; width: 45px; background-color:#2a68ba;" type="button">

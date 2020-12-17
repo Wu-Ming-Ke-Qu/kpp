@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'school',
     'account',
+    'search',
     'course',
     'comment',
     'vote',

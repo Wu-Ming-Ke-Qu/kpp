@@ -1,8 +1,3 @@
-#! /usr/bin/env python
-"""
-中文词云
-"""
-
 import os
 import jieba
 import matplotlib.pyplot as plt
@@ -13,10 +8,10 @@ def word_cloud(tar_path, *text):
     #tar_path为生成图片存放地址，格式为xx/xx/xx.png
 
     # 设置中文字体
-    font_path = '../../static/fonts/simhei.ttf'
+    font_path = 'static/fonts/simhei.ttf'
 
     # stopword
-    stopword_path = 'stopwords.txt'
+    stopword_path = 'comment/stopwords.txt'
 
     # 读入 stopword
     with open(stopword_path,encoding='UTF-8') as f_stop:
@@ -24,8 +19,8 @@ def word_cloud(tar_path, *text):
         f_stop_seg_list = f_stop_text.splitlines()
 
     # 中文分词
+    text = ";".join(text)
     seg_list = jieba.cut(text, cut_all=False)
-
     # 把文本中的stopword剃掉
     my_word_list = []
 
