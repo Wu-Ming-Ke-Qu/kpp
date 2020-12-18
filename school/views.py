@@ -3,6 +3,7 @@ from django.shortcuts import render
 from search.forms import SearchForm, SmallSearchForm
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
+from .forms import AddSchoolFrom
 
 def send_email(email, school_type, school_name, school_email_addr):
     subject = '课评评请求添加学校'
@@ -26,5 +27,17 @@ def schoolinfo(request):
 def addschool(request):
     search_form = SearchForm()
     small_search_form = SmallSearchForm()
-    send_email()
+
+    if request.method == "POST":
+        add_school_form = AddSchoolFrom(request.POST)
+        message = "请检查填写的内容！"
+        if add_school_form.is_valid():
+            school_type = add_school_form.cleaned_data['school_type']
+            school_name = add_school_form.cleaned_data['school_name']
+            school_email_addr = add_school_form.cleaned_data['school_email_addr']
+            send_email("guyi2000@yeah.net" ,school_type, school_name, school_email_addr)
+            message = "发送请求成功，我们将会在24小时内处理！"
+        return render(request, 'account/addschool.html', locals())
+
+    add_school_form = AddSchoolFrom()
     return render(request, 'account/addschool.html', locals())
