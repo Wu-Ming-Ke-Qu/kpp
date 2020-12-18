@@ -41,6 +41,9 @@ def login(request):
     if request.session.get('is_login', None): # 是否已登录
         return redirect("/")
 
+    earch_form = SearchForm()
+    small_search_form = SmallSearchForm()
+
     if request.method == "POST": # POST请求处理
         login_form = UserForm(request.POST)
         message = "请检查输入内容！"
@@ -83,6 +86,9 @@ def register(request):
     if request.session.get('is_login', None): # 登录情况下不能注册
         return redirect("/")
 
+    search_form = SearchForm()
+    small_search_form = SmallSearchForm()
+
     if request.method == "POST":
         register_form = RegisterForm(request.POST)
         message = "请检查填写的内容！"
@@ -95,7 +101,6 @@ def register(request):
             
             if password != password_confirm:
                 message = "两次输入的密码不同！"
-                register_form = RegisterForm()
                 return render(request, 'account/register.html', locals())
 
             same_name_user = models.User.objects.filter(username=username)
@@ -104,7 +109,6 @@ def register(request):
                 return render(request, 'account/register.html', locals())
             
             same_email_user = models.User.objects.filter(email=email)
-            
             if same_email_user:
                 print(username, password, password_confirm, school, email)  
                 message = '该邮箱地址已被注册，请使用别的邮箱！'
@@ -121,8 +125,9 @@ def register(request):
                 school = school)
             
             code = generate_code(30)
-            send_email(email, code)
             models.EmailVerify.objects.create(email=email, code=code, send_type="r")
+            send_email(email, code)
+            
             return redirect('/confirm/')
         return render(request, 'account/register.html', locals())
 
@@ -143,7 +148,15 @@ def confirm(request):
         except ObjectDoesNotExist:
             pass
         return redirect('/login/')
+    
+    search_form = SearchForm()
+    small_search_form = SmallSearchForm()
+
     return render(request, "account/emailcerti.html", locals())
 
 def userinfo(request):
+
+    search_form = SearchForm()
+    small_search_form = SmallSearchForm()
+    
     return render(request, 'account/userspace.html', locals())
