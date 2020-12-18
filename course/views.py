@@ -30,9 +30,6 @@ def addcourse(request):
     return render(request, 'course/addcourse.html', locals())
 
 def courseinfo(request, course_id):
-    if not request.session.get('is_login', None):
-        return redirect("/login/")
-
     search_form = SearchForm()
     small_search_form = SmallSearchForm()
 
