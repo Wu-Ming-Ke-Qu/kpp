@@ -86,7 +86,7 @@
         <p>{{comment.content}}</p>
         <div class="form pull-right">
           <div class="btn-group" role="group" aria-label="...">
-            {% if {{comment.islike}} %}
+            {% if comment.islike %}
               <button type="button" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="color: blue;"></span> 已点赞
               </button>
@@ -95,7 +95,7 @@
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 点赞
               </button>
             {% endif %}
-            {% if {{comment.isunlike}} %}
+            {% if comment.isunlike %}
               <button type="button" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" style="color: red;"></span> 已踩
               </button>
@@ -107,7 +107,7 @@
           </div>
         </div>
       </div>
-      {% if {{comment.is_folded}} %}
+      {% if comment.is_folded %}
         <a href="javascript:;" id="btn">
           &lt&lt&lt折叠评论</a>
           <script type="text/javascript">
@@ -168,7 +168,7 @@
         <p>comment.content</p>
         <div class="form pull-right">
           <div class="btn-group" role="group" aria-label="...">
-            {% if {{comment.islike}} %}
+            {% if comment.islike %}
               <button type="button" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="color: blue;"></span> 已点赞
               </button>
@@ -177,7 +177,7 @@
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 点赞
               </button>
             {% endif %}
-            {% if {{comment.isunlike}} %}
+            {% if comment.isunlike %}
               <button type="button" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" style="color: red;"></span> 已踩
               </button>
@@ -189,7 +189,7 @@
           </div>
         </div>
       </div>
-      {% if {{comment.is_folded}} %}
+      {% if comment.is_folded %}
         <a href="javascript:;" id="btn">
           &lt&lt&lt折叠评论</a>
           <script type="text/javascript">
@@ -261,8 +261,4 @@
   </div>
   <!-- add comment end-->
 </div>
-
-
-<script src="{% static 'js/course.js' %}"></script>
-
 {% endblock %}

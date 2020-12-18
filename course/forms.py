@@ -22,4 +22,5 @@ class CourseForm(forms.Form):
     hour = forms.IntegerField(label="学时", 
                               widget=forms.NumberInput(attrs={'class':'form-control'}))
     pre_course = forms.CharField(label="先修要求",
+                                 required=False,
                                  widget=forms.Textarea(attrs={'class':'form-control'}))

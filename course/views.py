@@ -1,10 +1,11 @@
+from school.models import Department, Teacher
 from django.shortcuts import render, redirect
 from .forms import CourseForm
-from .models import Course
+from .models import Course, CourseTeacher
 from search.forms import SearchForm, SmallSearchForm
 # Create your views here.
 def addcourse(request):
-    if not request.session.get('is_login', None): # 本身就没有登录，无需登出
+    if not request.session.get('is_login', None): # 必须登录，否则重定向
         return redirect('/login/')
 
     search_form = SearchForm()
@@ -23,8 +24,29 @@ def addcourse(request):
             hour=course_form.cleaned_data['hour']
             pre_course=course_form.cleaned_data['pre_course']
             
-            
+            same_course_id = Course.objects.filter(course_id = course_id, school = school)
+            if same_course_id:
+                message = "存在课程号相同的课程！"
+                return render(request, 'course/addcourse.html', locals())
 
+            same_department = Department.objects.filter(department_name = department)
+            if same_department:
+                department = department[0]
+            else:
+                department = Department.objects.create(department_name = department, school = school)
+            
+            same_teacher = Teacher.objects.filter(teacher_name = teacher, department = department)
+            if same_teacher:
+                teacher = teacher[0]
+            else:
+                teacher = Teacher.objects.create(teacher_name = teacher, department = department)
+            
+            course = Course.objects.create(course_name=course_name, course_id=course_id,
+                                           school=school, department=department,
+                                           credit=credit, hour=hour,
+                                           pre_course=pre_course)
+            CourseTeacher.objects.create(course = course, teacher = teacher)
+            
         return render(request, 'course/addcourse.html', locals())
     course_form = CourseForm()
     return render(request, 'course/addcourse.html', locals())
@@ -37,6 +59,7 @@ def courseinfo(request, course_id):
     teacher_name = ""
     for teacher in course.teachers.all():
         teacher_name += teacher.teacher_name
+    comment = {"islike": True}
     return render(request, 'course/course.html', locals())
 
 def changecourseinfo(request):

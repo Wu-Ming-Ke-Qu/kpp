@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title%}xxx的搜索结果丨课评评{% endblock %}
+{% block title%}{{course_name}}的搜索结果丨课评评{% endblock %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/search.css' %}">
 {% endblock %}
@@ -31,7 +31,7 @@
         <div class="row">
             <div class="search-hint" >
                 <p></p>
-                <p>...的搜索结果，共...条</p>
+                <p>{{course_name}} 的搜索结果，共 {{length}} 条</p>
                 没有找到想要的课程？点击
                 <!-- to add course page -->
                 <a href="{% url 'course:addcourse' %}">添加课程</a>
@@ -77,9 +77,9 @@
                     {% endfor %}
                 </ul>
             </div>
-        </div>
-        
+        </div>      
         <!-- page nav -->
+        <!--
         <nav aria-label="Page navigation" style="text-align: center;">
             <ul class="pagination">
               <li>
@@ -99,6 +99,7 @@
               </li>
             </ul>
         </nav>
+        -->
     </div>
 
 {% endblock %}

@@ -31,6 +31,9 @@ class User(models.Model):
     is_new_user.boolean = True
     is_new_user.short_description = '是否为新用户？'
 
+    def comment_count(self):
+        return self.comment_set.count()
+
     def total_approve(self):
         return sum([comment.approve_count() for comment in self.comment_set.all()])
     total_approve.admin_order_field = 'c_time'
