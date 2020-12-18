@@ -61,7 +61,7 @@ def login(request):
                             request.session.set_expiry(12 * 3600)
                         return redirect("/")
                     else:
-                        message = "请先激活账号！"
+                        message = "请先激活账号!"
                         # TODO: 此处增加一个重定向
                 else:
                     message = "用户名或密码错误"

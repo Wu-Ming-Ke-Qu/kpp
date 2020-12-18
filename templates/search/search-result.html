@@ -2,37 +2,42 @@
 {% load static %}
 {% block title%}xxx的搜索结果丨课评评{% endblock %}
 {% block css %}
+<link rel="stylesheet" href="{% static 'css/search.css' %}">
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <!-- searchbox -->
         <div class="row">
-          <!-- search-form -->
+        <!-- search-form -->
             <div class="col-md-10 col-md-offset-1">
                 <div class="col-md-12" style="height: 80px;"></div>
-                    <form class="form" action="{% url 'search:index' %}" method="get" style="text-align: center;">
-                        <div class="form-group">
-                            <div class="input-group">
-                            {{ search_form.school }}                    
-                            {{ search_form.course }}
-                                <span class="input-group-btn" >
+                <form class="form" action="{% url 'search:index' %}" method="get" style="text-align: center;">
+                    <div class="form-group">
+                        <div class="input-group">
+                        {{ search_form.school }}                    
+                        {{ search_form.course }}
+                            <span class="input-group-btn" >
                                 <button class="btn btn-default" type="submit" style="height: 50px; width: 45px; background-color:#2a68ba;" type="button">
                                     <span class="glyphicon glyphicon-search" aria-hidden="true" style="color: rgba(255, 255, 255, 0.705);"></span>
                                 </button>
-                                </span> 
-                            </div>
+                            </span> 
                         </div>
-                    </form>
-                </div>
-      </div> 
+                    </div>
+                </form>
+            </div>
+        </div> 
         <!-- search result summary -->
         <div class="row">
-          <div class="col-md-1"></div>
-          <div class="col-md-10" style="margin-left: 15px;">
-            <p></p>
-            <p>...的搜索结果，共...条</p>
-          </div>
+            <div class="search-hint" >
+                <p></p>
+                <p>...的搜索结果，共...条</p>
+                没有找到想要的课程？点击
+                <!-- to add course page -->
+                <!-- TODO:需要链接到添加课程 -->
+                <a href="#">添加课程</a>
+                <p></p>
+            </div>
         </div>
         
         <div class="row">
@@ -43,17 +48,17 @@
                     {% for course in course_list %}
                     <li class="thumbnail">
                         <div class="row">
-                            <div class="col-xl-9 col-md-10">
+                            <div class="col-xl-9 col-md-10 col-xs-9">
                                 <div class="media">
                                     <div class="media-left">
-                                        <img class="media-object" src="{% static 'img/wordcloud/1.png' %}" alt="img" style="height: 100px; width: 100px;">
+                                        <img class="media-object" src="{% static 'img/wordcloud/1.png' %}" style="height: 100px; width: 100px;" alt="img">
                                     </div>
                                     <div class="media-body align-self-center">
                                         <p></p>
                                         <!-- courname -->
                                         <!-- TODO: link to course info Page -->
                                         <a href="#" action="/dispcour/">
-                                            <h1 class="media-heading">{{ course.course_name }}</h1>
+                                            <h3 class="media-heading">{{ course.course_name }}</h3>
                                         </a>
                                         <p></p>
                                         <!-- school&teacher info -->
