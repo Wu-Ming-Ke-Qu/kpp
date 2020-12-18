@@ -142,6 +142,7 @@ def confirm(request):
                 right_user = models.User.objects.get(email=right.email)
                 right_user.is_active = True
                 right_user.save()
+                return redirect('/')
             else:
                 return redirect('/register/')
         except ObjectDoesNotExist:
@@ -152,6 +153,11 @@ def confirm(request):
     small_search_form = SmallSearchForm()
 
     return render(request, "account/emailcerti.html", locals())
+
+def certi_success(request):
+    search_form = SearchForm()
+    small_search_form = SmallSearchForm()
+    return render(request, 'account/certisuccess.html', locals())
 
 def userinfo(request):
     if not request.session.get('is_login', None):
