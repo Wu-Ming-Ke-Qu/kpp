@@ -1,7 +1,6 @@
 from django import forms
 
-from course.models import Course, CourseTeacher
-from school.models import Teacher, School, Department
+from school.models import School
 
 class CourseForm(forms.Form):
     course_name = forms.CharField(label="课程名",

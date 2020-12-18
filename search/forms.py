@@ -13,7 +13,7 @@ class SearchForm(forms.Form):
 class SmallSearchForm(forms.Form):
     school = forms.ModelChoiceField(queryset=School.objects.all(), label="学校", empty_label="学校",
                                             widget=forms.Select(attrs={'class':'form-control', 
-                                            'style':'width:30%; font-size: x-small;'}))
+                                            'style':'width:40%; font-size: x-small;'}))
     course = forms.CharField(max_length=128, label="课程名", empty_value="课程名", 
                              widget=forms.TextInput(attrs={'class':'form-control',
-                             'style':'width: 70%; font-size: x-small;'}))
+                             'style':'width: 60%; font-size: x-small;'}))
