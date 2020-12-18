@@ -33,7 +33,7 @@
               <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="{% url 'index' %}" >
-              <img alt="Brand" src="{% static 'img/logo-white.png' %}" height="22px">
+              <img id="nav-logo"alt="Brand" src="{% static 'img/logo-white.png' %}" height="22px">
             </a>
           </div>
       
@@ -60,7 +60,7 @@
               <li style="text-align: center;"><a href="{% url 'account:index' %}" style="color: #fff;">{{ request.session.user_name }}</a></li>
               <li style="text-align: center;"><a href="{% url 'logout' %}" style="color: #fff;">登出</a></li>
               {% else %}
-              <li style="text-align: center;"><a href="{% url 'login' %}" style="color: #fff;">登录</a></li>
+              <li id="login"style="text-align: center;"><a href="{% url 'login' %}" style="color: #fff;">登录</a></li>
               <li style="text-align: center;"><a href="{% url 'register' %}" style="color: #fff;">注册</a></li>
               {% endif %}
             </ul>
