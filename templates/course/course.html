@@ -86,7 +86,7 @@
         <p>{{comment.content}}</p>
         <div class="form pull-right">
           <div class="btn-group" role="group" aria-label="...">
-            {% if comment.islike %}
+            {% if {{comment.islike}} %}
               <button type="button" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="color: blue;"></span> 已点赞
               </button>
@@ -95,7 +95,7 @@
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 点赞
               </button>
             {% endif %}
-            {% if comment.isunlike %}
+            {% if {{comment.isunlike}} %}
               <button type="button" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" style="color: red;"></span> 已踩
               </button>
@@ -107,33 +107,35 @@
           </div>
         </div>
       </div>
-      <a href="javascript:;" id="btn">
-        &lt&lt&lt折叠评论</a>
-        <script type="text/javascript">
-         //获取button
-         var btn = document.getElementById('btn');
-         //获取p
-         var content = document.getElementById('content');
-         //获取p的内容
-         var str = content.innerHTML;
-         //定义一个变量，表示当前状态
-         var onOff = true; //true表示展示
-         content.innerHTML = ""
-         btn.innerHTML = "评论被折叠，点击显示";
-         btn.onclick = function() {
-           if(!onOff) {
-             content.innerHTML = ""
-             btn.innerHTML = "评论被折叠，点击显示";
-           }
-           else{
-             content.innerHTML = str;
-             btn.innerHTML = "<<<收缩"
-           }
-           onOff = !onOff;
-           return false;
-         }
-        </script>
-      </a>
+      {% if {{comment.is_folded}} %}
+        <a href="javascript:;" id="btn">
+          &lt&lt&lt折叠评论</a>
+          <script type="text/javascript">
+          //获取button
+          var btn = document.getElementById('btn');
+          //获取p
+          var content = document.getElementById('content');
+          //获取p的内容
+          var str = content.innerHTML;
+          //定义一个变量，表示当前状态
+          var onOff = true; //true表示展示
+          content.innerHTML = ""
+          btn.innerHTML = "评论被折叠，点击显示";
+          btn.onclick = function() {
+            if(!onOff) {
+              content.innerHTML = ""
+              btn.innerHTML = "评论被折叠，点击显示";
+            }
+            else{
+              content.innerHTML = str;
+              btn.innerHTML = "<<<收缩"
+            }
+            onOff = !onOff;
+            return false;
+          }
+          </script>
+        </a>
+      {% endif %}
     </div>
      <!-- a comment end -->
      {% endfor %}
@@ -154,11 +156,11 @@
           <div class="col-md-9 col-xs-6 column">
             <span><a href="#">comment.user</a></span>
             <span>发布于</span>
-            <span style="color:#777;">comment.time</span>
+            <span style="color:#777;">{{comment.time}}</span>
             <span>获赞：</span>
-            <span style="color:#777;">comment.like</span>
+            <span style="color:#777;">{{comment.like}}</span>
             <span>被踩：</span>
-            <span style="color:#777;">comment.dislike</span>
+            <span style="color:#777;">{{comment.dislike}}</span>
           </div>
         </div>
       </div>
@@ -166,7 +168,7 @@
         <p>comment.content</p>
         <div class="form pull-right">
           <div class="btn-group" role="group" aria-label="...">
-            {% if comment.islike %}
+            {% if {{comment.islike}} %}
               <button type="button" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="color: blue;"></span> 已点赞
               </button>
@@ -175,7 +177,7 @@
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 点赞
               </button>
             {% endif %}
-            {% if comment.isunlike %}
+            {% if {{comment.isunlike}} %}
               <button type="button" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" style="color: red;"></span> 已踩
               </button>
@@ -187,13 +189,42 @@
           </div>
         </div>
       </div>
+      {% if {{comment.is_folded}} %}
+        <a href="javascript:;" id="btn">
+          &lt&lt&lt折叠评论</a>
+          <script type="text/javascript">
+          //获取button
+          var btn = document.getElementById('btn');
+          //获取p
+          var content = document.getElementById('content');
+          //获取p的内容
+          var str = content.innerHTML;
+          //定义一个变量，表示当前状态
+          var onOff = true; //true表示展示
+          content.innerHTML = ""
+          btn.innerHTML = "评论被折叠，点击显示";
+          btn.onclick = function() {
+            if(!onOff) {
+              content.innerHTML = ""
+              btn.innerHTML = "评论被折叠，点击显示";
+            }
+            else{
+              content.innerHTML = str;
+              btn.innerHTML = "<<<收缩"
+            }
+            onOff = !onOff;
+            return false;
+          }
+          </script>
+        </a>
+        {% endif %}
     </div>
      <!-- a comment end -->
      {% endfor %}
   </div>
   {% else %}
   <div class="comments-area">
-    <h4 class="bg-white">全部评论(all_number)</h4>
+    <h4 class="bg-white">全部评论({{all_number}})</h4>
     <hr />
 
     <p>请在登录后查看
