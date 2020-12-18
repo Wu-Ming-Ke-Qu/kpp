@@ -32,12 +32,12 @@ class User(models.Model):
     is_new_user.short_description = '是否为新用户？'
 
     def total_approve(self):
-        return self.comment_set.aggregate(Sum('zan'))['zan__sum']
+        return sum([comment.approve_count() for comment in self.comment_set.all()])
     total_approve.admin_order_field = 'c_time'
     total_approve.short_description = '总赞数'
     
     def total_disapprove(self):
-        return self.comment_set.aggregate(Sum('cai'))['cai__sum']
+        return sum([comment.disapprove_count() for comment in self.comment_set.all()])
     total_disapprove.admin_order_field = 'c_time'
     total_disapprove.short_description = '总踩数'
 

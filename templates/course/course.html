@@ -18,22 +18,22 @@
      <div class="row clearfix">
        <div class="col-md-5 column">
          <!-- <span class="banner-thumbnail"> -->
-         <img src="../static/img/{{course_name}}.png" alt="wordcloud" class="banner-thumbnail">
+         <img src="../static/img/{{ course.id }}.png" alt="wordcloud" class="banner-thumbnail">
          <!-- </span> -->
        </div>
        <div class="col-md-4 column">
-         <span class="banner-name"><strong>{{course_name}}</strong></span>
-         <h4>{{couse_teacher_info}}</h4>
+         <span class="banner-name"><strong>{{ course.course_name}}</strong></span>
+         <h4>{{ course.teacher }}</h4>
          <span class="banner-details">
            <ul class="list-unstyled">
              <li>
-               学分：{{course_credit}}
+               学分：{{ course.credit }}
              </li>
              <li>
-               学时: {{course_hours}}
+               学时: {{ course.hour }}
              </li>
              <li>
-               先修课程：{{precourse}}
+               先修课程：{{ course.pre_course }}
              </li>
            </ul>
          </span>
