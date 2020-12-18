@@ -41,15 +41,18 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="border:none" >
 
             <form class="navbar-form navbar-left" action="{% url 'search:index' %}" method="get" style="border:none">
-              <div class="input-group">
+              <div class="search-tab">
+                <div class="input-group">
                  {{ small_search_form.school }}
                  {{ small_search_form.course }}
                  <span class="input-group-btn" >
-                  <button class="btn btn-default" type="submit" style="background-color: #cecece; border-color: #cecece;" >
+                  <button class="btn btn-default" id="s-btn" type="submit" style="background-color: #cecece; border-color: #cecece;" >
                     <span class="glyphicon glyphicon-search" aria-hidden="true" style=" color:#2b4f7c; font-size: 10px;"></span>
                   </button>
                 </span>
               </div>
+              </div>
+              
             </form>
             
             <ul class="nav navbar-nav navbar-right" style="border:none">
