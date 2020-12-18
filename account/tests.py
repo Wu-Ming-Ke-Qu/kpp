@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.core import mail
 from django.test import Client
 from django.urls import reverse
 from school.models import School, Department, Teacher
@@ -8,10 +9,13 @@ from vote.models import Vote
 from django.contrib.auth.hashers import make_password, check_password
 from .models import User
 from .models import EmailVerify
+from .views import send_email
 
 # create an instance of the client for our use
 client = Client()
 
+# Empty the test outbox
+mail.outbox = []
 
 # Create your tests here.
 
@@ -98,6 +102,24 @@ class AccountModelTests(TestCase):
 
 # 视图测试
 class AccountViewTests(TestCase):
+
+    def test_send_email_virtual(self):
+        """
+        采用Django的虚拟邮箱
+        测试是否可以正常发送邮件
+        """
+        mail.send_mail(
+            'Subject here', 'Here is the message of test1.',
+            'from@example.com', ['to@example.com'],
+            fail_silently=False,
+        )
+        mail.send_mail(
+            'test2', 'Here is the message of test2.',
+            'from@example.com', ['to@example.com'],
+            fail_silently=False,
+        )
+        self.assertEqual(len(mail.outbox), 2)
+        self.assertEqual(mail.outbox[1].subject, 'test2')
 
     def test_index(self):
         """
@@ -272,15 +294,15 @@ class AccountViewTests(TestCase):
     def test_register_with_register_successful(self):
         """
         如果未登陆则读取用户输入的数据
-        成功注册后重新定向到confirm界面
+        成功注册后重定向到confirm界面
+        并再次重定向到login界面
         """
         school_test = School(school_name="thu", email_addr="126.com")
         school_test.save()
         response = client.post('/register/', {'username': 'user_test', 'password': '123456',
                                               'password_confirm': '123456', 'school': school_test.id,
-                                              'email': 'test@126.com'})
-        self.assertEqual(response.context['message'], "两次输入的密码不同！")
-        self.assertRedirects(response, "/confirm/", status_code=302, target_status_code=200)
+                                              'email': 'test@126.com'}, follow=True)
+        self.assertEqual(response.redirect_chain, [('/confirm/', 302), ('/login/', 302)])
 
     def test_register_with_wrong_password(self):
         """
@@ -290,7 +312,7 @@ class AccountViewTests(TestCase):
         school_test = School(school_name="thu", email_addr="126.com")
         school_test.save()
         response = client.post('/register/', {'username': 'user_test', 'password': '123456',
-                                              'password_confirm': '12345', 'school': 'thu',
+                                              'password_confirm': '12345', 'school': school_test.id,
                                               'email': 'test@126.com'})
         self.assertEqual(response.context['message'], "两次输入的密码不同！")
         self.assertEqual(response.status_code, 200)
@@ -308,7 +330,7 @@ class AccountViewTests(TestCase):
                          school=school_test, department=department_test, is_active=True)
         user_test.save()
         response = client.post('/register/', {'username': 'user_test', 'password': '123456',
-                                              'password_confirm': '123456', 'school': 'thu',
+                                              'password_confirm': '123456', 'school': school_test.id,
                                               'email': 'ttest@126.com'})
         self.assertEqual(response.context['message'], "用户已经存在，请重新选择用户名！")
         self.assertEqual(response.status_code, 200)
@@ -326,7 +348,7 @@ class AccountViewTests(TestCase):
                          school=school_test, department=department_test, is_active=True)
         user_test.save()
         response = client.post('/register/', {'username': 'user', 'password': '123456',
-                                              'password_confirm': '123456', 'school': 'thu',
+                                              'password_confirm': '123456', 'school': school_test.id,
                                               'email': 'test@126.com'})
         self.assertEqual(response.context['message'], "该邮箱地址已被注册，请使用别的邮箱！")
         self.assertEqual(response.status_code, 200)
@@ -339,20 +361,74 @@ class AccountViewTests(TestCase):
         school_test = School(school_name="thu", email_addr="126.com")
         school_test.save()
         response = client.post('/register/', {'username': 'user_test', 'password': '123456',
-                                              'password_confirm': '123456', 'school': 'thu',
+                                              'password_confirm': '123456', 'school': school_test.id,
                                               'email': 'test@163.com'})
         self.assertEqual(response.context['message'], "邮箱域名错误！请使用本学校edu邮箱！")
         self.assertEqual(response.status_code, 200)
 
-    def test_register_with_wrong_register_form(self):
+    def test_register_with_wrong_register_form1(self):
         """
-        如果输入格式错误
+        如果输入格式错误-没有输入用户名
+        返回message"请检查填写的内容！"
+        """
+        school_test = School(school_name="thu", email_addr="126.com")
+        school_test.save()
+        response = client.post('/register/', {'password': '123456', 'password_confirm': '123456',
+                                              'school': school_test.id, 'email': 'test@126.com'})
+        self.assertEqual(response.context['message'], "请检查填写的内容！")
+        self.assertEqual(response.status_code, 200)
+
+    def test_register_with_wrong_register_form2(self):
+        """
+        如果输入格式错误-没有输入密码
+        返回message"请检查填写的内容！"
+        """
+        school_test = School(school_name="thu", email_addr="126.com")
+        school_test.save()
+        response = client.post('/register/', {'username': 'user_test', 'password_confirm': '123456',
+                                              'school': school_test.id, 'email': 'test@126.com'})
+        self.assertEqual(response.context['message'], "请检查填写的内容！")
+        self.assertEqual(response.status_code, 200)
+
+    def test_register_with_wrong_register_form3(self):
+        """
+        如果输入格式错误-没有输入确认密码
         返回message"请检查填写的内容！"
         """
         school_test = School(school_name="thu", email_addr="126.com")
         school_test.save()
         response = client.post('/register/', {'username': 'user_test', 'password': '123456',
-                                              'password_confirm': '123456', 'school': 'thu',
-                                              'email': 'test@126.com'})
+                                              'school': school_test.id, 'email': 'test@163.com'})
         self.assertEqual(response.context['message'], "请检查填写的内容！")
+        self.assertEqual(response.status_code, 200)
+
+    def test_register_with_wrong_register_form4(self):
+        """
+        如果输入格式错误-没有选择学校
+        返回message"请检查填写的内容！"
+        """
+        school_test = School(school_name="thu", email_addr="126.com")
+        school_test.save()
+        response = client.post('/register/', {'username': 'user_test', 'password': '123456',
+                                              'password_confirm': '123456', 'email': 'test@163.com'})
+        self.assertEqual(response.context['message'], "请检查填写的内容！")
+        self.assertEqual(response.status_code, 200)
+
+    def test_register_with_wrong_register_form5(self):
+        """
+        如果输入格式错误-没有填写邮箱
+        返回message"请检查填写的内容！"
+        """
+        school_test = School(school_name="thu", email_addr="126.com")
+        school_test.save()
+        response = client.post('/register/', {'username': 'user_test', 'password': '123456',
+                                              'password_confirm': '123456', 'school': school_test.id})
+        self.assertEqual(response.context['message'], "请检查填写的内容！")
+        self.assertEqual(response.status_code, 200)
+
+    def test_useinfo(self):
+        """
+        测试个人用户信息界面是否可以成功打开
+        """
+        response = client.get("account/userspace/")
         self.assertEqual(response.status_code, 200)
