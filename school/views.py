@@ -4,3 +4,7 @@ from django.shortcuts import render
 # Create your views here.
 def schoolinfo(request):
     return HttpResponse("OK")
+
+def addschool(request):
+    
+    return HttpResponse("OK")
