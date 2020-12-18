@@ -13,36 +13,47 @@
         <p style="height: 120px;"></p>
 
         <h1 class="text-center">添加课程</h1>
-        <div class="form-group col-md-12">
-          <h5><strong>课程名：</strong></h5>
+        <div class="form-group col-md-12 col-xs-12">
+          <h5><strong><span style="color:#2b4f7c;">* </span>课程名：</strong></h5>
           <input type="text" class="form-control" id="courname" >
         </div>
         <div class="form-group col-md-12">
-          <h5><strong>学校：</strong></h5>
-          <input type="text" class="form-control" id="sch" >
+          <h5><strong><span style="color:#2b4f7c;">* </span>学校：</strong></h5>
+          <input type="text" class="form-control col-md-11" id="sch">
         </div>
         <div class="form-group col-md-12">
-          <h5><strong>任课教师：</strong></h5>
+          <h5><strong>&nbsp开课院系：</strong></h5>
+          <input type="text" class="form-control" id="col" >
+        </div>
+        <div class="form-group col-md-12">
+          <h5><strong><span style="color:#2b4f7c;">* </span>任课教师：</strong></h5>
           <input type="text" class="form-control" id="te" >
         </div>
-        <div class="form-group col-md-6">
-          <h5><strong>学分：</strong></h5>
-          <input type="text" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" class="form-control" id="cred" >
-        </div>
-        <div class="form-group col-md-6">
-          <h5><strong>学时：</strong></h5>
-          <input type="text" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" class="form-control" id="hour" >
-        </div>
         <div class="form-group col-md-12">
-          <h5><strong>先修要求</strong></h5>
+          <h5><strong>&nbsp课程号：</strong></h5>
+          <!-- 只能输入数字、小数点(.)和减号(-) -->
+          <input type="char" class="form-control" id="te" onKeyPress="if (event.keyCode!=45 && (event.keyCode<48 || event.keyCode>57)) event.returnValue=false" placeholder="只能输入数字和 ‘-’">
+        </div>
+        <div class="form-group col-md-6 col-xs-6">
+          <h5><strong><span style="color:#2b4f7c;">* </span>学分：</strong></h5>
+          <!-- 只能输入数字、小数点(.) -->
+          <input type="text" class="form-control" id="cred" onKeyPress="if (event.keyCode!=46 && (event.keyCode<48 || event.keyCode>57)) event.returnValue=false" placeholder="只能输入整数或小数">
+        </div>
+        <div class="form-group col-md-6 col-xs-6">
+          <h5><strong><span style="color:#2b4f7c;">* </span>学时：</strong></h5>
+          <!-- 只能输入数字、小数点(.) -->
+          <input type="text" class="form-control" id="hour" onKeyPress="if (event.keyCode!=46 && (event.keyCode<48 || event.keyCode>57)) event.returnValue=false" placeholder="只能输入整数或小数">
+        </div>
+        <div class="form-group col-md-12 col-xs-12">
+          <h5><strong>&nbsp先修要求</strong></h5>
           <textarea class="form-control" id="pre" rows="3"></textarea>
         </div>
 
       <!-- buttons -->
         <div class="form-group col-md-12">
           <div style="clear: both; height: 15px;"></div>
-            <button type="reset" class="btn btn-default pull-left col-md-4 ">重置</button>
-            <button type="submit" class="btn btn-primary pull-right col-md-7 col-md-offset-1">发布</button>
+            <button type="reset" class="btn btn-default pull-left col-md-4 col-xs-5 ">重置</button>
+            <button type="submit" class="btn btn-primary pull-right col-md-7 col-md-offset-1 col-xs-6 col-xs-offset-1">发布</button>
         </div>
     </form>
   </div>
