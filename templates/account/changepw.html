@@ -10,7 +10,7 @@
       <p style="height: 50px;"></p>
       
       <div class="row">
-        <div class="col-md-4 col-md-offset-4">
+        <div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
           <h2 class="text-center">修改密码</h2>
           <form class="form-group" action="/changepw/" method="post">
             {% if message %}
@@ -34,8 +34,8 @@
               <input type="password" class="form-control" name="confirmpass" id="confirmpass" />
             </div>
             <!-- TODO:这里要返回到个人信息页面@gy -->
-            <a class="btn btn-default pull-left" href="#">返回个人信息页面</a>
-            <button type="submit" class="btn btn-primary pull-right">确认修改</button>
+            <a class="btn btn-default pull-left" style="font-size: 13px;" href="#">返回个人信息页面</a>
+            <button type="submit" class="btn btn-primary pull-right" style="font-size: 13px;" >确认修改</button>
           </form>
         </div>
       </div>

@@ -24,7 +24,15 @@ class Comment(models.Model):
     disapprove_count.short_description = "计算踩数"
 
     def is_folded(self):
-        return ((self.approve_count() - self.disapprove_count()) < -1)
+        approve_count = self.approve_count()
+        disapprove_count = self.disapprove_count()
+        total_count = approve_count + disapprove_count
+        if ((total_count >= 20) and 
+            (disapprove_count / total_count >= 0.7)) or \
+           ((total_count < 20) and 
+            (disapprove_count >= 14)):
+            return True
+        return False
     is_folded.admin_order_field = "c_time"
     is_folded.boolean = True
     is_folded.short_description = "是否折叠？"

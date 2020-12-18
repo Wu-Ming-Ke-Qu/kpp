@@ -2,42 +2,46 @@
 {% load static %}
 {% block title%}xxx的搜索结果（无）丨课评评{% endblock %}
 {% block css %}
+<link rel="stylesheet" href="{% static 'css/search.css' %}">
 {% endblock %}
-
 {% block content %}
 
-    <div class="container">
-      <!-- searchbox -->
-      <div class="row">
-        <!-- search-form -->
-          <div class="col-md-10 col-md-offset-1">
-              <div class="col-md-12" style="height: 80px;"></div>
-                  <form class="form" action="{% url 'search:index' %}" method="GET" style="text-align: center;">
-                      <div class="form-group">
-                          <div class="input-group">
-                          {{ search_form.school }}                      
-                          {{ search_form.course }}
-                              <span class="input-group-btn" >
-                              <button class="btn btn-default" type="submit" style="height: 50px; width: 45px; background-color:#2a68ba;" type="button">
-                                  <span class="glyphicon glyphicon-search" aria-hidden="true" style="color: rgba(255, 255, 255, 0.705);"></span>
-                              </button>
-                              </span>
-                          </div>
-                      </div>
-                  </form>
-              </div>
-    </div>
-      <!-- search result summary -->
-      <p></p>
-      <div class="row">
-        <div class="col-md-offset-2" >
-          未检索到相关课程，
-          请尝试更改搜索关键词或选择
-          <!-- to add course page -->
-          <!-- TODO:需要链接到添加课程 -->
-          <a href="#">添加课程</a>
+<div class="container">
+  <!-- searchbox -->
+  <div class="row">
+    <!-- search-form -->
+    <div class="col-md-10 col-md-offset-1">
+      <div class="col-md-12" style="height: 80px;"></div>
+      <form class="form" action="{% url 'search:index' %}" method="GET" style="text-align: center;">
+        <div class="form-group">
+          <div class="input-group">
+            {{ search_form.school }}
+            {{ search_form.course }}
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="submit" style="height: 50px; width: 45px; background-color:#2a68ba;"
+                type="button">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"
+                  style="color: rgba(255, 255, 255, 0.705);"></span>
+              </button>
+            </span>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
+  </div>
+  <!-- search result summary -->
+  <p></p>
+  <div class="row">
+    <div class="search-hint" >
+      未检索到相关课程，
+      请尝试更改搜索关键词或选择
+      <!-- to add course page -->
+      <!-- TODO:需要链接到添加课程 -->
+      <a href="#">添加课程</a>
+    </div>
+  </div>
+</div>
+
+
 
 {% endblock %}

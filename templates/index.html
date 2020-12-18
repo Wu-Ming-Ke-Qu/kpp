@@ -2,6 +2,9 @@
 {% load static %}
 {% block title %}评评课~丨课评评{% endblock %}
 {% block content %}
+
+<link href="/static/css/base.css" rel="stylesheet">
+
 <div class="row">
   <div class="container" >
     <!-- great logo -->
@@ -23,11 +26,17 @@
           {{ search_form.course }}
           <span class="input-group-btn" >
             <button class="btn btn-default" type="submit" style="height: 50px; background-color:#2a68ba;">
-              <span class="glyphicon glyphicon-search" aria-hidden="true" style="color: rgba(255, 255, 255, 0.705); font-size: 20px;"></span>
+              <span class="glyphicon glyphicon-search" aria-hidden="true" style="color: rgba(255, 255, 255, 0.705); font-size: 20px; "></span>
             </button>
           </span>
         </div><!-- /input-group -->
       </form>
+      <div class="row">
+        <p style="clear: both;"></p>
+        <div class="col-md-8 col-md-offset-2" style="font-size: x-small;" >
+          <a href="/account/addschool.html"style="margin-left: 20px;">没有你要找的学校？点击此处添加</a>
+        </div>
+      </div>
     </div> 
     <!-- /container -->
 </div>
