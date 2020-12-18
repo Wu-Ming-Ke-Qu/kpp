@@ -34,8 +34,7 @@
                 <p>...的搜索结果，共...条</p>
                 没有找到想要的课程？点击
                 <!-- to add course page -->
-                <!-- TODO:需要链接到添加课程 -->
-                <a href="#">添加课程</a>
+                <a href="{% url 'course:addcourse' %}">添加课程</a>
                 <p></p>
             </div>
         </div>
@@ -51,13 +50,12 @@
                             <div class="col-xl-9 col-md-10 col-xs-9">
                                 <div class="media">
                                     <div class="media-left">
-                                        <img class="media-object" src="{% static 'img/wordcloud/1.png' %}" style="height: 100px; width: 100px;" alt="img">
+                                        <img class="media-object" src="../static/img/wordcloud/{{course.id}}.png" style="height: 100px; width: 100px;" alt="img">
                                     </div>
                                     <div class="media-body align-self-center">
                                         <p></p>
                                         <!-- courname -->
-                                        <!-- TODO: link to course info Page -->
-                                        <a href="#" action="/dispcour/">
+                                        <a href="{% url 'course:courseinfo' course.id %}">
                                             <h3 class="media-heading">{{ course.course_name }}</h3>
                                         </a>
                                         <p></p>
