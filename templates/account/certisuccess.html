@@ -2,6 +2,24 @@
 {% load static %}
 {% block title %}激活成功！丨课评评{% endblock %}
 {% block content %}
+{% block javascript %} 
+<script type="text/javascript">
+  onload = function(){
+    setInterval(go, 1000);
+  }
+  var x=3;
+  function go(){
+    x--;
+  }
+  if(x>0){
+    document.getElementById("time").innerHTML = x;
+  }
+  else{
+    location.href = '/';
+  }
+</script>
+
+{% endblock %}
 <div class="container">
   <p style="height: 50px;"></p>
     <div class="col-md-10 col-md-offset-1">
@@ -9,7 +27,9 @@
       <div class="col-md-12" style="background-color: #549ce054;  border-radius: 10px;">
         <div class="col-md-8 col-md-offset-2" style="text-align: center;">
           <p style="height: 40px;"></p>
-          <h3><strong>激活成功！将在&nbsp;&nbsp;X&nbsp;s&nbsp;&nbsp;后自动跳转至首页。</strong></h3>
+          <h3><strong>激活成功！将在&nbsp;&nbsp;
+            <span id="time">3</span>
+            &nbsp;s&nbsp;&nbsp;后自动跳转至首页。</strong></h3>
           <p style="height: 30px;"></p>
           <img src="../static/img/OK.png" height="100px">
           <p style="height: 30px;"></p>
