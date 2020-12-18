@@ -124,7 +124,7 @@
           </div>
         </div>
       </div>
-      <div class="panel-body">
+      <div class="panel-body" id="content">
         <p>怀新资讯12月8日消息，据报道，三星Galaxy S21系列已通过巴西监管机构ANATEL的入网销售认证，三款Galaxy S21手机都取消了附赠充电器和耳机。分析认为，随着苹果、三星两大厂的率先取消附赠充电器及耳机，不排除后续仍有大厂跟随，三方快充头将成为明年重要的需求方向，并迎来重大发展机遇。A股公司中，海能实业已自主研发出快充氮化镓产品；富满电子有可搭配氮化镓的中高功率主控芯片，与OPPO协作研发氮化镓充电器产品。</p>
         <div class="form pull-right">
           <div class="btn-group" role="group" aria-label="...">
@@ -149,35 +149,36 @@
           </div>
         </div>
       </div>
-    </div>
-       <a href="javascript:;" id="btn">
-         &lt&lt&lt折叠评论</a>
-         <script type="text/javascript">
-          //获取button
-          var btn = document.getElementById('btn');
-          //获取p
-          var content = document.getElementById('content');
-          //获取p的内容
-          var str = content.innerHTML;
-          //定义一个变量，表示当前状态
-          var onOff = true; //true表示展示
-          content.innerHTML = ""
-          btn.innerHTML = "评论被折叠，点击显示";
-          btn.onclick = function() {
-            if(!onOff) {
-              content.innerHTML = ""
-              btn.innerHTML = "评论被折叠，点击显示";
-            }
-            else{
-              content.innerHTML = str;
-              btn.innerHTML = "<<<收缩"
-            }
-            onOff = !onOff;
-            return false;
-          }
+      <a href="javascript:;" id="btn">
+        &lt&lt&lt折叠评论</a>
+        <script type="text/javascript">
+         //获取button
+         var btn = document.getElementById('btn');
+         //获取p
+         var content = document.getElementById('content');
+         //获取p的内容
+         var str = content.innerHTML;
+         //定义一个变量，表示当前状态
+         var onOff = true; //true表示展示
+         content.innerHTML = ""
+         btn.innerHTML = "评论被折叠，点击显示";
+         btn.onclick = function() {
+           if(!onOff) {
+             content.innerHTML = ""
+             btn.innerHTML = "评论被折叠，点击显示";
+           }
+           else{
+             content.innerHTML = str;
+             btn.innerHTML = "<<<收缩"
+           }
+           onOff = !onOff;
+           return false;
+         }
 
-         </script>
-       </a>
+        </script>
+      </a>
+    </div>
+       
      <!-- a fold comment end -->
    </div>
    <!-- latest comments end-->
