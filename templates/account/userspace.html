@@ -15,7 +15,7 @@
      <!-- nav list start -->
      <div class="col-md-3 col-sm-3 column hidden-xs ">
        <div class="list-group" style="position: fixed; top: 100px;">
-         <a href="#" class="list-group-item active">@username的个人空间</a>
+         <a href="#" class="list-group-item active">{{user.username}}的个人空间</a>
          <div class="list-group-item">
            <a href="#profile">基本信息</a>
          </div>
@@ -43,11 +43,11 @@
            <form role="form">
              <div class="form-group">
                <label for="user_profile_name">学校</label>
-               <input class="form-control" id="disabledInput" type="text" placeholder="清华大学" disabled>
+               <input class="form-control" id="disabledInput" type="text" placeholder="{{user.school}}" disabled>
              </div>
              <div class="form-group">
                <label for="user_profile_name">邮箱</label>
-               <input class="form-control" id="disabledInput" type="text" placeholder="xxx@xxx.xxx" disabled>
+               <input class="form-control" id="disabledInput" type="text" placeholder="{{user.mail}}" disabled>
              </div>
            </form>
          </div>
@@ -78,69 +78,50 @@
        <form role="form">
          <div class="form-group">
            <span>评论总数：</span>
-           <span style="color:#777;">20</span>
+           <span style="color:#777;">{{user.comment_count}}</span>
          </div>
          <div class="form-group">
            <span>获赞总数：</span>
-           <span style="color:#777;">100</span>
+           <span style="color:#777;">{{user.approve_count}}</span>
          </div>
          <div class="form-group">
            <span>被踩总数：</span>
-           <span style="color:#777;">1000</span>
+           <span style="color:#777;">{{user.disapprove_count}}</span>
          </div>
        </form>
        <!-- overall comments info end -->
- 
-       <!-- one of my comments start -->
-       <form class="clearfix">
-         <div class="head">
-           <div class="time">
-             <span>发布日期：</span>
-             <span style="color:#777;">2020-10-08 19:50</span>
-             <span>评论课程：</span>
-             <span style="color:#777;"><a href="#">软件工程（清华大学 董渊）</a></span>
-             <span>获赞数：</span>
-             <span style="color:#777;">10</span>
-             <span>被踩数：</span>
-             <span style="color:#777;">100</span>
-             <span>是否折叠：</span>
-             <span style="color:#777;">是</span>
-           </div>
-         </div>
-         <div class="context">
-           <span>评论内容：</span>
-           <p>怀新资讯12月8日消息，据报道，三星Galaxy S21系列已通过巴西监管机构ANATEL的入网销售认证，三款Galaxy S21手机都取消了附赠充电器和耳机。分析认为，随着苹果、三星两大厂的率先取消附赠充电器及耳机，不排除后续仍有大厂跟随，三方快充头将成为明年重要的需求方向，并迎来重大发展机遇。A股公司中，海能实业已自主研发出快充氮化镓产品；富满电子有可搭配氮化镓的中高功率主控芯片，与OPPO协作研发氮化镓充电器产品。</p>
-         </div>
-         <a type="submit" class="btn btn-default">删除该评论</a>
-         <hr/>
-       </form>
-       <!-- one of my comments end-->
- 
-       <!-- one of my comments start -->
-       <form class="clearfix">
-       <div class="head">
-         <div class="time">
-           <span>发布日期：</span>
-           <span style="color:#777;">2020-10-08 19:50</span>
-           <span>评论课程：</span>
-           <span style="color:#777;"><a href="#">软件工程（清华大学 董渊）</a></span>
-           <span>获赞数：</span>
-           <span style="color:#777;">10</span>
-           <span>被踩数：</span>
-           <span style="color:#777;">100</span>
-           <span>是否折叠：</span>
-           <span style="color:#777;">是</span>
-         </div>
-       </div>
-       <div class="context">
-         <span>评论内容：</span>
-         <p>怀新资讯12月8日消息，据报道，三星Galaxy S21系列已通过巴西监管机构ANATEL的入网销售认证，三款Galaxy S21手机都取消了附赠充电器和耳机。分析认为，随着苹果、三星两大厂的率先取消附赠充电器及耳机，不排除后续仍有大厂跟随，三方快充头将成为明年重要的需求方向，并迎来重大发展机遇。A股公司中，海能实业已自主研发出快充氮化镓产品；富满电子有可搭配氮化镓的中高功率主控芯片，与OPPO协作研发氮化镓充电器产品。</p>
-       </div>
-       <a type="submit" class="btn btn-default">删除该评论</a>
-       <hr/>
-     </form>
-     <!-- one of my comments end-->
- 
+       
+       {% for comment in user.comment_list %}
+        <!-- one of my comments start -->
+        <form class="clearfix">
+          <div class="head">
+            <div class="time">
+              <span>发布日期：</span>
+              <span style="color:#777;">{{comment.c_time}}</span>
+              <span>评论课程：</span>
+              <span style="color:#777;"><a href="#">{{comment.course}}</a></span>
+              <span>获赞数：</span>
+              <span style="color:#777;">{{comment.approve_count}}</span>
+              <span>被踩数：</span>
+              <span style="color:#777;">{{comment.disapprove_count}}</span>
+              <span>是否折叠：</span>
+              {% if comment.is_folded %}
+                <span style="color:#777;">是</span>
+              {% else %}
+                <span style="color:#777;">否</span>
+              {% endif %}
+            </div>
+          </div>
+          <div class="context">
+            <span>评论内容：</span>
+            <p>{{comment.content}}</p>
+          </div>
+          <a type="submit" class="btn btn-default">删除该评论</a>
+          <hr/>
+        </form>
+        <!-- one of my comments end-->
+       {% endfor %}
+
        <!-- my comments end -->
      </div>
    </div>
