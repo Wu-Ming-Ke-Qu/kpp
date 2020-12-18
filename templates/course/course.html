@@ -9,48 +9,6 @@
  {% block css %}
  <link rel="stylesheet" href="{% static 'css/course.css' %}">
  {% endblock %}
- 
- {% block javascript %} 
- <script>
-   function showSection(id){
-    //获取元素
-    var divs = document.getElementsByTagName("div");
-    
-    //判断   如果div的className不为section，则跳出循环，否则再次判断当前的id是否等于参数id，不是的话则隐藏
-      for(var i= 0; i<divs.length; i++){
-          if(divs[i].className.indexOf("panel-body") == -1) continue;
-          if(divs[i].getAttribute("id") != id){
-              divs[i].style.display = "none";
-          }
-          else{
-              divs[i].style.display = "block";
-          }
-      }
-    }
-   function prepareComment(){
-     //浏览器对象检测
-     if(!document.getElementById) return false;
-     if(!document.getElementsByTagName) return false;
-     //获取元素
-     var links = document.getElementsByTagName("div");
-     //遍历连接，分割出href属性的值，调用显示section块的函数
-     for(var i=0; i<links.length; i++){
-        var sectionId = links[i].getAttribute("id");   
-        if(sectionId=="fold-content"){
-          document.getElementById()
-        }
-        if(!document.getElementById(sectionId)) continue;                 //如果找不到这个id，则退出循环
-        document.getElementById(sectionId).style.display = "none";        //把class属性值为sectionId的都设置为display：none，然后再显示出来
-        links[i].destination = sectionId;
-        links[i].onclick = function(){
-            showSection(this.destination);
-            return false;
-        }
-     }
-     
-   }
- </script>
- {% endblock %}
 
  {% block content %}
  <p style="height: 50px;"></p>
