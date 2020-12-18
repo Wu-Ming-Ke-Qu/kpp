@@ -37,6 +37,9 @@ def courseinfo(request, course_id):
     small_search_form = SmallSearchForm()
 
     course = Course.objects.get(pk=course_id)
+    teacher_name = ""
+    for teacher in course.teachers.all():
+        teacher_name += teacher.teacher_name
     return render(request, 'course/course.html', locals())
 
 def changecourseinfo(request):
