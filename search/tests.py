@@ -15,7 +15,7 @@ class SearchViewTests(TestCase):
         搜索课程如果没有检索到结果
         则重新定向到search-noresult页面
         """
-        response = client.get(reverse("index"))
+        response = client.get("/search/", {'school': 1, 'course': "test"})
         self.assertEqual(response.status_code, 200)
 
     def test_search_index_with_course(self):
