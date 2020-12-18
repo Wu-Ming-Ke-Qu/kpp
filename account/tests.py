@@ -97,6 +97,42 @@ class AccountModelTests(TestCase):
         vote_test3.save()
         self.assertEqual(user_test.total_disapprove(), 3)
 
+    def test_user_comment_count(self):
+        """
+        计算用户发表总评论数
+        """
+        school_test = School(school_name="thu")
+        school_test.save()
+        department_test = Department(department_name="ce", school=school_test)
+        department_test.save()
+        teacher_test = Teacher(teacher_name="li", school=school_test, department=department_test)
+        teacher_test.save()
+        user_test = User(username="user_test", password=make_password("123456"), email="test@126.com",
+                         school=school_test, department=department_test, is_active=True)
+        user_test.save()
+        course_test = Course(course_name="course_test", course_id="123456", school=school_test,
+                             department=department_test, credit=3, hour=64)
+        course_test.save()
+        course_test2 = Course(course_name="course_test2", course_id="1234567", school=school_test,
+                              department=department_test, credit=3, hour=64)
+        course_test2.save()
+        teacher_course2 = CourseTeacher(course=course_test2, teacher=teacher_test)
+        teacher_course2.save()
+        teacher_course = CourseTeacher(course=course_test, teacher=teacher_test)
+        teacher_course.save()
+        course_test3 = Course(course_name="course_test3", course_id="12345", school=school_test,
+                              department=department_test, credit=3, hour=64)
+        course_test3.save()
+        teacher_course3 = CourseTeacher(course=course_test3, teacher=teacher_test)
+        teacher_course3.save()
+        comment_test = Comment(course=course_test, user=user_test, content="yes!", zan=0, cai=0)
+        comment_test.save()
+        comment_test2 = Comment(course=course_test2, user=user_test, content="yes!!", zan=0, cai=0)
+        comment_test2.save()
+        comment_test3 = Comment(course=course_test3, user=user_test, content="yes!!!", zan=0, cai=0)
+        comment_test3.save()
+        self.assertEqual(user_test.comment_count(), 3)
+
 
 # 视图测试
 class AccountViewTests(TestCase):
@@ -166,7 +202,8 @@ class AccountViewTests(TestCase):
     def test_login_with_user_is_not_active(self):
         """
         如果未登陆则读取用户输入的数据
-        如果该用户未激活则返回message"请先激活账号!"
+        如果该用户未激活
+        则返回message"请先激活账号!"
         并重定向到激活页面
         """
         school_test = School(school_name="thu")
@@ -183,7 +220,8 @@ class AccountViewTests(TestCase):
     def test_login_with_username_not_exist(self):
         """
         如果未登陆则读取用户输入的数据
-        如果用户名不存在则返回message"用户名或密码错误"
+        如果用户名不存在
+        则返回message"用户名或密码错误"
         """
         response = client.post('/login/', {'username': 'user', 'password': '123456', 'is_rem': True})
         self.assertEqual(response.context['message'], "用户名或密码错误")
@@ -192,7 +230,8 @@ class AccountViewTests(TestCase):
     def test_login_with_wrong_password(self):
         """
         如果未登陆则读取用户输入的数据
-        如果密码错误则返回message"用户名或密码错误"
+        如果密码错误
+        则返回message"用户名或密码错误"
         """
         school_test = School(school_name="thu")
         school_test.save()
@@ -422,4 +461,27 @@ class AccountViewTests(TestCase):
         response = client.post('/register/', {'username': 'user_test', 'password': '123456',
                                               'password_confirm': '123456', 'school': school_test.id})
         self.assertEqual(response.context['message'], "请检查填写的内容！")
+        self.assertEqual(response.status_code, 200)
+
+    def test_userinfo_with_not_login(self):
+        """
+        没有登录则无法打开个人信息界面
+        并重定向到login界面
+        """
+        response = client.get('/account/userspace/')
+        self.assertRedirects(response, "/account/userspace/", status_code=302, target_status_code=200)
+
+    def test_userinfo_with_is_login(self):
+        """
+        测试登录状态下是否可成功打开个人信息页面
+        """
+        school_test = School(school_name="thu")
+        school_test.save()
+        department_test = Department(department_name="ce", school=school_test)
+        department_test.save()
+        user_test = User(username="user_test", password=make_password("123456"), email="test@126.com",
+                         school=school_test, department=department_test, is_active=True)
+        user_test.save()
+        client.post('/login/', {'username': 'user_test', 'password': '123456', 'is_rem': True})
+        response = client.get('/account/userspace/')
         self.assertEqual(response.status_code, 200)
