@@ -277,8 +277,9 @@ class AccountViewTests(TestCase):
         school_test = School(school_name="thu", email_addr="126.com")
         school_test.save()
         response = client.post('/register/', {'username': 'user_test', 'password': '123456',
-                                              'password_confirm': '123456', 'school': "thu",
+                                              'password_confirm': '123456', 'school': school_test.id,
                                               'email': 'test@126.com'})
+        self.assertEqual(response.context['message'], "两次输入的密码不同！")
         self.assertRedirects(response, "/confirm/", status_code=302, target_status_code=200)
 
     def test_register_with_wrong_password(self):
