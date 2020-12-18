@@ -9,8 +9,8 @@
 {% if request.session.is_login %}
 <div class="container">
   <div class="col-md-6 col-md-offset-3">
-    <form class='form-register' action="/register/" method="post">
-
+    <form class='form-register' action="{% url 'course:addcourse' %}" method="post">
+      {% csrf_token %}
       <p style="height: 100px;"></p>
       {% if message %}
         <div class="alert alert-warning" style="height: 50px;">{{ message }}</div>
@@ -20,39 +20,43 @@
 
         <h1 class="text-center">添加课程</h1>
         <div class="form-group col-md-12 col-xs-12">
-          <h5><strong><span style="color:#2b4f7c;">* </span>课程名：</strong></h5>
-          <input type="text" class="form-control" id="courname" >
+          <h5><strong><span style="color:#2b4f7c;">* </span>{{ course_form.course_name.label }}</strong></h5>
+          {{ course_form.course_name }}
         </div>
         <div class="form-group col-md-12">
-          <h5><strong><span style="color:#2b4f7c;">* </span>学校：</strong></h5>
-          <input type="text" class="form-control col-md-11" id="sch">
+          <h5><strong><span style="color:#2b4f7c;">* </span>{{ course_form.school.label }}</strong></h5>
+          {{ course_form.school }}
         </div>
         <div class="form-group col-md-12">
-          <h5><strong><span style="color:#2b4f7c;">* </span>开课院系：</strong></h5>
-          <input type="text" class="form-control" id="col" >
+          <h5><strong><span style="color:#2b4f7c;">* </span>{{ course_form.department.label }}</strong></h5>
+          {{ course_form.department }}
         </div>
         <div class="form-group col-md-12">
-          <h5><strong><span style="color:#2b4f7c;">* </span>任课教师：</strong></h5>
-          <input type="text" class="form-control" id="te" >
+          <h5><strong><span style="color:#2b4f7c;">* </span>{{ course_form.teacher.label }}</strong></h5>
+          {{ course_form.teacher }}
         </div>
         <div class="form-group col-md-12">
-          <h5><strong>&nbsp课程号：</strong></h5>
+          <h5><strong>{{ course_form.course_id.label }}</strong></h5>
           <!-- 只能输入数字、小数点(.)和减号(-) -->
+<<<<<<< HEAD
           <input type="char" class="form-control" id="courid" onKeyPress="if (event.keyCode!=45 && (event.keyCode<48 || event.keyCode>57)) event.returnValue=false" placeholder="只能输入数字和 ‘-’">
+=======
+          {{ course_form.course_id }}
+>>>>>>> 44d7aedf34bf0ef100252be9b137ad7ab9e49b36
         </div>
         <div class="form-group col-md-6 col-xs-6">
-          <h5><strong><span style="color:#2b4f7c;">* </span>学分：</strong></h5>
+          <h5><strong><span style="color:#2b4f7c;">* </span>{{ course_form.credit.label }}</strong></h5>
           <!-- 只能输入数字、小数点(.) -->
-          <input type="text" class="form-control" id="cred" onKeyPress="if (event.keyCode!=46 && (event.keyCode<48 || event.keyCode>57)) event.returnValue=false" placeholder="只能输入整数或小数">
+          {{ course_form.credit }}
         </div>
         <div class="form-group col-md-6 col-xs-6">
-          <h5><strong><span style="color:#2b4f7c;">* </span>学时：</strong></h5>
+          <h5><strong><span style="color:#2b4f7c;">* </span>{{ course_form.hour.label }}</strong></h5>
           <!-- 只能输入数字、小数点(.) -->
-          <input type="text" class="form-control" id="hour" onKeyPress="if (event.keyCode!=46 && (event.keyCode<48 || event.keyCode>57)) event.returnValue=false" placeholder="只能输入整数或小数">
+          {{ course_form.hour }}
         </div>
         <div class="form-group col-md-12 col-xs-12">
-          <h5><strong>&nbsp先修要求</strong></h5>
-          <textarea class="form-control" id="pre" rows="3"></textarea>
+          <h5><strong>{{ course_form.pre_course.label }}</strong></h5>
+          {{ course_form.pre_course }}
         </div>
 
       <!-- buttons -->

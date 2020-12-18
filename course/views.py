@@ -31,21 +31,28 @@ def addcourse(request):
 
             same_department = Department.objects.filter(department_name = department)
             if same_department:
-                department = department[0]
+                department = same_department[0]
             else:
                 department = Department.objects.create(department_name = department, school = school)
             
             same_teacher = Teacher.objects.filter(teacher_name = teacher, department = department)
             if same_teacher:
-                teacher = teacher[0]
+                teacher = same_teacher[0]
             else:
                 teacher = Teacher.objects.create(teacher_name = teacher, department = department)
             
-            course = Course.objects.create(course_name=course_name, course_id=course_id,
-                                           school=school, department=department,
-                                           credit=credit, hour=hour,
-                                           pre_course=pre_course)
+            if course_id == '':
+                course = Course.objects.create(course_name=course_name, school=school, 
+                                               department=department,
+                                               credit=credit, hour=hour,
+                                               pre_course=pre_course)
+            else:
+                course = Course.objects.create(course_name=course_name, course_id=course_id,
+                                               school=school, department=department,
+                                               credit=credit, hour=hour,
+                                               pre_course=pre_course)
             CourseTeacher.objects.create(course = course, teacher = teacher)
+            return redirect("/course/" + str(course.id))
             
         return render(request, 'course/addcourse.html', locals())
     course_form = CourseForm()
