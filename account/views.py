@@ -110,7 +110,6 @@ def register(request):
             
             same_email_user = models.User.objects.filter(email=email)
             if same_email_user:
-                print(username, password, password_confirm, school, email)  
                 message = '该邮箱地址已被注册，请使用别的邮箱！'
                 return render(request, 'account/register.html', locals())
 
@@ -155,8 +154,10 @@ def confirm(request):
     return render(request, "account/emailcerti.html", locals())
 
 def userinfo(request):
+    if not request.session.get('is_login', None):
+        return redirect("/login/")
 
     search_form = SearchForm()
     small_search_form = SmallSearchForm()
-    
+
     return render(request, 'account/userspace.html', locals())
