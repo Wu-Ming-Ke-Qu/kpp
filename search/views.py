@@ -15,5 +15,4 @@ def index(request):
         search_form = SearchForm()
         small_search_form = SmallSearchForm()
         return render(request, "search/search-result.html", locals())
-    
     return HttpResponse("OK")

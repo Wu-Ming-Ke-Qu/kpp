@@ -10,7 +10,7 @@ class CourseForm(forms.Form):
     course_id = forms.CharField(label="课程号",
                                 max_length=128,
                                 widget=forms.TextInput(attrs={'class':'form-control'}))
-    school = forms.ModelField(label="课程号",
-                                max_length=128,
-                                widget=forms.TextInput(attrs={'class':'form-control'}))
+    #school = forms.ModelChoiceField(label="课程号",
+    #                           max_length=128,
+    #                            widget=forms.TextInput(attrs={'class':'form-control'}))
     
