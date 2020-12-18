@@ -1,12 +1,10 @@
 from django.test import TestCase
 from django.test import Client
-from django.urls import reverse
 from account.models import User
 from school.models import School, Department, Teacher
 from course.models import Course, CourseTeacher
 from comment.models import Comment
-from vote.models import Vote
-from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.hashers import make_password
 
 # create an instance of the client for our use
 client = Client()
@@ -16,7 +14,7 @@ client = Client()
 
 
 # 模型测试
-class CommentModelTests(TestCase):
+class CourseModelTests(TestCase):
 
     def test_course_comment_count(self):
         """
