@@ -6,10 +6,8 @@ from school.models import School, Department, Teacher
 from course.models import Course, CourseTeacher
 from comment.models import Comment
 from vote.models import Vote
-from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.hashers import make_password
 from .models import User
-from .models import EmailVerify
-from .views import send_email
 
 # create an instance of the client for our use
 client = Client()
@@ -424,11 +422,4 @@ class AccountViewTests(TestCase):
         response = client.post('/register/', {'username': 'user_test', 'password': '123456',
                                               'password_confirm': '123456', 'school': school_test.id})
         self.assertEqual(response.context['message'], "请检查填写的内容！")
-        self.assertEqual(response.status_code, 200)
-
-    def test_useinfo(self):
-        """
-        测试个人用户信息界面是否可以成功打开
-        """
-        response = client.get("account/userspace/")
         self.assertEqual(response.status_code, 200)
