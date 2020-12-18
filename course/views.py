@@ -1,8 +1,10 @@
 from django.shortcuts import render
+from .forms import CourseForm
 
 # Create your views here.
 def addcourse(request):
-    return render(request, 'course/addcourse.html')
+    course_form = CourseForm()
+    return render(request, 'course/addcourse.html', locals())
 
 def courseinfo(request, course_id):
     return render(request, 'course/course.html')

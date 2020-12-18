@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'school',
     'account',
+    'search',
     'course',
     'comment',
     'vote',
@@ -131,6 +132,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.126.com'
 EMAIL_PORT = 25
 EMAIL_HOST_USER = 'kepingping2020@126.com'
-EMAIL_HOST_PASSWORD = 'GLKTJULVSQVMHBVE'
+EMAIL_HOST_PASSWORD = 'BPHWSTXRCRDSTJDY'
 
 CONFIRM_DAYS = 7

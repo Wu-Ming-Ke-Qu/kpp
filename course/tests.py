@@ -1,10 +1,16 @@
 from django.test import TestCase
+from django.test import Client
+from django.urls import reverse
 from account.models import User
 from school.models import School, Department, Teacher
 from course.models import Course, CourseTeacher
 from comment.models import Comment
 from vote.models import Vote
 from django.contrib.auth.hashers import make_password, check_password
+
+# create an instance of the client for our use
+client = Client()
+
 
 # Create your tests here.
 
@@ -42,3 +48,25 @@ class CommentModelTests(TestCase):
 
 
 # 视图测试
+class CourseViewTests(TestCase):
+
+    def test_add_course(self):
+        """
+        测试添加课程页面是否可以成功打开
+        """
+        response = client.get("/course/addcourse/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_course_info(self):
+        """
+        测试课程信息页面是否可以成功打开
+        """
+        response = client.get("/course/1")
+        self.assertEqual(response.status_code, 200)
+
+    def test_change_course_info(self):
+        """
+        测试修改课程信息页面是否可以成功打开
+        """
+        response = client.get("/course/changecourseinfo/")
+        self.assertEqual(response.status_code, 200)

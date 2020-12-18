@@ -61,7 +61,7 @@ def login(request):
                             request.session.set_expiry(12 * 3600)
                         return redirect("/")
                     else:
-                        message = "请先激活账号！"
+                        message = "请先激活账号!"
                         # TODO: 此处增加一个重定向
                 else:
                     message = "用户名或密码错误"
@@ -92,35 +92,39 @@ def register(request):
             password_confirm = register_form.cleaned_data['password_confirm']
             school = register_form.cleaned_data['school']
             email = register_form.cleaned_data['email']
+            
             if password != password_confirm:
                 message = "两次输入的密码不同！"
+                register_form = RegisterForm()
                 return render(request, 'account/register.html', locals())
-            else:
-                same_name_user = models.User.objects.filter(username=username)
-                if same_name_user:
-                    message = '用户已经存在，请重新选择用户名！'
-                    return render(request, 'account/register.html', locals())
 
-                same_email_user = models.User.objects.filter(email=email)
-                if same_email_user:
-                    message = '该邮箱地址已被注册，请使用别的邮箱！'
-                    return render(request, 'account/register.html', locals())
+            same_name_user = models.User.objects.filter(username=username)
+            if same_name_user:
+                message = '用户已经存在，请重新选择用户名！'
+                return render(request, 'account/register.html', locals())
+            
+            same_email_user = models.User.objects.filter(email=email)
+            
+            if same_email_user:
+                print(username, password, password_confirm, school, email)  
+                message = '该邮箱地址已被注册，请使用别的邮箱！'
+                return render(request, 'account/register.html', locals())
 
-                if school.email_addr != email.split("@")[-1]:
-                    message = "邮箱域名错误！请使用本学校edu邮箱！"
-                    return render(request, 'account/register.html', locals())
+            if school.email_addr != email.split("@")[-1]:
+                message = "邮箱域名错误！请使用本学校edu邮箱！"
+                return render(request, 'account/register.html', locals())
 
-                models.User.objects.create(
-                    username=username,
-                    password=make_password(password),
-                    email = email,
-                    school = school)
-
-                code = generate_code(30)
-                send_email(email, code)
-                models.EmailVerify.objects.create(email=email, code=code, send_type="r")
-
-                return redirect('/confirm/')
+            models.User.objects.create(
+                username=username,
+                password=make_password(password),
+                email = email,
+                school = school)
+            
+            code = generate_code(30)
+            send_email(email, code)
+            models.EmailVerify.objects.create(email=email, code=code, send_type="r")
+            return redirect('/confirm/')
+        return render(request, 'account/register.html', locals())
 
     register_form = RegisterForm()
     return render(request, 'account/register.html', locals())
@@ -139,7 +143,7 @@ def confirm(request):
         except ObjectDoesNotExist:
             pass
         return redirect('/login/')
-    return redirect('/register/')
+    return render(request, "account/emailcerti.html", locals())
 
 def userinfo(request):
     return render(request, 'account/userspace.html', locals())

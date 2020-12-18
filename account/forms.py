@@ -4,10 +4,10 @@ from school.models import School
 class UserForm(forms.Form):
     username = forms.CharField(label="用户名",
                                max_length=128, 
-                               widget=forms.TextInput(attrs={"class": 'form-control'}))
+                               widget=forms.TextInput(attrs={"class": 'form-control', 'style': 'border-radius: 5px;'}))
     password = forms.CharField(label="密码", 
                                max_length=256, 
-                               widget=forms.PasswordInput(attrs={"class": 'form-control'}))
+                               widget=forms.PasswordInput(attrs={"class": 'form-control', 'style': 'border-radius: 5px;'}))
     is_rem = forms.BooleanField(required=False)
 
 class RegisterForm(forms.Form):
