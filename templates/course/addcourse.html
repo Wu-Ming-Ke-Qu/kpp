@@ -38,11 +38,7 @@
         <div class="form-group col-md-12">
           <h5><strong>{{ course_form.course_id.label }}</strong></h5>
           <!-- 只能输入数字、小数点(.)和减号(-) -->
-<<<<<<< HEAD
-          <input type="char" class="form-control" id="courid" onKeyPress="if (event.keyCode!=45 && (event.keyCode<48 || event.keyCode>57)) event.returnValue=false" placeholder="只能输入数字和 ‘-’">
-=======
           {{ course_form.course_id }}
->>>>>>> 44d7aedf34bf0ef100252be9b137ad7ab9e49b36
         </div>
         <div class="form-group col-md-6 col-xs-6">
           <h5><strong><span style="color:#2b4f7c;">* </span>{{ course_form.credit.label }}</strong></h5>
