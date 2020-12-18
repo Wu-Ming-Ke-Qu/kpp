@@ -180,6 +180,7 @@
           var str = content.innerHTML;
           //定义一个变量，表示当前状态
           var onOff = true; //true表示展示
+          content.innerHTML = ""
           btn.innerHTML = "评论被折叠，点击显示";
           btn.onclick = function() {
             if(!onOff) {
