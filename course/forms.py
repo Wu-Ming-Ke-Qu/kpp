@@ -8,8 +8,10 @@ class CourseForm(forms.Form):
                                   widget=forms.TextInput(attrs={'class':'form-control'}))
     course_id = forms.CharField(label="课程号",
                                 max_length=128,
+                                required=False,
                                 widget=forms.TextInput(attrs={'class':'form-control'}))
     school = forms.ModelChoiceField(queryset=School.objects.all(),
+                                    label="学校",
                                     widget=forms.Select(attrs={'class':'form-control'}))
     department = forms.CharField(label="院系",
                                  max_length=128,
