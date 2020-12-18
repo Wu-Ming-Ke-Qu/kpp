@@ -63,7 +63,7 @@
    <!-- comments area start-->
    <!-- latest comments begin-->
    <div class="comments-area">
-     <h4 class="bg-white">最新评论</h4>
+     <h4 class="bg-white">最新评论({{new_number}})</h4>
      <hr/>
 
      {% for comment in new_comments %}
@@ -144,7 +144,7 @@
    <!-- all comments start-->
   {% if request.session.is_login %}
   <div class="comments-area">
-     <h4 class="bg-white">全部评论(all_number)</h4>
+     <h4 class="bg-white">全部评论({{all_number}})</h4>
      <hr/>
      {% for comment in all_comments %}
      <!-- a comment begin -->
