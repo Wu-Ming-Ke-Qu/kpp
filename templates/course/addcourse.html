@@ -5,12 +5,18 @@
 {% block content %}
 
 
+
 {% if request.session.is_login %}
 <div class="container">
   <div class="col-md-6 col-md-offset-3">
     <form class='form-register' action="/register/" method="post">
 
-        <p style="height: 120px;"></p>
+      <p style="height: 100px;"></p>
+      {% if message %}
+        <div class="alert alert-warning" style="height: 50px;">{{ message }}</div>
+      {% endif %}
+      
+      <p style="height: 50px;"></p>
 
         <h1 class="text-center">添加课程</h1>
         <div class="form-group col-md-12 col-xs-12">
