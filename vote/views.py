@@ -7,3 +7,6 @@ def like(request, comment_id):
 
 def dislike(request, comment_id):
     return HttpResponse("OK")
+
+def clear(request, comment_id):
+    return HttpResponse("OK")
