@@ -18,22 +18,22 @@
      <div class="row clearfix">
        <div class="col-md-5 column">
          <!-- <span class="banner-thumbnail"> -->
-         <img src="../static/img/wordcloud.png" alt="wordcloud" class="banner-thumbnail">
+         <img src="../static/img/{{course_name}}.png" alt="wordcloud" class="banner-thumbnail">
          <!-- </span> -->
        </div>
        <div class="col-md-4 column">
-         <span class="banner-name"><strong>一二三四五六七八</strong></span>
-         <h4>清华大学 董渊</h4>
+         <span class="banner-name"><strong>{{course_name}}</strong></span>
+         <h4>{{couse_teacher_info}}</h4>
          <span class="banner-details">
            <ul class="list-unstyled">
              <li>
-               学分：3
+               学分：{{course_credit}}
              </li>
              <li>
-               学时: 48
+               学时: {{course_hours}}
              </li>
              <li>
-               先修课程：程序设计基础
+               先修课程：{{precourse}}
              </li>
            </ul>
          </span>
@@ -65,27 +65,28 @@
    <div class="comments-area">
      <h4 class="bg-white">最新评论</h4>
      <hr/>
- 
+
+     {% for comment in new_comments %}
      <!-- a comment begin -->
      <div class="panel panel-default">
       <div class="panel-heading">
         <div class="row clearfix">
           <div class="col-md-9 col-xs-6 column">
-            <span><a href="#">用户@996</a></span>
+            <span><a href="#">{{comment.user}}</a></span>
             <span>发布于</span>
-            <span style="color:#777;">2020-10-08 19:50</span>
+            <span style="color:#777;">{{comment.time}}</span>
             <span>获赞：</span>
-            <span style="color:#777;">10</span>
+            <span style="color:#777;">{{comment.like}}</span>
             <span>被踩：</span>
-            <span style="color:#777;">100</span>
+            <span style="color:#777;">{{comment.dislike}}</span>
           </div>
         </div>
       </div>
       <div class="panel-body">
-        <p>怀新资讯12月8日消息，据报道，三星Galaxy S21系列已通过巴西监管机构ANATEL的入网销售认证，三款Galaxy S21手机都取消了附赠充电器和耳机。分析认为，随着苹果、三星两大厂的率先取消附赠充电器及耳机，不排除后续仍有大厂跟随，三方快充头将成为明年重要的需求方向，并迎来重大发展机遇。A股公司中，海能实业已自主研发出快充氮化镓产品；富满电子有可搭配氮化镓的中高功率主控芯片，与OPPO协作研发氮化镓充电器产品。</p>
+        <p>{{comment.content}}</p>
         <div class="form pull-right">
           <div class="btn-group" role="group" aria-label="...">
-            {% if islike %}
+            {% if comment.islike %}
               <button type="button" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="color: blue;"></span> 已点赞
               </button>
@@ -94,50 +95,7 @@
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 点赞
               </button>
             {% endif %}
-            {% if isunlike %}
-              <button type="button" class="btn btn-default btn-sm">
-                <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" style="color: red;"></span> 已踩
-              </button>
-            {% else %}
-              <button type="button" class="btn btn-default btn-sm">
-                <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> 踩
-              </button>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </div>
-     <!-- a comment end -->
- 
-     <!-- a fold comment begin -->
-     <div class="panel panel-default">
-      <div class="panel-heading">
-        <div class="row clearfix">
-          <div class="col-md-9 col-xs-6 column">
-            <span><a href="#">用户@996</a></span>
-            <span>发布于</span>
-            <span style="color:#777;">2020-10-08 19:50</span>
-            <span>获赞：</span>
-            <span style="color:#777;">10</span>
-            <span>被踩：</span>
-            <span style="color:#777;">100</span>
-          </div>
-        </div>
-      </div>
-      <div class="panel-body" id="content">
-        <p>怀新资讯12月8日消息，据报道，三星Galaxy S21系列已通过巴西监管机构ANATEL的入网销售认证，三款Galaxy S21手机都取消了附赠充电器和耳机。分析认为，随着苹果、三星两大厂的率先取消附赠充电器及耳机，不排除后续仍有大厂跟随，三方快充头将成为明年重要的需求方向，并迎来重大发展机遇。A股公司中，海能实业已自主研发出快充氮化镓产品；富满电子有可搭配氮化镓的中高功率主控芯片，与OPPO协作研发氮化镓充电器产品。</p>
-        <div class="form pull-right">
-          <div class="btn-group" role="group" aria-label="...">
-            {% if islike %}
-              <button type="button" class="btn btn-default btn-sm">
-                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="color: blue;"></span> 已点赞
-              </button>
-            {% else %}
-              <button type="button" class="btn btn-default btn-sm">
-                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 点赞
-              </button>
-            {% endif %}
-            {% if isunlike %}
+            {% if comment.isunlike %}
               <button type="button" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" style="color: red;"></span> 已踩
               </button>
@@ -174,40 +132,41 @@
            onOff = !onOff;
            return false;
          }
-
         </script>
       </a>
     </div>
-       
+     <!-- a comment end -->
+     {% endfor %}
      <!-- a fold comment end -->
    </div>
    <!-- latest comments end-->
  
    <!-- all comments start-->
-   {% if request.session.is_login %}
-   <div class="comments-area">
-     <h4 class="bg-white">全部评论(20)</h4>
+  {% if request.session.is_login %}
+  <div class="comments-area">
+     <h4 class="bg-white">全部评论(all_number)</h4>
      <hr/>
+     {% for comment in all_comments %}
      <!-- a comment begin -->
      <div class="panel panel-default">
       <div class="panel-heading">
         <div class="row clearfix">
           <div class="col-md-9 col-xs-6 column">
-            <span><a href="#">用户@996</a></span>
+            <span><a href="#">comment.user</a></span>
             <span>发布于</span>
-            <span style="color:#777;">2020-10-08 19:50</span>
+            <span style="color:#777;">comment.time</span>
             <span>获赞：</span>
-            <span style="color:#777;">10</span>
+            <span style="color:#777;">comment.like</span>
             <span>被踩：</span>
-            <span style="color:#777;">100</span>
+            <span style="color:#777;">comment.dislike</span>
           </div>
         </div>
       </div>
       <div class="panel-body">
-        <p>怀新资讯12月8日消息，据报道，三星Galaxy S21系列已通过巴西监管机构ANATEL的入网销售认证，三款Galaxy S21手机都取消了附赠充电器和耳机。分析认为，随着苹果、三星两大厂的率先取消附赠充电器及耳机，不排除后续仍有大厂跟随，三方快充头将成为明年重要的需求方向，并迎来重大发展机遇。A股公司中，海能实业已自主研发出快充氮化镓产品；富满电子有可搭配氮化镓的中高功率主控芯片，与OPPO协作研发氮化镓充电器产品。</p>
+        <p>comment.content</p>
         <div class="form pull-right">
           <div class="btn-group" role="group" aria-label="...">
-            {% if islike %}
+            {% if comment.islike %}
               <button type="button" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="color: blue;"></span> 已点赞
               </button>
@@ -216,7 +175,7 @@
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 点赞
               </button>
             {% endif %}
-            {% if isunlike %}
+            {% if comment.isunlike %}
               <button type="button" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" style="color: red;"></span> 已踩
               </button>
@@ -233,7 +192,7 @@
   </div>
   {% else %}
   <div class="comments-area">
-    <h4 class="bg-white">全部评论(20)</h4>
+    <h4 class="bg-white">全部评论(all_number)</h4>
     <hr />
 
     <p>请在登录后查看
