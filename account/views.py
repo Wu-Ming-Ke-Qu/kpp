@@ -8,7 +8,7 @@ from django.core.mail import EmailMultiAlternatives, message
 from django.conf import settings
 
 from . import models
-from .forms import ChangePWForm, UserForm, RegisterForm
+from .forms import ChangePWForm, FindPWForm, ForgetPWForm, UserForm, RegisterForm
 from search.forms import SearchForm, SmallSearchForm
 
 # Create your views here.
@@ -23,6 +23,23 @@ def send_email(email, code):
     html_content = '''<p>感谢注册<a href="http://{}/confirm/?code={}" target=blank>课评评网站</a>，\
                     在这里你可以匿名地分享、吐槽课程！</p>
                     <p>请点击<a href="http://{}/confirm/?code={}" target=blank>这里</a>完成注册确认！</p>
+                    <p>此链接有效期为{}天！</p>'''.format(
+                        '127.0.0.1:8000', 
+                        code, 
+                        '127.0.0.1:8000',
+                        code,
+                        settings.CONFIRM_DAYS)
+    msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_HOST_USER, [email])
+    msg.attach_alternative(html_content, "text/html")
+    return msg.send()
+
+def send_forgetpw_email(email, code):
+    subject = '课评评网站找回密码'
+    text_content = '''感谢您使用课评评，在这里你可以匿名地分享、吐槽课程，\
+                      如果您看到这条消息，说明你的邮箱服务器不提供HTML链接功能，请联系管理员！'''
+    html_content = '''<p>感谢您使用<a href="http://{}/account/findpw/?code={}" target=blank>课评评网站</a>，\
+                    在这里你可以匿名地分享、吐槽课程！</p>
+                    <p>请点击<a href="http://{}/account/findpw/?code={}" target=blank>这里</a>完成密码找回！</p>
                     <p>此链接有效期为{}天！</p>'''.format(
                         '127.0.0.1:8000', 
                         code, 
@@ -146,7 +163,7 @@ def confirm(request):
         code = request.GET.get("code")
         try:
             right = models.EmailVerify.objects.get(code=code)
-            if right.is_valid:
+            if right.is_valid():
                 right_user = models.User.objects.get(email=right.email)
                 right_user.is_active = True
                 right_user.save()
@@ -154,12 +171,14 @@ def confirm(request):
                 request.session['user_id'] = right_user.id
                 request.session['user_name'] = right_user.username
                 request.session['user_school'] = right_user.school.school_name
+                right.delete()
                 return redirect('/account/certisuccess/')
             else:
                 right_user = models.User.objects.get(email=right.email)
                 request.session['user_id'] = right_user.id
                 request.session['user_name'] = right_user.username
                 request.session['user_school'] = right_user.school.school_name
+                right.delete()
                 return redirect('/account/emailcert/')
         except ObjectDoesNotExist:
             pass
@@ -256,3 +275,80 @@ def change_passwd(request):
 
     changepw_form = ChangePWForm()
     return render(request, 'account/changepw.html', locals())
+
+def forget_passwd(request):
+    if request.session.get('is_login', None):
+        return redirect("/")
+
+    search_form = SearchForm()
+    small_search_form = SmallSearchForm()
+
+    if request.method == "POST":
+        forgetpw_form = ForgetPWForm(request.POST)
+        message = "请检查填写的内容！"
+        if forgetpw_form.is_valid():
+            email_addr = forgetpw_form.cleaned_data['email_addr']
+            try:
+                user = models.User.objects.get(email=email_addr)
+                code = generate_code(30)
+                models.EmailVerify.objects.create(email=email_addr, code=code, send_type="f")
+                send_forgetpw_email(email_addr, code)
+                message = "邮件已发送，请移步到收件箱继续操作！"
+                return render(request, 'account/pwforget.html', locals())
+            except ObjectDoesNotExist:
+                message = "该邮箱未注册！"
+                return render(request, 'account/pwforget.html', locals())
+        else:
+            return render(request, 'account/pwforget.html', locals()) 
+
+    forgetpw_form = ForgetPWForm()
+    return render(request, 'account/pwforget.html', locals()) 
+
+def find_passwd(request):
+    if request.session.get('is_login', None):
+        return redirect("/")
+    
+    search_form = SearchForm()
+    small_search_form = SmallSearchForm()
+
+    if request.method == "POST":
+        findpw_form = FindPWForm(request.POST)
+        message = "请检查填写的内容！"
+        if findpw_form.is_valid():
+            new_password = findpw_form.cleaned_data['new_password']
+            confirm_password = findpw_form.cleaned_data['confirm_password']
+            if new_password != confirm_password:
+                message = "两次输入密码不同！"
+                return redirect("/account/forgetpw/")
+            
+            code = request.POST['code']
+            target = models.EmailVerify.objects.get(code=code)
+            if target.is_valid():
+                user = models.User.objects.get(email=target.email)
+                user.password = make_password(new_password)
+                user.save()
+                target.delete()
+                return redirect("/login/")
+            else:
+                target.delete()
+                return redirect("/account/forgetpw/")
+        else:
+            return redirect("/account/forgetpw/")
+
+    if request.method == "GET":
+        try:
+            code = request.GET['code']
+        except Exception:
+            return redirect("/login/")
+        try:
+            target = models.EmailVerify.objects.get(code=code)
+            if target.is_valid():
+                user = models.User.objects.get(email=target.email)
+                findpw_form = FindPWForm()
+                return render(request, "account/pwfind.html", locals())
+            else:
+                target.delete()
+                return redirect("/login/")
+        except ObjectDoesNotExist:
+            print("AAA")
+            return redirect("/login/")

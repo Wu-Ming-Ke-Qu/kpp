@@ -38,3 +38,17 @@ class ChangePWForm(forms.Form):
     confirm_password = forms.CharField(label="确认新密码",
                                        max_length=256,
                                        widget=forms.PasswordInput(attrs={'class':'form-control'}))
+
+class ForgetPWForm(forms.Form):
+    email_addr = forms.EmailField(label="邮箱地址",
+                                  widget=forms.EmailInput(attrs={'class': 'form-control',
+                                                                 'placeholder': "请输入注册时使用的邮箱"}))
+
+class FindPWForm(forms.Form):
+    new_password = forms.CharField(label="新密码",
+                                   max_length=256,
+                                   widget=forms.PasswordInput(attrs={'class':'form-control'}))
+    
+    confirm_password = forms.CharField(label="确认新密码",
+                                       max_length=256,
+                                       widget=forms.PasswordInput(attrs={'class':'form-control'}))
