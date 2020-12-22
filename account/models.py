@@ -7,7 +7,6 @@ from django.conf import settings
 
 from school.models import Department, School
 
-
 class User(models.Model):
     '''用户表'''
 

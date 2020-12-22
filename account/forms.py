@@ -25,3 +25,16 @@ class RegisterForm(forms.Form):
                                     widget=forms.Select(attrs={'class': 'form-control'}))
     email = forms.EmailField(label="邮箱地址", 
                              widget=forms.EmailInput(attrs={'class': 'form-control'}))
+
+class ChangePWForm(forms.Form):
+    old_password = forms.CharField(label="旧密码",
+                                   max_length=256,
+                                   widget=forms.PasswordInput(attrs={'class':'form-control'}))
+
+    new_password = forms.CharField(label="新密码",
+                                   max_length=256,
+                                   widget=forms.PasswordInput(attrs={'class':'form-control'}))
+    
+    confirm_password = forms.CharField(label="确认新密码",
+                                       max_length=256,
+                                       widget=forms.PasswordInput(attrs={'class':'form-control'}))

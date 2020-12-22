@@ -33,5 +33,10 @@ def addcomment(request, course_id):
     return redirect("/course/" + str(course_id))
 
 def rmcomment(request, comment_id):
-    Comment.objects.get(pk=comment_id).delete()
+    if not request.session.get("is_login", None):
+        return redirect('/login/')
+    
+    comment = Comment.objects.get(pk=comment_id)
+    if comment.user.id == request.session["user_id"]:
+        comment.delete()
     return HttpResponse("OK")

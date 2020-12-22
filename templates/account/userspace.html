@@ -6,8 +6,28 @@
  {% load static %}
  {% block title %}个人空间丨课评评{% endblock%}
  {% block css %}
- <link rel="stylesheet" href="{% static 'css/style.css' %}">
-{% endblock %}
+ <link rel="stylesheet" href="{% static 'css/base.css' %}">
+ {% endblock %}
+
+ {% block javascript %}
+ <script>
+   function sendData(data) {
+    var XHR = new XMLHttpRequest();
+    var FD  = new FormData();
+    for(name in data) {
+      FD.append(name, data[name]);
+    }
+    XHR.addEventListener('load', function(event) {
+      location.reload();
+    });
+    XHR.addEventListener('error', function(event) {
+      location.reload();
+    });
+    XHR.open("GET", "/comment/rmcomment/" + data['comment_id']);
+    XHR.send(FD);
+  }
+ </script>
+ {% endblock %}
 
  {% block content %}
  <div class="container">
@@ -47,7 +67,7 @@
              </div>
              <div class="form-group">
                <label for="user_profile_name">邮箱</label>
-               <input class="form-control" id="disabledInput" type="text" placeholder="{{user.mail}}" disabled>
+               <input class="form-control" id="disabledInput" type="text" placeholder="{{user.email}}" disabled>
              </div>
            </form>
          </div>
@@ -63,8 +83,7 @@
            账户安全
          </h1>
        </div>
-      <!-- TODO:链接到修改密码页面 -->
-       <a href="#" class="btn btn-default">修改密码</a>
+       <a href="/account/changepw/" class="btn btn-default">修改密码</a>
        <!-- security part end -->  
  
        <!-- my comments start -->
@@ -82,16 +101,16 @@
          </div>
          <div class="form-group">
            <span>获赞总数：</span>
-           <span style="color:#777;">{{user.approve_count}}</span>
+           <span style="color:#777;">{{user.total_approve}}</span>
          </div>
          <div class="form-group">
            <span>被踩总数：</span>
-           <span style="color:#777;">{{user.disapprove_count}}</span>
+           <span style="color:#777;">{{user.total_disapprove}}</span>
          </div>
        </form>
        <!-- overall comments info end -->
        
-       {% for comment in user.comment_list %}
+       {% for comment in comment_list %}
         <!-- one of my comments start -->
         <form class="clearfix">
           <div class="head">
@@ -99,7 +118,7 @@
               <span>发布日期：</span>
               <span style="color:#777;">{{comment.c_time}}</span>
               <span>评论课程：</span>
-              <span style="color:#777;"><a href="#">{{comment.course}}</a></span>
+              <span style="color:#777;"><a href="{% url 'course:courseinfo' comment.course.id %}">{{comment.course.course_name}}</a></span>
               <span>获赞数：</span>
               <span style="color:#777;">{{comment.approve_count}}</span>
               <span>被踩数：</span>
@@ -116,7 +135,7 @@
             <span>评论内容：</span>
             <p>{{comment.content}}</p>
           </div>
-          <a type="submit" class="btn btn-default">删除该评论</a>
+          <a type="submit" class="btn btn-default" onclick="sendData({'comment_id': {{comment.id}}})">删除该评论</a>
           <hr/>
         </form>
         <!-- one of my comments end-->
@@ -125,6 +144,5 @@
        <!-- my comments end -->
      </div>
    </div>
-
  </div>
  {% endblock %}

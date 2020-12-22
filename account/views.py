@@ -4,11 +4,11 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
-from django.core.mail import EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives, message
 from django.conf import settings
 
 from . import models
-from .forms import UserForm, RegisterForm
+from .forms import ChangePWForm, UserForm, RegisterForm
 from search.forms import SearchForm, SmallSearchForm
 
 # Create your views here.
@@ -179,8 +179,13 @@ def userinfo(request):
     if not request.session.get('is_login', None):
         return redirect("/login/")
 
+    user = models.User.objects.get(pk = request.session["user_id"])
     search_form = SearchForm()
     small_search_form = SmallSearchForm()
+
+    comment_list = []
+    for comment in user.comment_set.all():
+        comment_list.append(comment)
 
     return render(request, 'account/userspace.html', locals())
 
@@ -214,3 +219,40 @@ def send_email_again(request):
         models.EmailVerify.objects.create(email=email_addr, code=code, send_type="r")
         send_email(email_addr, code)
         return redirect("/")
+
+def change_passwd(request):
+    if not request.session.get('is_login', None):
+        return redirect("/")
+
+    search_form = SearchForm()
+    small_search_form = SmallSearchForm()
+
+    user = models.User.objects.get(pk=request.session['user_id'])
+
+    if request.method == "POST":
+        changepw_form = ChangePWForm(request.POST)
+        message = "请检查填写的内容！"
+
+        if changepw_form.is_valid():
+            old_password = changepw_form.cleaned_data['old_password']
+            new_password = changepw_form.cleaned_data['new_password']
+            confirm_password = changepw_form.cleaned_data['confirm_password']
+            if check_password(old_password, user.password):
+                if old_password == new_password:
+                    message = "新密码不能与旧密码相同！"
+                    return render(request, 'account/changepw.html', locals())
+                if new_password != confirm_password:
+                    message = "两次输入的密码不同！"
+                    return render(request, 'account/changepw.html', locals())
+                
+                user.password = make_password(new_password)
+                user.save()
+                return redirect("/account/")
+            else:
+                message = "密码错误！"
+                return render(request, 'account/changepw.html', locals())
+        else:
+            return render(request, 'account/changepw.html', locals())
+
+    changepw_form = ChangePWForm()
+    return render(request, 'account/changepw.html', locals())
