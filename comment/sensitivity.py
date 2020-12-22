@@ -3,7 +3,7 @@ class DFA:
         self.ban_words_set = set()
         self.ban_words_list = list()
         self.ban_words_dict = dict()
-        self.path = 'sensitive_words.txt'
+        self.path = 'comment/sensitive_words.txt'
         self.get_words()
 
     # 获取敏感词列表

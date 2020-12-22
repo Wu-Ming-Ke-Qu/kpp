@@ -1,6 +1,7 @@
 import random, string
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
 from django.core.mail import EmailMultiAlternatives
@@ -65,7 +66,10 @@ def login(request):
                         return redirect("/")
                     else:
                         message = "请先激活账号!"
-                        # TODO: 此处增加一个重定向
+                        request.session['user_id'] = user.id
+                        request.session['user_name'] = user.username
+                        request.session['user_school'] = user.school.school_name
+                        return redirect("/account/emailcert/")
                 else:
                     message = "用户名或密码错误"
             except ObjectDoesNotExist:
@@ -117,7 +121,7 @@ def register(request):
                 message = "邮箱域名错误！请使用本学校edu邮箱！"
                 return render(request, 'account/register.html', locals())
 
-            models.User.objects.create(
+            user = models.User.objects.create(
                 username=username,
                 password=make_password(password),
                 email = email,
@@ -127,7 +131,11 @@ def register(request):
             models.EmailVerify.objects.create(email=email, code=code, send_type="r")
             send_email(email, code)
             
-            return redirect('/confirm/')
+            request.session['user_id'] = user.id
+            request.session['user_name'] = user.username
+            request.session['user_school'] = user.school.school_name
+
+            return redirect('/account/emailcert/')
         return render(request, 'account/register.html', locals())
 
     register_form = RegisterForm()
@@ -142,9 +150,17 @@ def confirm(request):
                 right_user = models.User.objects.get(email=right.email)
                 right_user.is_active = True
                 right_user.save()
-                return redirect('/')
+                request.session['is_login'] = True
+                request.session['user_id'] = right_user.id
+                request.session['user_name'] = right_user.username
+                request.session['user_school'] = right_user.school.school_name
+                return redirect('/account/certisuccess/')
             else:
-                return redirect('/register/')
+                right_user = models.User.objects.get(email=right.email)
+                request.session['user_id'] = right_user.id
+                request.session['user_name'] = right_user.username
+                request.session['user_school'] = right_user.school.school_name
+                return redirect('/account/emailcert/')
         except ObjectDoesNotExist:
             pass
         return redirect('/login/')
@@ -167,3 +183,34 @@ def userinfo(request):
     small_search_form = SmallSearchForm()
 
     return render(request, 'account/userspace.html', locals())
+
+def email_cert(request):
+    if request.session.get('is_login', None): # 激活情况下不能再激活
+        return redirect("/")
+
+    user_id = request.session.get('user_id', None)
+    if user_id is not None:
+        user = models.User.objects.get(pk=user_id)
+        email_addr = user.email
+
+    search_form = SearchForm()
+    small_search_form = SmallSearchForm()
+
+    return render(request, 'account/emailcerti.html', locals())
+
+def send_email_again(request):
+    if request.session.get('is_login', None): # 激活情况下不能再激活
+        return redirect("/")
+    
+    user_id = request.session.get('user_id', None)
+    email_addr = None
+    if user_id is not None:
+        user = models.User.objects.get(pk=user_id)
+        email_addr = user.email
+    if email_addr is None:
+        return redirect('/login/')
+    else:
+        code = generate_code(30)
+        models.EmailVerify.objects.create(email=email_addr, code=code, send_type="r")
+        send_email(email_addr, code)
+        return redirect("/")
