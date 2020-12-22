@@ -1,15 +1,43 @@
-<!-- 
-  课程信息界面，用户已登陆
- -->
-
  {% extends 'base.html' %}
  {% load static %}
- {% block title %}软件工程丨课评评{% endblock %}
+ {% block title %}{{ course.course_name }}丨课评评{% endblock %}
  
  {% block css %}
  <link rel="stylesheet" href="{% static 'css/course.css' %}">
  {% endblock %}
+ {% block javascript %}
+  <script>
+  function sendData(data) {
+    var XHR = new XMLHttpRequest();
+    var FD  = new FormData();
 
+    // 把我们的数据添加到这个FormData对象中
+    for(name in data) {
+      FD.append(name, data[name]);
+    }
+
+    // 定义数据成功发送并返回后执行的操作
+    XHR.addEventListener('load', function(event) {
+      location.reload();
+    });
+
+    // 定义发生错误时执行的操作
+    XHR.addEventListener('error', function(event) {
+      location.reload();
+    });
+
+    // 设置请求地址和方法
+    if(data['attr'] === 'A')
+      XHR.open("GET", "/vote/like/" + data['comment_id']);
+    else if(data['attr'] === 'D')
+      XHR.open("GET", "/vote/dislike/" + data['comment_id']);
+    else 
+      XHR.open("GET", "/vote/clear/" + data['comment_id']);
+    // 发送这个formData对象,HTTP请求头会自动设置
+    XHR.send(FD);
+  }
+  </script>
+ {% endblock %}
  {% block content %}
  <p style="height: 50px;"></p>
  <div class="container">
@@ -30,11 +58,13 @@
                学分：{{ course.credit }}
              </li>
              <li>
-               学时: {{ course.hour }}
+               学时：{{ course.hour }}
              </li>
+             {% if course.pre_course %}
              <li>
                先修课程：{{ course.pre_course }}
              </li>
+             {% endif %}
            </ul>
          </span>
        </div>
@@ -44,14 +74,11 @@
            <a href="#add-comment" class="btn btn-primary col-md-8"
              role="button">发&nbsp;&nbsp;表&nbsp;&nbsp;评&nbsp;&nbsp;论</a>
            <p style="clear:both; height: 10px;"></p>
-           <!-- TODO:添加修改课程页面链接 -->
-           <!-- TODO:链接到课程信息界面 -->
-           <a href="{% url 'course:changecourseinfo' %}" class="btn btn-default col-md-8" role="button">修改课程信息</a>
+           <a href="{% url 'course:changecourseinfo' course.id %}" class="btn btn-default col-md-8" role="button">修改课程信息</a>
            {% else %}
            <span class="btn btn-primary col-md-8" role="button"
              disabled="disabled">发&nbsp;&nbsp;表&nbsp;&nbsp;评&nbsp;&nbsp;论</span>
            <p style="clear:both; height: 10px;"></p>
-           <!-- TODO:添加修改课程页面链接 -->
            <a class="btn btn-default col-md-8" role="button" disabled="disabled">修改课程信息</a>
            {% endif %}
          </span>
@@ -74,7 +101,7 @@
           <div class="col-md-9 col-xs-6 column">
             <span><a href="#">{{comment.user}}</a></span>
             <span>发布于</span>
-            <span style="color:#777;">{{comment.time}}</span>
+            <span style="color:#777;">{{comment.c_time}}</span>
             <span>获赞：</span>
             <span style="color:#777;">{{comment.like}}</span>
             <span>被踩：</span>
@@ -87,23 +114,21 @@
         <div class="form pull-right">
           <div class="btn-group" role="group" aria-label="...">
             {% if comment.islike %}
-              <button type="button" class="btn btn-default btn-sm">
+              <button type="button" class="btn btn-default btn-sm" onclick="sendData({'comment_id': {{comment.id}}, 'attr': 'C'})">
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="color: blue;"></span> 已点赞
               </button>
-            {% else %}
-              <button type="button" class="btn btn-default btn-sm">
-                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 点赞
-              </button>
-            {% endif %}
-            {% if comment.isunlike %}
-              <button type="button" class="btn btn-default btn-sm">
+            {% elif comment.isunlike %}
+              <button type="button" class="btn btn-default btn-sm" onclick="sendData({'comment_id': {{comment.id}}, 'attr': 'C'})">
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" style="color: red;"></span> 已踩
               </button>
             {% else %}
-              <button type="button" class="btn btn-default btn-sm">
+              <button type="button" class="btn btn-default btn-sm" onclick="sendData({'comment_id': {{comment.id}}, 'attr': 'A'})">
+                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 点赞
+              </button>
+              <button type="button" class="btn btn-default btn-sm" onclick="sendData({'comment_id': {{comment.id}}, 'attr': 'D'})">
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> 踩
               </button>
-            {% endif %}
+            {% endif %} 
           </div>
         </div>
       </div>
@@ -154,9 +179,9 @@
       <div class="panel-heading">
         <div class="row clearfix">
           <div class="col-md-9 col-xs-6 column">
-            <span><a href="#">comment.user</a></span>
+            <span><a href="#">{{ comment.user.username }}</a></span>
             <span>发布于</span>
-            <span style="color:#777;">{{comment.time}}</span>
+            <span style="color:#777;">{{comment.c_time}}</span>
             <span>获赞：</span>
             <span style="color:#777;">{{comment.like}}</span>
             <span>被踩：</span>
@@ -165,27 +190,25 @@
         </div>
       </div>
       <div class="panel-body">
-        <p>comment.content</p>
+        <p>{{comment.content}}</p>
         <div class="form pull-right">
           <div class="btn-group" role="group" aria-label="...">
             {% if comment.islike %}
-              <button type="button" class="btn btn-default btn-sm">
+              <button type="button" class="btn btn-default btn-sm" onclick="sendData({'comment_id': {{comment.id}}, 'attr': 'C'})">
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="color: blue;"></span> 已点赞
               </button>
-            {% else %}
-              <button type="button" class="btn btn-default btn-sm">
-                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 点赞
-              </button>
-            {% endif %}
-            {% if comment.isunlike %}
-              <button type="button" class="btn btn-default btn-sm">
+            {% elif comment.isunlike %}
+              <button type="button" class="btn btn-default btn-sm" onclick="sendData({'comment_id': {{comment.id}}, 'attr': 'C'})">
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" style="color: red;"></span> 已踩
               </button>
             {% else %}
-              <button type="button" class="btn btn-default btn-sm">
+              <button type="button" class="btn btn-default btn-sm" onclick="sendData({'comment_id': {{comment.id}}, 'attr': 'A'})">
+                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 点赞
+              </button>
+              <button type="button" class="btn btn-default btn-sm" onclick="sendData({'comment_id': {{comment.id}}, 'attr': 'D'})">
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> 踩
               </button>
-            {% endif %}
+            {% endif %} 
           </div>
         </div>
       </div>
@@ -237,7 +260,7 @@
   <!-- comments area end-->
 
   <!-- add comment start-->
-  <div class="comments-area">
+  <div id="add-comment" class="comments-area">
     <div class="row clearfix">
       <div class="col-md-12 column">
         <h4>发表评论</h4>

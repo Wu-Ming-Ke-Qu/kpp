@@ -1,4 +1,7 @@
+import datetime
+
 from django.db import models
+from django.utils import timezone
 
 from course.models import Course
 from account.models import User
@@ -12,6 +15,12 @@ class Comment(models.Model):
     zan = models.IntegerField(verbose_name="赞")
     cai = models.IntegerField(verbose_name="踩")
     c_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
+
+    def is_recent(self):
+        return ((timezone.now() - datetime.timedelta(days=3)) <= self.c_time)
+    is_recent.admin_order_field = 'c_time'
+    is_recent.boolean = True
+    is_recent.short_description = '是否为新评论？'
 
     def approve_count(self):
         return self.vote_set.filter(attr="A").count()
