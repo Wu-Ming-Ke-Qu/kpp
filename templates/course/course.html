@@ -263,6 +263,13 @@
   <!-- all comments end-->
   <!-- comments area end-->
 
+  <!-- fail comment alert -->
+  {% if message %}
+    <p style="height: 20px;"></p>
+    <div class="alert alert-warning" style="text-align: left;">{{ message }}</div>
+  {% endif %}
+  <!-- fail comment alert end -->
+
   <!-- add comment start-->
   <div id="add-comment" class="comments-area">
     <div class="row clearfix">
