@@ -16,4 +16,5 @@ class AddSchoolFrom(forms.Form):
     school_email_addr = forms.CharField(label="学校邮箱后缀",
                                         max_length=128,
                                         required=False,
-                                        widget=forms.TextInput(attrs={'class':'form-control'}))
+                                        widget=forms.TextInput(attrs={'class':'form-control',
+                                                                    'placeholder':"只需输入@后的部分，例：qq.com"}))
