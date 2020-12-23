@@ -26,6 +26,12 @@
     XHR.open("GET", "/comment/rmcomment/" + data['comment_id']);
     XHR.send(FD);
   }
+  function deleteConfirm(data){
+    var r=confirm("你确定要删除这条评论吗？");
+    if (r==true){
+      sendData(data)
+    }
+  }
  </script>
  {% endblock %}
 
@@ -113,7 +119,7 @@
           </div>
           <div class="panel-body">
             {{comment.content}}</br></br>
-            <span><a type="submit" class="btn btn-default pull-right" onclick="sendData({'comment_id': {{comment.id}}})">删除该评论</a></span>
+            <span><a type="submit" class="btn btn-default pull-right" onclick="deleteConfirm({'comment_id': {{comment.id}}})">删除该评论</a></span>
           </div>
         </div>
        {% endfor %}
