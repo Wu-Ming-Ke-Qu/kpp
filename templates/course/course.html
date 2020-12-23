@@ -195,7 +195,13 @@
               <button type="button" class="btn btn-default btn-sm" onclick="sendData({'comment_id': {{comment.id}}, 'attr': 'C'})">
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="color: blue;"></span> 已点赞({{comment.like}})
               </button>
+              <button type="button" class="btn btn-default btn-sm" onclick="sendData({'comment_id': {{comment.id}}, 'attr': 'D'})" disabled="disabled">
+                <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> 踩({{comment.dislike}})
+              </button>
             {% elif comment.isunlike %}
+              <button type="button" class="btn btn-default btn-sm" onclick="sendData({'comment_id': {{comment.id}}, 'attr': 'A'})" disabled="disabled">
+                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 点赞({{comment.like}})
+              </button>
               <button type="button" class="btn btn-default btn-sm" onclick="sendData({'comment_id': {{comment.id}}, 'attr': 'C'})">
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" style="color: red;"></span> 已踩({{comment.dislike}})
               </button>
@@ -206,7 +212,7 @@
               <button type="button" class="btn btn-default btn-sm" onclick="sendData({'comment_id': {{comment.id}}, 'attr': 'D'})">
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> 踩({{comment.dislike}})
               </button>
-            {% endif %} 
+            {% endif %}
           </div>
         </div>
       </div>
