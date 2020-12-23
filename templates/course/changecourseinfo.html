@@ -6,31 +6,35 @@
       <p style="height: 80px;"></p>
       <div class="row clearfix">
           <div class="col-md-8 column col-md-offset-2">
-              <h2 class="text-center">修改课程信息</h2>
-              <!-- course info -->
-              <div class="page-header" style="margin-left: 15px;">
-                  <h3>{{ course.course_name }}</h3>
-                  <h5><strong>开课学校：{{ course.school.school_name }}</strong></h5>
-                  <h5><strong>授课教师：{{ teacher_name }}</strong></h5>
+            {% if message %}
+              <div class="alert alert-warning">{{ message }}</div>
+            {% endif %}
+            <p style="height: 20px;"></p>
+            <h2 class="text-center">修改课程信息</h2>
+            <!-- course info -->
+            <div class="page-header" style="margin-left: 15px;">
+                <h3>{{ course.course_name }}</h3>
+                <h5><strong>开课学校：{{ course.school.school_name }}</strong></h5>
+                <h5><strong>授课教师：{{ teacher_name }}</strong></h5>
+            </div>
+            <form class="form-group" action="{% url 'course:changecourseinfo' course.id %}" method="post">
+              {% csrf_token %}
+              <div class="form-group col-md-6">
+                <label for="cred">学分：</label>
+                <input name="credit" type="text" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" class="form-control" id="cred" >
               </div>
-              <form class="form-group" action="{% url 'course:changecourseinfo' course.id %}" method="post">
-                {% csrf_token %}
-                    <div class="form-group col-md-6">
-                      <label for="cred">学分：</label>
-                      <input name="credit" type="text" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" class="form-control" id="cred" >
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="cred">学时：</label>
-                      <input name="hour" type="text" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" class="form-control" id="hour" >
-                    </div>
-                    <div class="form-group col-md-12">
-                      <label for="cred">先修要求：</label>
-                      <textarea name="pre_course" class="form-control" id="pre" rows="3"></textarea>
-                    </div>
-                    <button type="reset" class="btn btn-default pull-left" style="margin-left: 15px;">重置</button>
-                    <button type="submit" class="btn btn-primary pull-right" style="margin-right: 15px;">提交修改</button>
-                    <a class="btn btn-default pull-right" style="margin-right: 15px;" href="{% url 'course:courseinfo' course.id %}">返回至课程信息页面</a>
-              </form>
+              <div class="form-group col-md-6">
+                <label for="cred">学时：</label>
+                <input name="hour" type="text" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" class="form-control" id="hour" >
+              </div>
+              <div class="form-group col-md-12">
+                <label for="cred">先修要求：</label>
+                <textarea name="pre_course" class="form-control" id="pre" rows="3"></textarea>
+              </div>
+              <button type="reset" class="btn btn-default pull-left" style="margin-left: 15px;">重置</button>
+              <button type="submit" class="btn btn-primary pull-right" style="margin-right: 15px;">提交修改</button>
+              <a class="btn btn-default pull-right" style="margin-right: 15px;" href="{% url 'course:courseinfo' course.id %}">返回至课程信息页面</a>
+            </form>
           </div>
       </div>
     </div>
