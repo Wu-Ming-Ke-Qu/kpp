@@ -251,5 +251,20 @@ class CourseViewTests(TestCase):
         """
         测试修改课程信息页面是否可以成功打开
         """
-        response = client.get("/course/changecourseinfo/")
+        school_test = School(school_name="thu")
+        school_test.save()
+        department_test = Department(department_name="ce", school=school_test)
+        department_test.save()
+        teacher_test = Teacher(teacher_name="li", school=school_test, department=department_test)
+        teacher_test.save()
+        course_test = Course(course_name="test", course_id="123456", school=school_test,
+                             department=department_test, credit=3, hour=64)
+        course_test.save()
+        teacher_course = CourseTeacher(course=course_test, teacher=teacher_test)
+        teacher_course.save()
+        user_test = User(username="user_test", password=make_password("123456"), email="test@126.com",
+                         school=school_test, department=department_test, is_active=True)
+        user_test.save()
+        client.post('/login/', {'username': 'user_test', 'password': '123456', 'is_rem': True})
+        response = client.get("/course/changecourseinfo/1")
         self.assertEqual(response.status_code, 200)
