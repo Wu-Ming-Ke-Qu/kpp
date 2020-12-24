@@ -19,10 +19,33 @@ class CourseForm(forms.Form):
     teacher = forms.CharField(label="开课教师", 
                               max_length=128,
                               widget=forms.TextInput(attrs={'class':'form-control'}))
-    credit = forms.IntegerField(label="学分", 
-                                widget=forms.NumberInput(attrs={'class':'form-control'}))
-    hour = forms.IntegerField(label="学时", 
-                              widget=forms.NumberInput(attrs={'class':'form-control'}))
+    credit = forms.CharField(
+        label="学分", 
+        max_length=128,
+        widget=forms.TextInput(attrs={'class':'form-control'})
+    )
+    hour = forms.CharField(
+        label="学时", 
+        max_length=128,
+        widget=forms.TextInput(attrs={'class':'form-control'})
+    )
     pre_course = forms.CharField(label="先修要求",
                                  required=False,
                                  widget=forms.Textarea(attrs={'class':'form-control'}))
+
+class ChangeCourseForm(forms.Form):
+    credit = forms.CharField(
+        label="学分",
+        max_length=128,
+        widget=forms.TextInput(attrs={'class':'form-control'})
+    )
+    hour = forms.CharField(
+        label="学时", 
+        max_length=128,
+        widget=forms.TextInput(attrs={'class':'form-control'})
+    )
+    pre_course = forms.CharField(
+        label="先修要求",
+        required=False,
+        widget=forms.Textarea(attrs={'class':'form-control'})
+    )

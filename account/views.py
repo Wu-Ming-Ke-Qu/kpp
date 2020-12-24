@@ -1,10 +1,9 @@
 import random, string
 
 from django.core.exceptions import ObjectDoesNotExist
-from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
-from django.core.mail import EmailMultiAlternatives, message
+from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 
 from . import models
@@ -51,8 +50,12 @@ def send_forgetpw_email(email, code):
     return msg.send()
 
 def index(request):
-    search_form = SearchForm()
-    small_search_form = SmallSearchForm()
+    search_school_id = None
+    if request.session.get('is_login', None):
+        search_school_id = models.User.objects.get(pk=request.session['user_id']).school
+
+    search_form = SearchForm(initial={'school': search_school_id})
+    small_search_form = SmallSearchForm(initial={'school': search_school_id})
     return render(request, 'index.html', locals()) # 主页
 
 def login(request):
@@ -134,8 +137,12 @@ def register(request):
                 message = '该邮箱地址已被注册，请使用别的邮箱！'
                 return render(request, 'account/register.html', locals())
 
-            if school.email_addr != email.split("@")[-1]:
+            if school.email_addr != "*" and school.email_addr != email.split("@")[-1]:
                 message = "邮箱域名错误！请使用本学校edu邮箱！"
+                return render(request, 'account/register.html', locals())
+
+            if len(password) < 8:
+                message = "密码长度小于8位，请重新输入！"
                 return render(request, 'account/register.html', locals())
 
             user = models.User.objects.create(
@@ -159,48 +166,55 @@ def register(request):
     return render(request, 'account/register.html', locals())
 
 def confirm(request):
-    if request.method == "GET":
-        code = request.GET.get("code")
-        try:
-            right = models.EmailVerify.objects.get(code=code)
-            if right.is_valid():
-                right_user = models.User.objects.get(email=right.email)
-                right_user.is_active = True
-                right_user.save()
-                request.session['is_login'] = True
-                request.session['user_id'] = right_user.id
-                request.session['user_name'] = right_user.username
-                request.session['user_school'] = right_user.school.school_name
-                right.delete()
-                return redirect('/account/certisuccess/')
-            else:
-                right_user = models.User.objects.get(email=right.email)
-                request.session['user_id'] = right_user.id
-                request.session['user_name'] = right_user.username
-                request.session['user_school'] = right_user.school.school_name
-                right.delete()
-                return redirect('/account/emailcert/')
-        except ObjectDoesNotExist:
-            pass
-        return redirect('/login/')
-    
-    search_form = SearchForm()
-    small_search_form = SmallSearchForm()
-
-    return render(request, "account/emailcerti.html", locals())
+    code = request.GET.get("code")
+    try:
+        right = models.EmailVerify.objects.get(code=code)
+        if right.is_valid():
+            right_user = models.User.objects.get(email=right.email)
+            right_user.is_active = True
+            right_user.save()
+            request.session['is_login'] = True
+            request.session['user_id'] = right_user.id
+            request.session['user_name'] = right_user.username
+            request.session['user_school'] = right_user.school.school_name
+            right.delete()  # 自动登录，完成注册激活
+            return redirect('/account/certisuccess/')
+        else:
+            right_user = models.User.objects.get(email=right.email)
+            request.session['user_id'] = right_user.id
+            request.session['user_name'] = right_user.username
+            request.session['user_school'] = right_user.school.school_name
+            right.delete()
+            return redirect('/account/emailcert/')
+    except ObjectDoesNotExist:
+        pass
+    return redirect('/login/')
 
 def certi_success(request):
-    search_form = SearchForm()
-    small_search_form = SmallSearchForm()
+    '''
+    验证成功页面，三秒后跳转至首页
+    '''
+    search_school_id = None
+    if request.session.get('is_login', None):
+        search_school_id = models.User.objects.get(pk=request.session['user_id']).school
+    else:
+        return redirect("/")
+
+    search_form = SearchForm(initial={'school': search_school_id})
+    small_search_form = SmallSearchForm(initial={'school': search_school_id})
+
     return render(request, 'account/certisuccess.html', locals())
 
 def userinfo(request):
+    search_school_id = None
     if not request.session.get('is_login', None):
         return redirect("/login/")
+    else:
+        search_school_id = models.User.objects.get(pk=request.session['user_id']).school
 
+    search_form = SearchForm(initial={'school': search_school_id})
+    small_search_form = SmallSearchForm(initial={'school': search_school_id})
     user = models.User.objects.get(pk = request.session["user_id"])
-    search_form = SearchForm()
-    small_search_form = SmallSearchForm()
 
     comment_list = []
     for comment in user.comment_set.all():
@@ -212,13 +226,13 @@ def email_cert(request):
     if request.session.get('is_login', None): # 激活情况下不能再激活
         return redirect("/")
 
+    search_form = SearchForm()
+    small_search_form = SmallSearchForm()
+
     user_id = request.session.get('user_id', None)
     if user_id is not None:
         user = models.User.objects.get(pk=user_id)
         email_addr = user.email
-
-    search_form = SearchForm()
-    small_search_form = SmallSearchForm()
 
     return render(request, 'account/emailcerti.html', locals())
 
@@ -242,9 +256,11 @@ def send_email_again(request):
 def change_passwd(request):
     if not request.session.get('is_login', None):
         return redirect("/")
+    else:
+        search_school_id = models.User.objects.get(pk=request.session['user_id']).school
 
-    search_form = SearchForm()
-    small_search_form = SmallSearchForm()
+    search_form = SearchForm(initial={'school': search_school_id})
+    small_search_form = SmallSearchForm(initial={'school': search_school_id})
 
     user = models.User.objects.get(pk=request.session['user_id'])
 
@@ -350,5 +366,4 @@ def find_passwd(request):
                 target.delete()
                 return redirect("/login/")
         except ObjectDoesNotExist:
-            print("AAA")
             return redirect("/login/")

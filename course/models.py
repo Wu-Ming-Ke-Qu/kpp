@@ -15,8 +15,8 @@ class Course(models.Model):
     teachers = models.ManyToManyField(Teacher, through='CourseTeacher', 
                                      through_fields=('course', 'teacher'), 
                                      verbose_name=u"开课教师", related_name='courses')
-    credit = models.IntegerField(verbose_name="学分")
-    hour = models.IntegerField(verbose_name="学时")
+    credit = models.CharField(max_length=128, verbose_name="学分")
+    hour = models.CharField(max_length=128, verbose_name="学时")
     pre_course = models.CharField(max_length=128, null=True, blank=True, verbose_name="先修要求")
     c_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
 

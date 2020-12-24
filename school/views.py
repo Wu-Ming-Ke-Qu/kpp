@@ -4,6 +4,7 @@ from search.forms import SearchForm, SmallSearchForm
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from .forms import AddSchoolFrom
+from account.models import User
 
 def send_email(email, school_type, school_name, school_email_addr):
     subject = '课评评请求添加学校'
@@ -25,8 +26,12 @@ def schoolinfo(request):
     return HttpResponse("OK")
 
 def addschool(request):
-    search_form = SearchForm()
-    small_search_form = SmallSearchForm()
+    search_school_id = None
+    if request.session.get("is_login", None):
+        search_school_id = User.objects.get(pk=request.session['user_id']).school
+
+    search_form = SearchForm(initial={'school': search_school_id})
+    small_search_form = SmallSearchForm(initial={'school': search_school_id})
 
     if request.method == "POST":
         add_school_form = AddSchoolFrom(request.POST)
