@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}403丨课评评{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="container col-md-8 col-md-offset-2 col-xs-12 col-xs-offset-2" >
+        <p style="height: 100px;"></p>
+        <div class="jumbotron">
+          <h1>403&nbspForbidden</h1>
+          <p>很抱歉，您没有访问权限！</p>
+          <p><a class="btn btn-primary btn-lg" href="{% url 'index' %}" role="button">回首页</a></p>
+        </div>
+    </div>
+</div>
+
+ {% endblock %}

@@ -214,8 +214,7 @@ class AccountViewTests(TestCase):
                          school=school_test, department=department_test, is_active=False)
         user_test.save()
         response = client.post('/login/', {'username': 'user_test', 'password': '123456', 'is_rem': True})
-        self.assertEqual(response.context['message'], "请先激活账号!")
-        # self.assertRedirects(response, "/", status_code=302, target_status_code=200)
+        self.assertRedirects(response, "/account/emailcert/", status_code=302, target_status_code=200)
 
     def test_login_with_username_not_exist(self):
         """
@@ -339,7 +338,7 @@ class AccountViewTests(TestCase):
         response = client.post('/register/', {'username': 'user_test', 'password': '123456',
                                               'password_confirm': '123456', 'school': school_test.id,
                                               'email': 'test@126.com'}, follow=True)
-        self.assertEqual(response.redirect_chain, [('/confirm/', 302), ('/login/', 302)])
+        self.assertRedirects(response, "/account/emailcert/", status_code=302, target_status_code=200)
 
     def test_register_with_wrong_password(self):
         """
@@ -468,8 +467,8 @@ class AccountViewTests(TestCase):
         没有登录则无法打开个人信息界面
         并重定向到login界面
         """
-        response = client.get('/account/userspace/')
-        self.assertRedirects(response, "/account/userspace/", status_code=302, target_status_code=200)
+        response = client.get('/account/')
+        self.assertRedirects(response, "/login/", status_code=302, target_status_code=200)
 
     def test_userinfo_with_is_login(self):
         """
@@ -483,5 +482,5 @@ class AccountViewTests(TestCase):
                          school=school_test, department=department_test, is_active=True)
         user_test.save()
         client.post('/login/', {'username': 'user_test', 'password': '123456', 'is_rem': True})
-        response = client.get('/account/userspace/')
+        response = client.get('/account/')
         self.assertEqual(response.status_code, 200)
