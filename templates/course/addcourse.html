@@ -19,7 +19,7 @@
       <p style="height: 50px;"></p>
 
         <h1 class="text-center">添加课程</h1>
-        <div class="form-group col-md-12 col-xs-12">
+        <div class="form-group col-md-12">
           <h5><strong><span style="color:#2b4f7c;">* </span>{{ course_form.course_name.label }}</strong></h5>
           {{ course_form.course_name }}
         </div>
@@ -40,17 +40,17 @@
           <!-- 只能输入数字、小数点(.)和减号(-) -->
           {{ course_form.course_id }}
         </div>
-        <div class="form-group col-md-6 col-xs-6">
+        <div class="form-group col-md-6">
           <h5><strong><span style="color:#2b4f7c;">* </span>{{ course_form.credit.label }}</strong></h5>
           <!-- 只能输入数字、小数点(.) -->
           {{ course_form.credit }}
         </div>
-        <div class="form-group col-md-6 col-xs-6">
+        <div class="form-group col-md-6">
           <h5><strong><span style="color:#2b4f7c;">* </span>{{ course_form.hour.label }}</strong></h5>
           <!-- 只能输入数字、小数点(.) -->
           {{ course_form.hour }}
         </div>
-        <div class="form-group col-md-12 col-xs-12">
+        <div class="form-group col-md-12">
           <h5><strong>{{ course_form.pre_course.label }}</strong></h5>
           {{ course_form.pre_course }}
         </div>
