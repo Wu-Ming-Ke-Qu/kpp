@@ -114,8 +114,11 @@
           <div class="panel-heading">
             发布于<span style="color:#777;">{{comment.c_time}}</span>&nbsp;
             评论课程<span style="color:#777;"><a href="{% url 'course:courseinfo' comment.course.id %}">{{comment.course.course_name}}</a></span>
-            <span class="glyphicon glyphicon-thumbs-down pull-right" aria-hidden="true">({{comment.disapprove_count}})</span>
-            <span class="glyphicon glyphicon-thumbs-up pull-right" aria-hidden="true">({{comment.approve_count}})&nbsp;</span>
+            <span class="glyphicon glyphicon-thumbs-down pull-right" aria-hidden="true">&#32;&#32;({{comment.disapprove_count}})</span>
+            <span class="glyphicon glyphicon-thumbs-up pull-right" aria-hidden="true">&#32;&#32;({{comment.approve_count}})&nbsp;</span>
+            {% if comment.is_folded %}
+            <span class="pull-right" style="color: red;">已折叠&nbsp;</span>
+            {% endif %}
           </div>
           <div class="panel-body">
             {{comment.content}}</br></br>
