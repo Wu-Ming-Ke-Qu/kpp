@@ -32,7 +32,7 @@ def addcomment(request, course_id):
         for comment in course.comment_set.all():
             comment_list.append(str(comment.content))
         try:
-            word_cloud("static/img/wordcloud/" + str(course_id) + ".png", *comment_list)
+            word_cloud("staticfiles/img/wordcloud/" + str(course_id) + ".png", *comment_list)
         except Exception:
             pass
         return redirect("/course/" + str(course_id))
@@ -50,7 +50,7 @@ def rmcomment(request, comment_id):
     for comment in course.comment_set.all():
         comment_list.append(str(comment.content))
     try:
-        word_cloud("static/img/wordcloud/" + str(course.id) + ".png", *comment_list)
+        word_cloud("staticfiles/img/wordcloud/" + str(course.id) + ".png", *comment_list)
     except Exception:
         pass
 

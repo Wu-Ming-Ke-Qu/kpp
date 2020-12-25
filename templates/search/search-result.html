@@ -50,7 +50,7 @@
                             <div class="col-xl-9 col-md-10 col-xs-9">
                                 <div class="media">
                                     <div class="media-left">
-                                        <img class="media-object" src="../static/img/wordcloud/{{course.id}}.png" style="height: 100px; width: 100px;" alt="img">
+                                        <img class="media-object" src="/static/img/wordcloud/{{course.id}}.png" style="height: 100px; width: 100px;" alt="img">
                                     </div>
                                     <div class="media-body align-self-center">
                                         <p></p>
@@ -61,7 +61,7 @@
                                         <p></p>
                                         <!-- school&teacher info -->
                                         <div class="row">
-                                            <div class="col-md-4">{{ course.school }}</div>
+                                            <div class="col-md-4">{{ course.school }}&nbsp;{{ course.teacher_name }}</div>
                                             <div class="col-md-4"></div>
                                         </div>
                                     </div>

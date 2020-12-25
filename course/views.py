@@ -73,7 +73,7 @@ def addcourse(request):
                                                pre_course=pre_course)
             CourseTeacher.objects.create(course = course, teacher = teacher)
             try:
-                word_cloud("static/img/wordcloud/" + str(course.id) + ".png", course_name)
+                word_cloud("staticfiles/img/wordcloud/" + str(course.id) + ".png", course_name)
             except Exception:
                 pass
             return redirect("/course/" + str(course.id))

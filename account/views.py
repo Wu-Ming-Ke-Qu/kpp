@@ -23,12 +23,12 @@ def send_email(email, code):
                     在这里你可以匿名地分享、吐槽课程！</p>
                     <p>请点击<a href="http://{}/confirm/?code={}" target=blank>这里</a>完成注册确认！</p>
                     <p>此链接有效期为{}天！</p>'''.format(
-                        '127.0.0.1:8000', 
+                        'www.kepingping.top', 
                         code, 
-                        '127.0.0.1:8000',
+                        'www.kepingping.top',
                         code,
                         settings.CONFIRM_DAYS)
-    msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_HOST_USER, [email])
+    msg = EmailMultiAlternatives(subject, text_content, "no-reply", [email])
     msg.attach_alternative(html_content, "text/html")
     return msg.send()
 
@@ -40,12 +40,12 @@ def send_forgetpw_email(email, code):
                     在这里你可以匿名地分享、吐槽课程！</p>
                     <p>请点击<a href="http://{}/account/findpw/?code={}" target=blank>这里</a>完成密码找回！</p>
                     <p>此链接有效期为{}天！</p>'''.format(
-                        '127.0.0.1:8000', 
+                        'www.kepingping.top', 
                         code, 
-                        '127.0.0.1:8000',
+                        'www.kepingping.top',
                         code,
                         settings.CONFIRM_DAYS)
-    msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_HOST_USER, [email])
+    msg = EmailMultiAlternatives(subject, text_content, "no-reply", [email])
     msg.attach_alternative(html_content, "text/html")
     return msg.send()
 
