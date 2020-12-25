@@ -67,4 +67,4 @@ node_modules/
 venv_bootcamp/
 staticfiles
 
-kpp/settings.py
+kpp/server-settings.py
