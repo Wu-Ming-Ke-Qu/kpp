@@ -102,7 +102,7 @@
         <span>发布于</span>
         <span style="color:#777;">{{comment.c_time}}</span>
       </div>
-      <div class="panel-body">
+      <div class="panel-body" id="{{forloop.counter}}content">
         <p>{{comment.content}}</p>
         <div class="form pull-right">
           <div class="btn-group" role="group" aria-label="...">
@@ -136,9 +136,9 @@
           &lt&lt&lt折叠评论</a>
           <script type="text/javascript">
           //获取button
-          var btn = document.getElementById('btn');
+          var btn = document.getElementById('{{forloop.counter}}btn');
           //获取p
-          var content = document.getElementById('content');
+          var content = document.getElementById('{{forloop.counter}}content');
           //获取p的内容
           var str = content.innerHTML;
           //定义一个变量，表示当前状态
@@ -180,7 +180,7 @@
         <span>发布于</span>
         <span style="color:#777;">{{comment.c_time}}</span>
       </div>
-      <div class="panel-body">
+      <div class="panel-body" id="{{forloop.counter}}content">
         <p>{{comment.content}}</p>
         <div class="form pull-right">
           <div class="btn-group" role="group" aria-label="...">
@@ -210,13 +210,13 @@
         </div>
       </div>
       {% if comment.is_folded %}
-        <a href="javascript:;" id="btn">
+        <a href="javascript:;" id="{{forloop.counter}}btn">
           &lt&lt&lt折叠评论</a>
           <script type="text/javascript">
           //获取button
-          var btn = document.getElementById('btn');
+          var btn = document.getElementById('{{forloop.counter}}btn');
           //获取p
-          var content = document.getElementById('content');
+          var content = document.getElementById('{{forloop.counter}}content');
           //获取p的内容
           var str = content.innerHTML;
           //定义一个变量，表示当前状态
