@@ -68,3 +68,4 @@ venv_bootcamp/
 staticfiles
 
 kpp/server-settings.py
+kpp-server.tar.gz
