@@ -23,7 +23,7 @@ git clone https://github.com/Wu-Ming-Ke-Qu/kpp
 cd kpp
 ```
 
-Then, fill some basic settings:
+Then, fill some basic settings in `./kpp/settings.py`:
 
 ```python
 SECRET_KEY = '&v=$55c3h$1@2gw*@js2=a%+^!(e)8!3ycyq*%%1zg(ydk66t=' # change it if used in production environment
@@ -59,9 +59,10 @@ python manage.py runserver
 ## License
 
 本项目采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议进行许可。
+
 This repository is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
 
 
 ## Contributing
 
-fork and raise a pull request
+Fork and raise a pull request
