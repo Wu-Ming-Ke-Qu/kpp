@@ -1,4 +1,4 @@
-# kpp
+# KPP
 `课评评` —— A site gives course reviews!
 
 ## Introduction
@@ -58,11 +58,11 @@ python manage.py runserver
 
 ## License
 
-本项目采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议进行许可。
+本项目采用GPL\-3.0开源许可协议进行许可。
 
-This repository is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+This repository is licensed under GPL\-3.0 License.
 
 
 ## Contributing
 
-Fork and raise a pull request
+Fork, modify and raise a pull request
